@@ -1,0 +1,41 @@
+[ {
+  "nome" : "e",
+  "especie" : "e",
+  "raca" : "e",
+  "data" : [ 2010, 6, 5 ],
+  "sexo" : "r",
+  "situacao" : "r",
+  "setor" : null,
+  "tutores" : [ ],
+  "id" : 4
+}, {
+  "nome" : "q",
+  "especie" : "q",
+  "raca" : "q",
+  "data" : [ 2007, 9, 8 ],
+  "sexo" : "f",
+  "situacao" : "f",
+  "setor" : null,
+  "tutores" : [ ],
+  "id" : 6
+}, {
+  "nome" : "a",
+  "especie" : "a",
+  "raca" : "a",
+  "data" : [ 2017, 5, 22 ],
+  "sexo" : "a",
+  "situacao" : "a",
+  "setor" : null,
+  "tutores" : [ ],
+  "id" : 9
+}, {
+  "nome" : "g",
+  "especie" : "g",
+  "raca" : "g",
+  "data" : [ 2005, 3, 4 ],
+  "sexo" : "f",
+  "situacao" : "f",
+  "setor" : null,
+  "tutores" : [ ],
+  "id" : 11
+} ]
