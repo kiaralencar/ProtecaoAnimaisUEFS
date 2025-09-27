@@ -8,6 +8,7 @@ import model.Animal;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,8 +20,7 @@ public class Main {
 
         // Entrada dos dados
         System.out.print("ID do animal: ");
-        int id = scan.nextInt();
-        scan.nextLine();
+        String id = scan.nextLine();
         System.out.print("Nome do animal: ");
         String nome = scan.nextLine();
         System.out.print("Especie: ");
@@ -33,9 +33,9 @@ public class Main {
         int mes = scan.nextInt();
         System.out.print("Ano de nascimento: ");
         int ano = scan.nextInt();
-        int idade = GeralController.A.calcularIdade(LocalDate.of(ano, mes, dia));
+        int idade = GeralController.A.calcularIdade(YearMonth.of(ano, mes));
         System.out.println("Idade: " + idade);
-        LocalDate data = LocalDate.of(ano, mes, dia);
+        YearMonth data = YearMonth.of(ano, mes);
         scan.nextLine();
         System.out.print("Sexo: ");
         String sexo = scan.nextLine();

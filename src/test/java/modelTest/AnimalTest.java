@@ -7,7 +7,7 @@ import model.Tutora;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * da classe Animal funcionam corretamente.
  *
  * @author Kiara Alencar
- * @version 1.0
+ * @version 1.2
  * @see Animal
  */
 class AnimalTest {
@@ -30,8 +30,18 @@ class AnimalTest {
     /** Inicializa uma nova instância da classe Animal antes de cada teste. */
     @BeforeEach
     void setUp() {
-        this.animal = new Animal(1, "Lulu", "Gato", "Persa",
-                LocalDate.of(2018, 5, 22), "Macho", "Em tratamento", null, new ArrayList<>());
+        this.animal = new Animal("A1", "Lulu", "Gato", "Persa",
+                YearMonth.of(2018, 5), "Macho", "Em tratamento", null, new ArrayList<>());
+    }
+
+    /**
+     * Testa o método setID para garantir que o ID do animal
+     * seja definido e recuperado corretamente.
+     */
+    @Test
+    void testSetID() {
+        animal.setNome("A3");
+        assertEquals("A3", animal.getID(), "O ID do animal deve ser 'A3'");
     }
 
     /**
@@ -70,7 +80,7 @@ class AnimalTest {
      */
     @Test
     void testSetData() {
-        LocalDate dataNascimento = LocalDate.of(2010, 7, 16);
+        YearMonth dataNascimento = YearMonth.of(2010, 7);
         animal.setData(dataNascimento);
         assertEquals(dataNascimento, animal.getData(), "A data de nascimento do animal deve ser 2010-07-16.");
     }
@@ -102,7 +112,7 @@ class AnimalTest {
     @Test
     void testSetSetor() {
         Endereco endereco = new Endereco("F", "G", "H", "I", "J");
-        Setor novo = new Setor("Modulo 1", endereco, new ArrayList<>(), new ArrayList<>());
+        Setor novo = new Setor("Modulo 1", new ArrayList<>(), new ArrayList<>());
         animal.setSetor(novo);
         assertEquals("Modulo 1", animal.getSetor().getNome(), "O setor do animal deve ser 'Modulo 1'");
     }

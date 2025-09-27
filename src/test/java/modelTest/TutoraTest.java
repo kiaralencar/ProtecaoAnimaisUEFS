@@ -7,7 +7,7 @@ import model.Tutora;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * da classe Tutora funcionam corretamente.
  *
  * @author Kiara Alencar
- * @version 1.0
+ * @version 1.1
  * @see Tutora
  * @see Endereco
  */
@@ -88,7 +88,7 @@ public class TutoraTest {
     @Test
     void testSetSetor() {
         Endereco endereco = new Endereco("A", "B", "C", "D", "E");
-        Setor novo = new Setor("Modulo 3", endereco, new ArrayList<>(), new ArrayList<>());
+        Setor novo = new Setor("Modulo 3", new ArrayList<>(), new ArrayList<>());
         pessoa.setSetor(novo);
         assertEquals("Modulo 3", pessoa.getSetor().getNome(), "O setor da pessoa tutora deve ser 'Modulo 3'");
     }
@@ -99,10 +99,10 @@ public class TutoraTest {
      */
     @Test
     void testSetAnimais(){
-        Animal animal1 = new Animal(4, "Charlie", "Cachorro", "Pastor alemao",
-                LocalDate.of(2018, 2, 3), "Femea", "Em tratamento", null, new ArrayList<>());
-        Animal animal2 = new Animal(5, "Tiffany", "Cachorro", "Sem raca",
-                LocalDate.of(2016, 10, 11), "Femea", "Disponivel", null, new ArrayList<>());
+        Animal animal1 = new Animal("A4", "Charlie", "Cachorro", "Pastor alemao",
+                YearMonth.of(2018, 2), "Femea", "Em tratamento", null, new ArrayList<>());
+        Animal animal2 = new Animal("A5", "Tiffany", "Cachorro", "Sem raca",
+                YearMonth.of(2016, 10), "Femea", "Disponivel", null, new ArrayList<>());
         List<Animal> animais = new ArrayList<>();
         animais.add(animal1);
         animais.add(animal2);

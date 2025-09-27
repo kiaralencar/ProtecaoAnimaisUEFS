@@ -1,6 +1,6 @@
 package model;
 
-import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class Animal {
     /** O ID do animal. */
-    private int ID;
+    private String ID;
 
     /** O nome do animal. */
     private String nome;
@@ -29,7 +29,7 @@ public class Animal {
     private String raca;
 
     /** A data de nascimento do animal. */
-    private LocalDate data;
+    private YearMonth data;
 
     /** O sexo do animal. */
     private String sexo;
@@ -56,7 +56,7 @@ public class Animal {
      * @param setor     O setor do animal.
      * @param tutores   As pessoas tutoras do animal.
      */
-    public Animal(int ID, String nome, String especie, String raca, LocalDate data, String sexo,
+    public Animal(String ID, String nome, String especie, String raca, YearMonth data, String sexo,
                   String situacao, Setor setor, List<Tutora> tutores){
         this.ID = ID;
         this.nome = nome;
@@ -79,13 +79,13 @@ public class Animal {
      *
      * @return O ID do animal.
      */
-    public int getID (){ return ID; }
+    public String getID (){ return ID; }
 
     /** Define o ID.
      *
      * @param ID O novo ID a ser atribuído.
      */
-    public void setID(int ID) { this.ID = ID; }
+    public void setID(String ID) { this.ID = ID; }
 
     /** Retorna o nome do animal.
      *
@@ -127,13 +127,13 @@ public class Animal {
      *
      * @return A data de nascimento do animal.
      */
-    public LocalDate getData() { return data; }
+    public YearMonth getData() { return data; }
 
     /** Define a data de nascimento.
      *
      * @param data A nova data de nascimento a ser atribuída.
      */
-    public void setData(LocalDate data) { this.data = data; }
+    public void setData(YearMonth data) { this.data = data; }
 
     /** Retorna o sexo do animal.
      *

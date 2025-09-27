@@ -5,12 +5,11 @@ import java.util.List;
 
 /**
  * A classe Setor representa um setor da UEFS com informações de nome,
- * endereço {@link Endereco}, pessoas tutoras {@link Tutora} e animais
- * {@link Animal}. Além disso, esta classe implementa métodos e atributos próprios.
+ * endereço, pessoas tutoras {@link Tutora} e animais {@link Animal}.
+ * Além disso, esta classe implementa métodos e atributos próprios.
  *
  * @author Kiara Alencar
- * @version 1.1
- * @see Endereco
+ * @version 1.3
  * @see Tutora
  * @see Animal
  */
@@ -18,8 +17,13 @@ public class Setor {
     /** O nome do setor. */
     private String nome;
 
-    /** O endereço do setor. */
-    private Endereco endereco;
+    /** O endereço do setor, que já é definido como UEFS.
+     * static: garante que o atributo pertence à classe em si, e
+     * não a qualquer objeto individual.
+     * final: garante que o endereço não poderá ser alterado depois
+     * de definido (é uma constante).
+     * */
+    private static final String ENDERECO = "Universidade Estadual de Feira de Santana (UEFS)";
 
     /** Pessoas tutoras do setor. */
     private List<Tutora> tutores;
@@ -31,13 +35,11 @@ public class Setor {
      * Construtor da classe Setor.
      *<p>
      * @param nome      O nome do setor.
-     * @param endereco  O enderço do setor.
      * @param tutores   As pessoas tutoras do setor.
      * @param animais   Os animais do setor.
      */
-    public Setor(String nome, Endereco endereco, List<Tutora> tutores, List<Animal> animais){
+    public Setor(String nome, List<Tutora> tutores, List<Animal> animais){
         this.nome = nome;
-        this.endereco = endereco;
         this.tutores = (tutores != null) ? tutores : new ArrayList<>();
         this.animais = (animais != null) ? animais : new ArrayList<>();
     }
@@ -58,13 +60,7 @@ public class Setor {
      *
      * @return O endereço do setor.
      */
-    public Endereco getEndereco() { return endereco; }
-
-    /** Define o endereço.
-     *
-     * @param endereco O novo endereço a ser atribuído.
-     */
-    public void setEndereco(Endereco endereco) { this.endereco = endereco; }
+    public static String getEndereco() { return ENDERECO; }
 
     /** Retorna as pessoas tutoras do setor.
      *

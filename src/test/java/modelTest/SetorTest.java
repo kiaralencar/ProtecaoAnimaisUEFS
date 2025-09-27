@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,21 +21,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * da classe Setor funcionam corretamente.
  *
  * @author Kiara Alencar
- * @version 1.0
+ * @version 1.3
  * @see Setor
- * @see Endereco
  */
 public class SetorTest {
     /** Instância do setor e do endereço para os testes. */
     private Setor setor;
-    private Endereco endereco;
 
-    /** Inicializa as instâncias de Setor e Endereco antes de cada teste. */
+    /** Inicializa as instâncias de Setor antes de cada teste. */
     @BeforeEach
     void setUp() {
-        endereco = new Endereco("A", "Novo Horizonte", "44600123",
-                "Feira de Santana", "Bahia") ;
-        setor = new Setor("Modulo 5", endereco, new ArrayList<>(), new ArrayList<>());
+        setor = new Setor("Modulo 5", new ArrayList<>(), new ArrayList<>());
     }
 
     /**
@@ -45,17 +42,6 @@ public class SetorTest {
     void testSetNome() {
         setor.setNome("Reitoria");
         assertEquals("Reitoria", setor.getNome(), "O nome do setor deve ser 'Reitoria'");
-    }
-
-    /**
-     * Testa o método setEndereco para verificar a correta atribuição
-     * e obtenção do endereço do setor.
-     */
-    @Test
-    void testSetEndereco() {
-        Endereco novo = new Endereco("E", "Feira VI", "44678543", "Ilheus", "Piaui");
-        setor.setEndereco(novo);
-        assertEquals(novo, setor.getEndereco());
     }
 
     /**
@@ -82,15 +68,25 @@ public class SetorTest {
      */
     @Test
     void testSetAnimais(){
-        Animal animal1 = new Animal(2, "Mily", "Gato", "Sem raca",
-                LocalDate.of(2022, 8, 9), "Femea", "Em tratamento", setor, new ArrayList<>());
-        Animal animal2 = new Animal(3, "Nick", "Cachorro", "Sem raca",
-                LocalDate.of(2024, 10, 27), "Macho", "Em observacao", setor, new ArrayList<>());
+        Animal animal1 = new Animal("A2", "Mily", "Gato", "Sem raca",
+                YearMonth.of(2022, 8), "Femea", "Em tratamento", setor, new ArrayList<>());
+        Animal animal2 = new Animal("A3", "Nick", "Cachorro", "Sem raca",
+                YearMonth.of(2024, 10), "Macho", "Em observacao", setor, new ArrayList<>());
         List<Animal> animais = new ArrayList<>();
         animais.add(animal1);
         animais.add(animal2);
         setor.setAnimais(animais);
         List<Animal> animaisAtuais = setor.getAnimais();
         assertEquals(animais, animaisAtuais, "A lista deve conter Mily e Nick como animais do setor.");
+    }
+
+    /**
+     * Testa o método getEndereco para verificar se o endereço do
+     * setor é realmente a UEFS.
+     */
+    @Test
+    void getEnderecoTest(){
+        assertEquals("Universidade Estadual de Feira de Santana (UEFS)", Setor.getEndereco(),
+                "O endereco do setor deve ser 'Universidade Estadual de Feira de Santana (UEFS)'");
     }
 }
