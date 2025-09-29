@@ -2,7 +2,7 @@ package controller;
 
 import model.Animal;
 import model.Setor;
-import model.Tutora;
+import model.Tutor;
 
 import java.time.YearMonth;
 import java.util.HashMap;
@@ -14,7 +14,7 @@ public class AnimalController {
 
     public AnimalController(){ this.animais = new HashMap<>(); }
 
-    public boolean validarID(String ID){ return ID.matches("[Aa][0-9]") && !animais.containsKey(ID); }
+    public boolean validarIDAnimal(String ID){ return ID.matches("A[0-9]+") && !animais.containsKey(ID); }
 
     /** Calcula a idade aproximada do animal.
      *
@@ -29,16 +29,15 @@ public class AnimalController {
     }
 
     public boolean cadastrarAnimal(Animal animal){
-        if (animais.containsKey(animal.getID())) return false;
+        if (animal == null || animais.containsKey(animal.getID())) return false;
         animais.put(animal.getID(), animal);
         return true;
     }
 
-    public boolean deletarAnimal(String ID){
-        Animal animal = animais.get(ID);
+    public boolean deletarAnimal(Animal animal){
         if (animal == null) return false;
         if (animal.getTutores() != null) {
-            for (Tutora tutor : animal.getTutores()) {
+            for (Tutor tutor : animal.getTutores()) {
                 if (tutor.getAnimais() != null) {
                     tutor.getAnimais().remove(animal); // Remove o animal dos tutores do animal a ser deletado
                 }
@@ -54,21 +53,19 @@ public class AnimalController {
         return true;
     }
 
-    public boolean adicionarTutora (String ID, Tutora tutora){
-        Animal animal = animais.get(ID);
-        if (animal != null && tutora != null && !animal.getTutores().contains(tutora)){
-            animal.getTutores().add(tutora);
+    public boolean adicionarTutor (Animal animal, Tutor tutor){
+        if (animal != null && tutor != null && !animal.getTutores().contains(tutor)){
+            animal.getTutores().add(tutor);
             return true;
         }
         return false;
     }
 
-    public boolean removerTutora (String ID, Tutora tutora){
-        Animal animal = animais.get(ID);
-        if (animal != null && tutora != null && animal.getTutores().contains(tutora)
-                && tutora.getAnimais().contains(animal)){
-            animal.getTutores().remove(tutora); // Removo a pessoa da lista de tutores do animal
-            tutora.getAnimais().remove(animal); // Remove o animal da lista de animais da pessoa tutora
+    public boolean removerTutor (Animal animal, Tutor tutor){
+        if (animal != null && tutor != null && animal.getTutores().contains(tutor)
+                && tutor.getAnimais().contains(animal)){
+            animal.getTutores().remove(tutor); // Removo a pessoa da lista de tutores do animal
+            tutor.getAnimais().remove(animal); // Remove o animal da lista de animais da pessoa tutor
             return true;
         }
         return false;
@@ -76,30 +73,34 @@ public class AnimalController {
 
     public Animal buscarPorID(String ID){ return animais.get(ID); }
 
-    public Setor buscarSetor(String ID){
-        Animal animal = animais.get(ID);
+    public Setor buscarSetor(Animal animal){
         if (animal != null) return animal.getSetor();
         return null;
     }
 
-    public List<Animal> listarAnimais(){ return new ArrayList<>(animais.values()); }
-
-    public List<String> listarTutoras (String ID){
-        Animal animal = animais.get(ID);
-        if (animal == null || animal.getTutores().isEmpty()){ return new ArrayList<>(); }
-        List<String> nomesTutoras = new ArrayList<>();
-        for (Tutora tutora : animal.getTutores()){
-            nomesTutoras.add(tutora.getNome());
+    public List<String> listarAnimais (){
+        if (animais.isEmpty()) return new ArrayList<>();
+        List<String> nomesAnimais = new ArrayList<>();
+        for (Animal animal : animais.values()){
+            nomesAnimais.add(animal.getNome());
         }
-        return nomesTutoras;
+        return nomesAnimais;
     }
 
-    public boolean atualizarID (String ID, String novoID){
-        Animal animal = animais.get(ID);
+    public List<String> listarTutores (Animal animal){
+        if (animal == null || animal.getTutores().isEmpty()) return new ArrayList<>();
+        List<String> nomesTutores = new ArrayList<>();
+        for (Tutor tutor : animal.getTutores()){
+            nomesTutores.add(tutor.getNome());
+        }
+        return nomesTutores;
+    }
+
+    public boolean atualizarID (Animal animal, String novoID){
         /* A verificação da existência do ID é feita em "validarID", que é chamada
         na View a cada vez que é inserido um novo ID */
         if (animal != null) {
-            animais.remove(ID); // Remove o animal com ID antigo
+            animais.remove(animal.getID()); // Remove o animal com ID antigo
             animal.setID(novoID); // Insere o novo ID no animal
             animais.put(animal.getID(), animal); // Insere o animal com o novo ID no Map
             return true;
@@ -107,8 +108,7 @@ public class AnimalController {
         return false;
     }
 
-    public boolean atualizarNome(String ID, String novoNome){
-        Animal animal = animais.get(ID);
+    public boolean atualizarNome(Animal animal, String novoNome){
         if (animal != null && !animal.getNome().equalsIgnoreCase(novoNome)){
             animal.setNome(novoNome);
             return true;
@@ -116,8 +116,7 @@ public class AnimalController {
         return false;
     }
 
-    public boolean atualizarEspecie(String ID, String novaEspecie){
-        Animal animal = animais.get(ID);
+    public boolean atualizarEspecie(Animal animal, String novaEspecie){
         if (animal != null && !animal.getEspecie().equalsIgnoreCase(novaEspecie)){
             animal.setEspecie(novaEspecie);
             return true;
@@ -125,8 +124,7 @@ public class AnimalController {
         return false;
     }
 
-    public boolean atualizarRaca(String ID, String novaRaca){
-        Animal animal = animais.get(ID);
+    public boolean atualizarRaca(Animal animal, String novaRaca){
         if (animal != null && !animal.getRaca().equalsIgnoreCase(novaRaca)){
             animal.setRaca(novaRaca);
             return true;
@@ -134,8 +132,7 @@ public class AnimalController {
         return false;
     }
 
-    public boolean atualizarData(String ID, YearMonth novaData){
-        Animal animal = animais.get(ID);
+    public boolean atualizarData(Animal animal, YearMonth novaData){
         if (animal != null && !animal.getData().equals(novaData)){
             animal.setData(novaData);
             return true;
@@ -143,8 +140,7 @@ public class AnimalController {
         return false;
     }
 
-    public boolean atualizarSexo(String ID, String novoSexo){
-        Animal animal = animais.get(ID);
+    public boolean atualizarSexo(Animal animal, String novoSexo){
         if (animal != null && !animal.getSexo().equalsIgnoreCase(novoSexo)){
             animal.setSexo(novoSexo);
             return true;
@@ -152,8 +148,7 @@ public class AnimalController {
         return false;
     }
 
-    public boolean atualizarSetor(String ID, Setor novoSetor){
-        Animal animal = animais.get(ID);
+    public boolean atualizarSetor(Animal animal, Setor novoSetor){
         if (animal != null && novoSetor != null &&
                 !animal.getSetor().getNome().equalsIgnoreCase(novoSetor.getNome())){
             animal.setSetor(novoSetor);
@@ -164,9 +159,11 @@ public class AnimalController {
 
 
 
+
+
     /* métodos a implementar:
     - construtor *FEITO*
-    - validar ID (ID >= 0 e inexistente) *FEITO*
+    - validar ID *FEITO*
     - calcular idade *FEITO*
     - cadastrar animal *FEITO*
     - deletar animal (tirar o animal do setor e da pessoa tutora) *FEITO*

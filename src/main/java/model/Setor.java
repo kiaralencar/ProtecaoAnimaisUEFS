@@ -5,15 +5,18 @@ import java.util.List;
 
 /**
  * A classe Setor representa um setor da UEFS com informações de nome,
- * endereço, pessoas tutoras {@link Tutora} e animais {@link Animal}.
+ * endereço, pessoas tutoras {@link Tutor} e animais {@link Animal}.
  * Além disso, esta classe implementa métodos e atributos próprios.
  *
  * @author Kiara Alencar
- * @version 1.3
- * @see Tutora
+ * @version 1.4
+ * @see Tutor
  * @see Animal
  */
 public class Setor {
+    /** O ID do setor */
+    private String ID;
+
     /** O nome do setor. */
     private String nome;
 
@@ -26,7 +29,7 @@ public class Setor {
     private static final String ENDERECO = "Universidade Estadual de Feira de Santana (UEFS)";
 
     /** Pessoas tutoras do setor. */
-    private List<Tutora> tutores;
+    private List<Tutor> tutores;
 
     /** Animais do setor. */
     private List<Animal> animais;
@@ -38,11 +41,24 @@ public class Setor {
      * @param tutores   As pessoas tutoras do setor.
      * @param animais   Os animais do setor.
      */
-    public Setor(String nome, List<Tutora> tutores, List<Animal> animais){
+    public Setor(String ID, String nome, List<Tutor> tutores, List<Animal> animais){
+        this.ID = ID;
         this.nome = nome;
         this.tutores = (tutores != null) ? tutores : new ArrayList<>();
         this.animais = (animais != null) ? animais : new ArrayList<>();
     }
+
+    /** Retorna o ID do setor.
+     *
+     * @return O ID do setor.
+     */
+    public String getID() { return ID; }
+
+    /** Define o ID.
+     *
+     * @param ID O novo ID a ser atribuído.
+     */
+    public void setID(String ID) { this.ID = ID; }
 
     /** Retorna o nome do setor.
      *
@@ -66,13 +82,13 @@ public class Setor {
      *
      * @return as pessoas tutoras do setor.
      */
-    public List<Tutora> getTutores(){ return tutores; }
+    public List<Tutor> getTutores(){ return tutores; }
 
     /** Define as pessoas tutoras do setor.
      *
      * @param tutores Os novos tutores a serem atribuídos.
      */
-    public void setTutores(List<Tutora> tutores) {
+    public void setTutores(List<Tutor> tutores) {
         this.tutores = tutores;
     }
 

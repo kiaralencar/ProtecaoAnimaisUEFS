@@ -3,7 +3,7 @@ package modelTest;
 import model.Animal;
 import model.Endereco;
 import model.Setor;
-import model.Tutora;
+import model.Tutor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,27 +14,27 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Classe de teste de unidade para a classe Tutora.
+ * Classe de teste de unidade para a classe Tutor.
  * <p>
  * Esta classe contém testes para verificar se os métodos getters e setters
- * da classe Tutora funcionam corretamente.
+ * da classe Tutor funcionam corretamente.
  *
  * @author Kiara Alencar
  * @version 1.1
- * @see Tutora
+ * @see Tutor
  * @see Endereco
  */
-public class TutoraTest {
+public class TutorTest {
     /** Instância da pessoa tutora e do endereço para os testes. */
-    private Tutora pessoa;
+    private Tutor pessoa;
     private Endereco endereco;
 
-    /** Inicializa as instâncias de Tutora e Endereco antes de cada teste. */
+    /** Inicializa as instâncias de Tutor e Endereco antes de cada teste. */
     @BeforeEach
     void setUp() {
         endereco = new Endereco("Bela", "Pontalzinho", "45632167",
                 "Itape", "Bahia") ;
-        pessoa = new Tutora("Aline", endereco, "73988543211", "alinemoreira@gmail.com", null, new ArrayList<>());
+        pessoa = new Tutor("Aline", endereco, "73988543211", "alinemoreira@gmail.com", null, new ArrayList<>());
     }
 
     /**

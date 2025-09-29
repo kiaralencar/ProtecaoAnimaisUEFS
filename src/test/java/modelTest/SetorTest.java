@@ -3,11 +3,10 @@ package modelTest;
 import model.Animal;
 import model.Endereco;
 import model.Setor;
-import model.Tutora;
+import model.Tutor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,14 +50,14 @@ public class SetorTest {
     @Test
     void testSetTutores(){
         Endereco endereco1 = new Endereco("A", "B", "C", "D", "E");
-        Tutora tutora1 = new Tutora("Kamilly", endereco1, "75999854777", "kamilly@gmail.com", setor, new ArrayList<>());
+        Tutor tutor1 = new Tutor("Kamilly", endereco1, "75999854777", "kamilly@gmail.com", setor, new ArrayList<>());
         Endereco endereco2 = new Endereco("F", "G", "H", "I", "J");
-        Tutora tutora2 = new Tutora("Marcelly", endereco2, "75951432567", "marcelly@gmail.com", setor, new ArrayList<>());
-        List<Tutora> tutores = new ArrayList<>();
-        tutores.add(tutora1);
-        tutores.add(tutora2);
+        Tutor tutor2 = new Tutor("Marcelly", endereco2, "75951432567", "marcelly@gmail.com", setor, new ArrayList<>());
+        List<Tutor> tutores = new ArrayList<>();
+        tutores.add(tutor1);
+        tutores.add(tutor2);
         setor.setTutores(tutores);
-        List<Tutora> tutoresAtuais = setor.getTutores();
+        List<Tutor> tutoresAtuais = setor.getTutores();
         assertEquals(tutores, tutoresAtuais, "A lista deve conter Kamilly e Marcelly como pessoas tutoras do setor.");
     }
 

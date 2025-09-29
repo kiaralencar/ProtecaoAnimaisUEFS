@@ -3,7 +3,7 @@ package modelTest;
 import model.Animal;
 import model.Endereco;
 import model.Setor;
-import model.Tutora;
+import model.Tutor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -124,14 +124,14 @@ class AnimalTest {
     @Test
     void testSetTutores(){
         Endereco endereco1 = new Endereco("K", "L", "M", "N", "O");
-        Tutora tutora1 = new Tutora("Helder", endereco1, "75988887777", "helder@gmail.com", null, new ArrayList<>());
+        Tutor tutor1 = new Tutor("Helder", endereco1, "75988887777", "helder@gmail.com", null, new ArrayList<>());
         Endereco endereco2 = new Endereco("P", "Q", "R", "S", "T");
-        Tutora tutora2 = new Tutora("Alana", endereco2, "75989987777", "alana@gmail.com", null, new ArrayList<>());
-        List<Tutora> tutores = new ArrayList<>();
-        tutores.add(tutora1);
-        tutores.add(tutora2);
+        Tutor tutor2 = new Tutor("Alana", endereco2, "75989987777", "alana@gmail.com", null, new ArrayList<>());
+        List<Tutor> tutores = new ArrayList<>();
+        tutores.add(tutor1);
+        tutores.add(tutor2);
         animal.setTutores(tutores);
-        List<Tutora> tutoresAtuais = animal.getTutores();
+        List<Tutor> tutoresAtuais = animal.getTutores();
         assertEquals(tutores, tutoresAtuais, "A lista deve conter Helder e Alana como tutores do animal.");
     }
 }

@@ -8,12 +8,12 @@ import java.util.List;
  * A classe Animal representa um animal com informações de nome, espécie,
  * raça, data de nascimento, sexo, situação (em observação, disponível
  * para adoção ou em tratamento), setor responsável {@link Setor} e pessoas
- * tutoras {@link Tutora}. Além disso, esta classe implementa métodos e atributos próprios.
+ * tutoras {@link Tutor}. Além disso, esta classe implementa métodos e atributos próprios.
  *
  * @author Kiara Alencar
  * @version 1.1
  * @see Setor
- * @see Tutora
+ * @see Tutor
  */
 public class Animal {
     /** O ID do animal. */
@@ -41,7 +41,7 @@ public class Animal {
     private Setor setor;
 
     /** As pessoas responsáveis pelo animal. */
-    private List<Tutora> tutores;
+    private List<Tutor> tutores;
 
     /**
      * Construtor da classe Animal.
@@ -57,7 +57,7 @@ public class Animal {
      * @param tutores   As pessoas tutoras do animal.
      */
     public Animal(String ID, String nome, String especie, String raca, YearMonth data, String sexo,
-                  String situacao, Setor setor, List<Tutora> tutores){
+                  String situacao, Setor setor, List<Tutor> tutores){
         this.ID = ID;
         this.nome = nome;
         this.especie = especie;
@@ -175,11 +175,11 @@ public class Animal {
      *
      * @return as pessoas responsaveis pelo animal.
      */
-    public List<Tutora> getTutores(){ return tutores; }
+    public List<Tutor> getTutores(){ return tutores; }
 
     /** Define as pessoas responsaveis pelo animal.
      *
      * @param tutores Os novos tutores a serem atribuídos.
      */
-    public void setTutores(List<Tutora> tutores) { this.tutores = tutores; }
+    public void setTutores(List<Tutor> tutores) { this.tutores = tutores; }
 }

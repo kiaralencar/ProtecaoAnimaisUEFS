@@ -7,7 +7,6 @@ import controller.GeralController;
 import model.Animal;
 
 import java.io.File;
-import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -121,7 +120,7 @@ public class Main {
         while (loop){
             System.out.println("---------------------- ATUALIZAR ----------------------");
             System.out.println("[1] Animal");
-            System.out.println("[2] Pessoa Tutora");
+            System.out.println("[2] Pessoa Tutor");
             System.out.println("[3] Setor Responsavel");
             System.out.println("[0] Voltar ao menu anterior");
             int opcao = validarOpcao();
