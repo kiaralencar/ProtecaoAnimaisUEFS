@@ -38,6 +38,17 @@ public class AnimalController {
      */
     public boolean validarIDAnimal(String ID){ return ID.matches("A[0-9]+") && !animais.containsKey(ID); }
 
+    /** Valida se a data de nascimento inserida pelo usuário é válida,
+     * ou seja, se é anterior ou igual à data atual.
+     *
+     * @param dataNascimento A data de nascimento inserida pelo usuário.
+     * @return {@code true}, caso a data seja válida, ou {@code false}, caso contrário.
+     */
+    public boolean validarData(YearMonth dataNascimento){
+        YearMonth dataHoje = YearMonth.now();
+        return dataNascimento.isBefore(dataHoje) || dataNascimento.equals(dataHoje);
+    }
+
     /** Calcula a idade aproximada do animal.
      *
      * @param dataNascimento A data de nascimento do animal.

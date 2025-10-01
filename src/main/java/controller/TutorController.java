@@ -38,6 +38,21 @@ public class TutorController {
      */
     public boolean validarIDTutor(String ID){ return ID.matches("T[0-9]+") && !tutores.containsKey(ID); }
 
+    /** Valida se o email inserido pelo usuário segue o padrão estipulado.
+     *
+     * @param email O email inserido pelo usuário.
+     * @return {@code true}, caso o email seja válido, ou {@code false}, caso contrário.
+     */
+    public boolean validarEmail(String email){ return email.matches("^[a-zA-Z0-9_!#$%&'*+/=?{|}~^-]" +
+            "+(\\.[a-zA-Z0-9_!#$%&'*+/=?{|}~^-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.[a-zA-Z]{2,}$"); }
+
+    /** Valida se o telefone inserido pelo usuário segue o padrão estipulado.
+     *
+     * @param telefone O telefone inserido pelo usuário.
+     * @return {@code true}, caso o telefone seja válido, ou {@code false}, caso contrário.
+     */
+    public boolean validarTelefone(String telefone){ return telefone.matches("\\d{11}");}
+
     /** Cadastra um novo tutor no mapa de tutores.
      *
      * @param tutor O objeto {@link Tutor} a ser cadastrado.
