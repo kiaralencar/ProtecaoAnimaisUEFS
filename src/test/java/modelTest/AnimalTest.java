@@ -1,16 +1,13 @@
 package modelTest;
-
 import model.Animal;
 import model.Endereco;
 import model.Setor;
 import model.Tutor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -40,7 +37,7 @@ class AnimalTest {
      */
     @Test
     void testSetID() {
-        animal.setNome("A3");
+        animal.setID("A3");
         assertEquals("A3", animal.getID(), "O ID do animal deve ser 'A3'");
     }
 
@@ -112,7 +109,7 @@ class AnimalTest {
     @Test
     void testSetSetor() {
         Endereco endereco = new Endereco("F", "G", "H", "I", "J");
-        Setor novo = new Setor("Modulo 1", new ArrayList<>(), new ArrayList<>());
+        Setor novo = new Setor("S1", "Modulo 1", new ArrayList<>(), new ArrayList<>());
         animal.setSetor(novo);
         assertEquals("Modulo 1", animal.getSetor().getNome(), "O setor do animal deve ser 'Modulo 1'");
     }
@@ -124,9 +121,9 @@ class AnimalTest {
     @Test
     void testSetTutores(){
         Endereco endereco1 = new Endereco("K", "L", "M", "N", "O");
-        Tutor tutor1 = new Tutor("Helder", endereco1, "75988887777", "helder@gmail.com", null, new ArrayList<>());
+        Tutor tutor1 = new Tutor("T1", "Helder", endereco1, "75988887777", "helder@gmail.com", null, new ArrayList<>());
         Endereco endereco2 = new Endereco("P", "Q", "R", "S", "T");
-        Tutor tutor2 = new Tutor("Alana", endereco2, "75989987777", "alana@gmail.com", null, new ArrayList<>());
+        Tutor tutor2 = new Tutor("T2", "Alana", endereco2, "75989987777", "alana@gmail.com", null, new ArrayList<>());
         List<Tutor> tutores = new ArrayList<>();
         tutores.add(tutor1);
         tutores.add(tutor2);

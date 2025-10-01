@@ -1,5 +1,4 @@
 package controllerTest;
-
 import controller.EnderecoController;
 import model.Endereco;
 import org.junit.jupiter.api.BeforeEach;

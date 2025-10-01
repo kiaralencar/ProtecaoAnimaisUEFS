@@ -1,12 +1,10 @@
 package modelTest;
-
 import model.Animal;
 import model.Endereco;
 import model.Setor;
 import model.Tutor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +28,17 @@ public class SetorTest {
     /** Inicializa as instâncias de Setor antes de cada teste. */
     @BeforeEach
     void setUp() {
-        setor = new Setor("Modulo 5", new ArrayList<>(), new ArrayList<>());
+        setor = new Setor("S1", "Modulo 5", new ArrayList<>(), new ArrayList<>());
+    }
+
+    /**
+     * Testa o método setID para garantir que o ID do setor
+     * seja definido e recuperado corretamente.
+     */
+    @Test
+    void testSetID() {
+        setor.setID("S3");
+        assertEquals("S3", setor.getID(), "O ID do setor deve ser 'S3'");
     }
 
     /**
@@ -50,9 +58,9 @@ public class SetorTest {
     @Test
     void testSetTutores(){
         Endereco endereco1 = new Endereco("A", "B", "C", "D", "E");
-        Tutor tutor1 = new Tutor("Kamilly", endereco1, "75999854777", "kamilly@gmail.com", setor, new ArrayList<>());
+        Tutor tutor1 = new Tutor("T2", "Kamilly", endereco1, "75999854777", "kamilly@gmail.com", setor, new ArrayList<>());
         Endereco endereco2 = new Endereco("F", "G", "H", "I", "J");
-        Tutor tutor2 = new Tutor("Marcelly", endereco2, "75951432567", "marcelly@gmail.com", setor, new ArrayList<>());
+        Tutor tutor2 = new Tutor("T3", "Marcelly", endereco2, "75951432567", "marcelly@gmail.com", setor, new ArrayList<>());
         List<Tutor> tutores = new ArrayList<>();
         tutores.add(tutor1);
         tutores.add(tutor2);

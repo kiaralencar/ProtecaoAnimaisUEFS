@@ -1,5 +1,4 @@
 package modelTest;
-
 import model.Endereco;
 import org.junit.jupiter.api.Test;
 

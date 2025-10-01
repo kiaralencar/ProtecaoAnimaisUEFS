@@ -1,16 +1,13 @@
 package modelTest;
-
 import model.Animal;
 import model.Endereco;
 import model.Setor;
 import model.Tutor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -34,7 +31,17 @@ public class TutorTest {
     void setUp() {
         endereco = new Endereco("Bela", "Pontalzinho", "45632167",
                 "Itape", "Bahia") ;
-        pessoa = new Tutor("Aline", endereco, "73988543211", "alinemoreira@gmail.com", null, new ArrayList<>());
+        pessoa = new Tutor("T1", "Aline", endereco, "73988543211", "alinemoreira@gmail.com", null, new ArrayList<>());
+    }
+
+    /**
+     * Testa o método setID para garantir que o ID do setor
+     * seja definido e recuperado corretamente.
+     */
+    @Test
+    void testSetID() {
+        pessoa.setID("T3");
+        assertEquals("T3", pessoa.getID(), "O ID da pessoa tutora deve ser 'T3'");
     }
 
     /**
@@ -88,7 +95,7 @@ public class TutorTest {
     @Test
     void testSetSetor() {
         Endereco endereco = new Endereco("A", "B", "C", "D", "E");
-        Setor novo = new Setor("Modulo 3", new ArrayList<>(), new ArrayList<>());
+        Setor novo = new Setor("S1", "Modulo 3", new ArrayList<>(), new ArrayList<>());
         pessoa.setSetor(novo);
         assertEquals("Modulo 3", pessoa.getSetor().getNome(), "O setor da pessoa tutora deve ser 'Modulo 3'");
     }

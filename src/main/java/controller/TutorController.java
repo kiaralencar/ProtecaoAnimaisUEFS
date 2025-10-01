@@ -1,27 +1,59 @@
 package controller;
-
 import model.Animal;
 import model.Endereco;
 import model.Setor;
 import model.Tutor;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * A classe TutorController é responsável por gerenciar as operações
+ * CRUD (Criar, Ler, Atualizar, Deletar) e outras funcionalidades
+ * relacionadas a objetos {@link Tutor}. Ela atua como uma camada de
+ * controle/serviço que orquestra a manipulação dos dados dos tutores.
+ *
+ * @author Kiara Alencar
+ * @version 1.4
+ * @see Tutor
+ * @see Setor
+ * @see Animal
+ */
 public class TutorController {
+    /** Um mapa que armazena objetos do tipo {@link Tutor}, usando o ID como chave. */
     private HashMap<String, Tutor> tutores;
 
+    /** Construtor  da classe TutorController.
+     * <p>
+     * Incializa o mapa como uma nova instância de HashMap.
+     *
+     */
     public TutorController(){ this.tutores = new HashMap<>(); }
 
-    public boolean validarIDSetor(String ID){ return ID.matches("T[0-9]+") && !tutores.containsKey(ID); }
+    /** Valida se o ID inserido pelo usuário segue o padrão estipulado e
+     * se já não é um ID existente.
+     *
+     * @param ID O ID inserido pelo usuário.
+     * @return {@code true}, caso o ID seja válido, ou {@code false}, caso contrário.
+     */
+    public boolean validarIDTutor(String ID){ return ID.matches("T[0-9]+") && !tutores.containsKey(ID); }
 
+    /** Cadastra um novo tutor no mapa de tutores.
+     *
+     * @param tutor O objeto {@link Tutor} a ser cadastrado.
+     * @return {@code true}, caso o tutor consiga ser cadastrado com sucesso, ou {@code false}, caso contrário.
+     */
     public boolean cadastrarTutor(Tutor tutor){
         if (tutor == null || tutores.containsKey(tutor.getID())) return false;
         tutores.put(tutor.getID(), tutor);
         return true;
     }
 
+    /** Exclui um tutor do mapa de tutores.
+     *
+     * @param tutor O objeto {@link Tutor} a ser deletado.
+     * @return {@code true}, caso o tutor consiga ser deletado com sucesso, ou {@code false}, caso contrário.
+     */
     public boolean deletarTutor(Tutor tutor) {
         if (tutor != null) {
             Setor setor = tutor.getSetor();
@@ -48,13 +80,27 @@ public class TutorController {
         return false;
     }
 
+    /** Busca um tutor pelo seu ID
+     *
+     * @param ID O ID do tutor a ser procurado.
+     * @return O objeto {@link Tutor} encontrado, ou {@code null} se não for encontrado.
+     */
     public Tutor buscarTutorPorID(String ID) { return tutores.get(ID); }
 
+    /** Busca em que setor está o tutor.
+     *
+     * @param tutor O objeto {@link Animal} a quem será feita a busca.
+     * @return O setor em que está o tutor, ou {@code null} se houver algum erro.
+     */
     public Setor buscarSetor(Tutor tutor){
         if (tutor != null) return tutor.getSetor();
         return null;
     }
 
+    /** Lista todos os tutores cadastrados no mapa de tutores.
+     *
+     * @return Uma lista contendo os nomes todos os tutores.
+     */
     public List<String> listarTutores (){
         if (tutores.isEmpty()) return new ArrayList<>();
         List<String> nomesTutores = new ArrayList<>();
@@ -64,6 +110,11 @@ public class TutorController {
         return nomesTutores;
     }
 
+    /** Lista todos os animais do tutor.
+     *
+     * @param tutor O objeto {@link Setor} a ter a lista de animais procurada.
+     * @return Uma lista com os nomes de todos os animais do tutor.
+     */
     public List<String> listarAnimais (Tutor tutor){
         if (tutor.getAnimais().isEmpty()) return new ArrayList<>();
         List<String> nomesAnimais = new ArrayList<>();
@@ -73,6 +124,15 @@ public class TutorController {
         return nomesAnimais;
     }
 
+    /** Atualiza o ID do tutor.
+     * <p>
+     * O método remove o tutor do mapa e a insere novamente com o novo ID,
+     * atualizando a chave.
+     * </p>
+     * @param tutor O objeto {@link Tutor} a ter o ID atualizado.
+     * @param novoID O novo ID a ser atribuído.
+     * @return {@code true} caso o ID seja atualizado com sucesso, ou {@code false}, caso contrário.
+     */
     public boolean atualizarID (Tutor tutor, String novoID){
         /* A verificação da existência do ID é feita em "validarID", que é chamada
         na View a cada vez que é inserido um novo ID */
@@ -85,6 +145,12 @@ public class TutorController {
         return false;
     }
 
+    /** Atualiza o nome do tutor.
+     *
+     * @param tutor O objeto {@link Tutor} a ter o nome atualizado.
+     * @param novoNome O novo nome a ser atribuído.
+     * @return {@code true} caso o nome seja atualizado com sucesso, ou {@code false}, caso contrário.
+     */
     public boolean atualizarNome(Tutor tutor, String novoNome){
         if (tutor != null && !tutor.getNome().equalsIgnoreCase(novoNome)){
             tutor.setNome(novoNome);
@@ -93,6 +159,12 @@ public class TutorController {
         return false;
     }
 
+    /** Atualiza o endereço do tutor.
+     *
+     * @param tutor O objeto {@link Tutor} a ter o endereço atualizado.
+     * @param novoEndereco O novo endereço a ser atribuído.
+     * @return {@code true} caso o endereço seja atualizado com sucesso, ou {@code false}, caso contrário.
+     */
     public boolean atualizarEndereco(Tutor tutor, Endereco novoEndereco){
         if (tutor != null && novoEndereco != null){
             tutor.setEndereco(novoEndereco);
@@ -101,6 +173,12 @@ public class TutorController {
         return false;
     }
 
+    /** Atualiza o telefone do tutor.
+     *
+     * @param tutor O objeto {@link Tutor} a ter o telefone atualizado.
+     * @param novoTelefone O novo telefone a ser atribuído.
+     * @return {@code true} caso o telefone seja atualizado com sucesso, ou {@code false}, caso contrário.
+     */
     public boolean atualizarTelefone(Tutor tutor, String novoTelefone){
         if (tutor != null && !novoTelefone.equalsIgnoreCase(tutor.getTelefone())){
             tutor.setTelefone(novoTelefone);
@@ -109,6 +187,12 @@ public class TutorController {
         return false;
     }
 
+    /** Atualiza o email do tutor.
+     *
+     * @param tutor O objeto {@link Animal} a ter o email atualizado.
+     * @param novoEmail O novo nome a ser atribuído.
+     * @return {@code true} caso o email seja atualizado com sucesso, ou {@code false}, caso contrário.
+     */
     public boolean atualizarEmail(Tutor tutor, String novoEmail){
         if (tutor != null && !novoEmail.equalsIgnoreCase(tutor.getEmail())){
             tutor.setTelefone(novoEmail);
@@ -117,6 +201,12 @@ public class TutorController {
         return false;
     }
 
+    /** Atualiza o setor do tutor.
+     *
+     * @param tutor O objeto {@link Animal} a ter o setor atualizado.
+     * @param novoSetor O novo setor a ser atribuído.
+     * @return {@code true} caso o setor seja atualizado com sucesso, ou {@code false}, caso contrário.
+     */
     public boolean atualizarSetor(Tutor tutor, Setor novoSetor){
         if (tutor != null && novoSetor != null && tutor.getSetor() != novoSetor
                 && !novoSetor.getTutores().contains(tutor)){
