@@ -3,6 +3,8 @@ import model.Animal;
 import model.Endereco;
 import model.Setor;
 import model.Tutor;
+
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +31,23 @@ public class TutorController {
      *
      */
     public TutorController(){ this.tutores = new HashMap<>(); }
+
+    /** Cria uma nova instância de {@link Tutor} com as informações fornecidas.
+     * Este método não persiste o tutor; ele apenas o instancia.
+     *
+     * @param ID         O ID do tutor.
+     * @param nome       O nome do tutor.
+     * @param endereco   O objeto {@link Endereco} do tutor.
+     * @param telefone   O telefone do tutor.
+     * @param email      O email do tutor.
+     * @param setor      O setor do tutor.
+     * @param animais    A lista de animais do tutor.
+     * @return Uma nova instância de {@link Tutor}.
+     */
+    public Tutor criarTutor(String ID, String nome, Endereco endereco, String telefone,
+                            String email, Setor setor, List<Animal> animais) {
+        return new Tutor(ID, nome, endereco, telefone, email, setor, new ArrayList<>());
+    }
 
     /** Valida se o ID inserido pelo usuário segue o padrão estipulado e
      * se já não é um ID existente.

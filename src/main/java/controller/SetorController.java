@@ -2,6 +2,8 @@ package controller;
 import model.Animal;
 import model.Setor;
 import model.Tutor;
+
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +30,19 @@ public class SetorController {
      *
      */
     public SetorController(){ this.setores = new HashMap<>(); }
+
+    /** Cria uma nova instância de {@link Setor} com as informações fornecidas.
+     * Este método não persiste o setor; ele apenas o instancia.
+     *
+     * @param ID         O ID do setor.
+     * @param nome       O nome do setor.
+     * @param tutores    A lista de tutores do setor.
+     * @param animais    A lista de animais setor.
+     * @return Uma nova instância de {@link Setor}.
+     */
+    public Setor criarSetor(String ID, String nome, List<Tutor> tutores, List<Animal> animais){
+        return new Setor(ID, nome, new ArrayList<>(), new ArrayList<>());
+    }
 
     /** Valida se o ID inserido pelo usuário segue o padrão estipulado e
      * se já não é um ID existente.

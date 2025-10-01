@@ -1,5 +1,6 @@
 package controller;
 import model.Animal;
+import model.Endereco;
 import model.Setor;
 import model.Tutor;
 import java.time.YearMonth;
@@ -29,6 +30,25 @@ public class AnimalController {
      *
      */
     public AnimalController(){ this.animais = new HashMap<>(); }
+
+    /** Cria uma nova instância de {@link Animal} com as informações fornecidas.
+     * Este método não persiste o animal; ele apenas o instancia.
+     *
+     * @param ID         O ID do animal.
+     * @param nome       O nome do animal.
+     * @param especie    A espécie do animal.
+     * @param raca       A raça do animal.
+     * @param data       A data de nascimento do animal.
+     * @param sexo       O sexo do animal.
+     * @param situacao   A situacao do animal.
+     * @param setor      O setor do animal.
+     * @param tutores    A lista de tutores do animal.
+     * @return Uma nova instância de {@link Animal}.
+     */
+    public Animal criarAnimal(String ID, String nome, String especie, String raca, YearMonth data,
+                            String sexo, String situacao, Setor setor, List<Tutor> tutores) {
+        return new Animal(ID, nome, especie, raca, data, sexo, situacao, setor, new ArrayList<>());
+    }
 
     /** Valida se o ID inserido pelo usuário segue o padrão estipulado e
      * se já não é um ID existente.
