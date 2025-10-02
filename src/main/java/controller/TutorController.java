@@ -55,7 +55,9 @@ public class TutorController {
      * @param ID O ID inserido pelo usuário.
      * @return {@code true}, caso o ID seja válido, ou {@code false}, caso contrário.
      */
-    public boolean validarIDTutor(String ID){ return ID.matches("T[0-9]+") && !tutores.containsKey(ID); }
+    public boolean validarIDTutor(String ID){
+        return ID.matches("T[0-9]+") && !tutores.containsKey(ID) && !ID.isBlank();
+    }
 
     /** Valida se o email inserido pelo usuário segue o padrão estipulado.
      *
@@ -127,7 +129,7 @@ public class TutorController {
      * @return O setor em que está o tutor, ou {@code null} se houver algum erro.
      */
     public Setor buscarSetor(Tutor tutor){
-        if (tutor != null) return tutor.getSetor();
+        if (tutor != null && tutor.getSetor()!= null) return tutor.getSetor();
         return null;
     }
 
@@ -168,9 +170,7 @@ public class TutorController {
      * @return {@code true} caso o ID seja atualizado com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarID (Tutor tutor, String novoID){
-        /* A verificação da existência do ID é feita em "validarID", que é chamada
-        na View a cada vez que é inserido um novo ID */
-        if (tutor != null) {
+        if (tutor != null && validarIDTutor(novoID)) {
             tutores.remove(tutor.getID()); // Remove o tutor com ID antigo
             tutor.setID(novoID); // Insere o novo ID no tutor
             tutores.put(tutor.getID(), tutor); // Insere o tutor com o novo ID no Map
@@ -186,7 +186,7 @@ public class TutorController {
      * @return {@code true} caso o nome seja atualizado com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarNome(Tutor tutor, String novoNome){
-        if (tutor != null && !tutor.getNome().equalsIgnoreCase(novoNome)){
+        if (tutor != null && !tutor.getNome().equalsIgnoreCase(novoNome) && !novoNome.isBlank()){
             tutor.setNome(novoNome);
             return true;
         }
@@ -214,7 +214,7 @@ public class TutorController {
      * @return {@code true} caso o telefone seja atualizado com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarTelefone(Tutor tutor, String novoTelefone){
-        if (tutor != null && !novoTelefone.equalsIgnoreCase(tutor.getTelefone())){
+        if (tutor != null && !novoTelefone.equalsIgnoreCase(tutor.getTelefone()) && validarTelefone(novoTelefone)){
             tutor.setTelefone(novoTelefone);
             return true;
         }
@@ -228,7 +228,7 @@ public class TutorController {
      * @return {@code true} caso o email seja atualizado com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarEmail(Tutor tutor, String novoEmail){
-        if (tutor != null && !novoEmail.equalsIgnoreCase(tutor.getEmail())){
+        if (tutor != null && !novoEmail.equalsIgnoreCase(tutor.getEmail()) && validarEmail(novoEmail)){
             tutor.setTelefone(novoEmail);
             return true;
         }

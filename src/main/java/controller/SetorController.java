@@ -50,7 +50,9 @@ public class SetorController {
      * @param ID O ID inserido pelo usuário.
      * @return {@code true}, caso o ID seja válido, ou {@code false}, caso contrário.
      */
-    public boolean validarIDSetor(String ID){ return ID.matches("S[0-9]+") && !setores.containsKey(ID); }
+    public boolean validarIDSetor(String ID){
+        return ID.matches("S[0-9]+") && !setores.containsKey(ID) && !ID.isBlank();
+    }
 
     /** Cadastra um novo setor no mapa de setores.
      *
@@ -268,9 +270,7 @@ public class SetorController {
      * @return {@code true} caso o ID seja atualizado com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarID (Setor setor, String novoID){
-        /* A verificação da existência do ID é feita em "validarID", que é chamada
-        na View a cada vez que é inserido um novo ID */
-        if (setor != null) {
+        if (setor != null && validarIDSetor(novoID)) {
             setores.remove(setor.getID()); // Remove o setor com ID antigo
             setor.setID(novoID); // Insere o novo ID no setor
             setores.put(setor.getID(), setor); // Insere o setor com o novo ID no Map
@@ -286,16 +286,18 @@ public class SetorController {
      * @return {@code true} caso o nome seja atualizado com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarNome(Setor setor, String novoNome){
-        boolean setorExistente = false;
-        for (Setor s : setores.values()){
-            if (s.getNome().equalsIgnoreCase(novoNome)) {
-                setorExistente = true;
-                break;
+        if (!novoNome.isBlank()) {
+            boolean setorExistente = false;
+            for (Setor s : setores.values()) {
+                if (s.getNome().equalsIgnoreCase(novoNome)) {
+                    setorExistente = true;
+                    break;
+                }
             }
-        }
-        if (setor != null && !setor.getNome().equalsIgnoreCase(novoNome) && !setorExistente){
-            setor.setNome(novoNome);
-            return true;
+            if (setor != null && !setor.getNome().equalsIgnoreCase(novoNome) && !setorExistente) {
+                setor.setNome(novoNome);
+                return true;
+            }
         }
         return false;
     }

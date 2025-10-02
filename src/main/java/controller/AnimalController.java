@@ -56,7 +56,9 @@ public class AnimalController {
      * @param ID O ID inserido pelo usuário.
      * @return {@code true}, caso o ID seja válido, ou {@code false}, caso contrário.
      */
-    public boolean validarIDAnimal(String ID){ return ID.matches("A[0-9]+") && !animais.containsKey(ID); }
+    public boolean validarIDAnimal(String ID){
+        return ID.matches("A[0-9]+") && !animais.containsKey(ID) && !ID.isBlank();
+    }
 
     /** Valida se a data de nascimento inserida pelo usuário é válida,
      * ou seja, se é anterior ou igual à data atual.
@@ -125,6 +127,7 @@ public class AnimalController {
     public boolean adicionarTutor (Animal animal, Tutor tutor){
         if (animal != null && tutor != null && !animal.getTutores().contains(tutor)){
             animal.getTutores().add(tutor);
+            tutor.getAnimais().add(animal);
             return true;
         }
         return false;
@@ -139,8 +142,23 @@ public class AnimalController {
     public boolean removerTutor (Animal animal, Tutor tutor){
         if (animal != null && tutor != null && animal.getTutores().contains(tutor)
                 && tutor.getAnimais().contains(animal)){
-            animal.getTutores().remove(tutor); // Removo a pessoa da lista de tutores do animal
+            animal.getTutores().remove(tutor); // Remove a pessoa da lista de tutores do animal
             tutor.getAnimais().remove(animal); // Remove o animal da lista de animais da pessoa tutor
+            return true;
+        }
+        return false;
+    }
+
+    /** Adiciona o setor do animal.
+     *
+     * @param animal O objeto {@link Animal} a quem será adicionado o setor.
+     * @param setor O objeto {@link Setor} que será adicionado ao animal.
+     * @return {@code true}, caso o setor seja adiconado com sucesso, ou {@code false}, caso contrário.
+     */
+    public boolean adicionarSetor(Animal animal, Setor setor){
+        if (animal != null && setor != null && animal.getSetor() == null && !setor.getAnimais().contains(animal)){
+            animal.setSetor(setor);
+            setor.getAnimais().add(animal);
             return true;
         }
         return false;
@@ -200,9 +218,7 @@ public class AnimalController {
      * @return {@code true} caso o ID seja atualizado com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarID (Animal animal, String novoID){
-        /* A verificação da existência do ID é feita em "validarID", que é chamada
-        na View a cada vez que é inserido um novo ID */
-        if (animal != null) {
+        if (animal != null && validarIDAnimal(novoID)) {
             animais.remove(animal.getID()); // Remove o animal com ID antigo
             animal.setID(novoID); // Insere o novo ID no animal
             animais.put(animal.getID(), animal); // Insere o animal com o novo ID no Map
@@ -218,7 +234,7 @@ public class AnimalController {
      * @return {@code true} caso o nome seja atualizado com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarNome(Animal animal, String novoNome){
-        if (animal != null && !animal.getNome().equalsIgnoreCase(novoNome)){
+        if (animal != null && !animal.getNome().equalsIgnoreCase(novoNome) && !novoNome.isBlank()){
             animal.setNome(novoNome);
             return true;
         }
@@ -232,7 +248,7 @@ public class AnimalController {
      * @return {@code true} caso a espécie seja atualizada com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarEspecie(Animal animal, String novaEspecie){
-        if (animal != null && !animal.getEspecie().equalsIgnoreCase(novaEspecie)){
+        if (animal != null && !animal.getEspecie().equalsIgnoreCase(novaEspecie) && !novaEspecie.isBlank()){
             animal.setEspecie(novaEspecie);
             return true;
         }
@@ -246,7 +262,7 @@ public class AnimalController {
      * @return {@code true} caso a raça seja atualizada com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarRaca(Animal animal, String novaRaca){
-        if (animal != null && !animal.getRaca().equalsIgnoreCase(novaRaca)){
+        if (animal != null && !animal.getRaca().equalsIgnoreCase(novaRaca) && !novaRaca.isBlank()){
             animal.setRaca(novaRaca);
             return true;
         }
@@ -260,7 +276,7 @@ public class AnimalController {
      * @return {@code true} caso a data seja atualizada com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarData(Animal animal, YearMonth novaData){
-        if (animal != null && !animal.getData().equals(novaData)){
+        if (animal != null && !animal.getData().equals(novaData) && validarData(novaData)){
             animal.setData(novaData);
             return true;
         }
@@ -274,7 +290,7 @@ public class AnimalController {
      * @return {@code true} caso o sexo seja atualizado com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarSexo(Animal animal, String novoSexo){
-        if (animal != null && !animal.getSexo().equalsIgnoreCase(novoSexo)){
+        if (animal != null && !animal.getSexo().equalsIgnoreCase(novoSexo) && !novoSexo.isBlank()){
             animal.setSexo(novoSexo);
             return true;
         }
@@ -288,7 +304,7 @@ public class AnimalController {
      * @return {@code true} caso o setor seja atualizado com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarSetor(Animal animal, Setor novoSetor){
-        if (animal != null && novoSetor != null &&
+        if (animal != null && novoSetor != null && animal.getSetor() != null &&
                 !animal.getSetor().getNome().equalsIgnoreCase(novoSetor.getNome())){
             animal.setSetor(novoSetor);
             return true;

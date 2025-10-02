@@ -33,7 +33,7 @@ public class Main {
         System.out.print("Ano de nascimento: ");
         int ano = scan.nextInt();
         int idade = GeralController.A.calcularIdade(YearMonth.of(ano, mes));
-        System.out.println("Idade: " + idade);
+        System.out.println("Idade: " + idade); // mostra a idade so p conferir se ta certa
         YearMonth data = YearMonth.of(ano, mes);
         scan.nextLine();
         System.out.print("Sexo: ");
