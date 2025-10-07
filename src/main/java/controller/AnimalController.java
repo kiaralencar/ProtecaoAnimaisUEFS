@@ -1,6 +1,5 @@
 package controller;
 import model.Animal;
-import model.Endereco;
 import model.Setor;
 import model.Tutor;
 import java.time.YearMonth;
@@ -124,7 +123,7 @@ public class AnimalController {
      * @param tutor O objeto {@link Tutor} que será adicionado à lista de tutores do animal.
      * @return {@code true}, caso o tutor seja adicionado com sucesso, ou {@code false}, caso contrário.
      */
-    public boolean adicionarTutor (Animal animal, Tutor tutor){
+    public boolean adicionarTutor(Animal animal, Tutor tutor){
         if (animal != null && tutor != null && !animal.getTutores().contains(tutor)){
             animal.getTutores().add(tutor);
             tutor.getAnimais().add(animal);
@@ -139,7 +138,7 @@ public class AnimalController {
      * @param tutor O objeto {@link Tutor} que será removido da lista de tutores do animal.
      * @return {@code true}, caso o tutor seja removido com sucesso, ou {@code false}, caso contrário.
      */
-    public boolean removerTutor (Animal animal, Tutor tutor){
+    public boolean removerTutor(Animal animal, Tutor tutor){
         if (animal != null && tutor != null && animal.getTutores().contains(tutor)
                 && tutor.getAnimais().contains(animal)){
             animal.getTutores().remove(tutor); // Remove a pessoa da lista de tutores do animal

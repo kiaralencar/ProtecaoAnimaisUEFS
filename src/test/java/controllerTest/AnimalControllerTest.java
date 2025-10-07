@@ -14,16 +14,45 @@ import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.*;
 
+/**
+ * Classe de teste de unidade para o controller da classe Animal.
+ * <p>
+ * Esta classe verifica a correta implementação e o comportamento de
+ * todas as funcionalidades relacionadas ao gerenciamento de animais.
+ *
+ * @author Kiara Alencar
+ * @version 1.7
+ * @see Animal
+ * @see Setor
+ * @see Tutor
+ * @see Endereco
+ */
 public class AnimalControllerTest {
+    /** Instância do controller do animal para o teste. */
     private AnimalController A;
+
+    /** Instância do controller do tutor para o teste. */
     private TutorController T;
+
+    /** Instância do controller do endereço para o teste. */
     private EnderecoController E;
+
+    /** Instância do controller do setor para o teste. */
     private SetorController S;
+
+    /** Instância do animal para o teste. */
     private Animal animal;
+
+    /** Instância do tutor para o teste. */
     private Tutor tutor;
+
+    /** Instância do endereço para o teste. */
     private Endereco endereco;
+
+    /** Instância do setor para o teste. */
     private Setor setor;
 
+    /** Cria novas instâncias da classes antes de cada teste. */
     @BeforeEach
     void setUp(){
         A = new AnimalController();
@@ -38,6 +67,8 @@ public class AnimalControllerTest {
                 "ana@gmail.com", setor, new ArrayList<>());
     }
 
+    /** Testa o método criarAnimal para garantir que o animal
+     * seja definido corretamente. */
     @Test
     void criarAnimalTest(){
         assertNotNull(animal);
@@ -54,6 +85,8 @@ public class AnimalControllerTest {
         assertEquals(dataEsperada, animal.getData());
     }
 
+    /** A seguir, os métodos testam o método validarIDAnimal para garantir
+     * que o ID seja inserido corretamente. */
     @Test
     void validarIDTest(){
         boolean resultado = A.validarIDAnimal("A4");
@@ -84,6 +117,8 @@ public class AnimalControllerTest {
         assertFalse(resultado);
     }
 
+    /** Testa o método validarData para garantir que a data de
+     * nascimento inserida é válida. */
     @Test
     void validarDataTest(){
         YearMonth data = YearMonth.of(2018, 6);
@@ -91,6 +126,7 @@ public class AnimalControllerTest {
         assertTrue(resultado);
     }
 
+    /** Não permite uma data adiantada. */
     @Test
     void validarDataFalsaTest(){
         YearMonth data = YearMonth.of(2032, 11);
@@ -98,27 +134,34 @@ public class AnimalControllerTest {
         assertFalse(resultado);
     }
 
+    /** Testa o método calcularIdade para calcular a idade do animal
+     * de acordo com a data de nascimento fornecida pelo usuário.
+     *
+     * OBS.: a idade esperada foi inserida em 07 de outubro de 2025.
+     * Para realizar testes em outra época, deve-se atualizar essa idade. */
     @Test
     void calcularIdadeTest(){
         int idade = A.calcularIdade(animal.getData());
-        YearMonth dataHoje = YearMonth.now();
-        int idadeEsperada = dataHoje.getYear() - animal.getData().getYear();
-        if (dataHoje.getMonthValue() < animal.getData().getMonthValue()) idadeEsperada--;
-        assertEquals(idadeEsperada, idade);
+        assertEquals(5, idade);
     }
 
+    /** Testa o método cadastrarAnimal para garantir que o animal seja
+     * inserido do Map de animais. */
     @Test
     void cadastrarAnimalTest(){
         boolean resultado = A.cadastrarAnimal(animal);
         assertTrue(resultado);
     }
 
+    /** Não permite o cadastro de um animal nulo. */
     @Test
     void cadastrarAnimalNuloTest(){
         boolean resultado = A.cadastrarAnimal(null);
         assertFalse(resultado);
     }
 
+    /** Testa o método deletarAnimal para garantir que o animal seja
+     * removido do Map de animais. */
     @Test
     void deletarAnimalTest(){
         A.cadastrarAnimal(animal);
@@ -126,24 +169,29 @@ public class AnimalControllerTest {
         assertTrue(resultado);
     }
 
+    /** Não permite deletar um animal nulo. */
     @Test
     void deletarAnimalNuloTest(){
         boolean resultado = A.deletarAnimal(null);
         assertFalse(resultado);
     }
 
+    /** Testa o método adicionarTutor para garantir que o tutor seja
+     * adicionado à lista de tutores do animal corretamente. */
     @Test
     void adicionarTutorTest(){
         boolean resultado = A.adicionarTutor(animal, tutor);
         assertTrue(resultado);
     }
 
+    /** Não permite que seja adicionado um tutor nulo. */
     @Test
     void adicionarTutorInexistenteTest(){
         boolean resultado = A.adicionarTutor(animal, null);
         assertFalse(resultado);
     }
 
+    /** Não permite que seja adicionado um tutor duplicado. */
     @Test
     void adicionarTutorDuplicadoTest(){
         A.adicionarTutor(animal, tutor);
@@ -151,6 +199,8 @@ public class AnimalControllerTest {
         assertFalse("Nao eh possivel adicionar tutores duplicados.", resultado);
     }
 
+    /** Testa o método removerTutor para garantir que o tutor seja
+     * removido da lista de tutores do animal corretamente. */
     @Test
     void removerTutorTest(){
         A.adicionarTutor(animal, tutor);
@@ -158,24 +208,30 @@ public class AnimalControllerTest {
         assertTrue("Tutor removido com sucesso!", resultado);
     }
 
+    /** Não permite que seja removido um tutor nulo. */
     @Test
     void removerTutorNuloTest(){
         boolean resultado = A.removerTutor(animal, tutor);
         assertFalse("Nao foi possivel remover este tutor.", resultado);
     }
 
+    /** Testa o método adicionarSetor para garantir que o setor do
+     * animal seja adicionado corretamente. */
     @Test
     void adicionarSetorTest(){
         boolean resultado = A.adicionarSetor(animal, setor);
         assertTrue(resultado);
     }
 
+    /** Não permite que seja adicionado um setor nulo. */
     @Test
     void adicionarSetorNuloTest(){
         boolean resultado = A.adicionarSetor(animal, null);
         assertFalse(resultado);
     }
 
+    /** Testa o método buscarAnimalPorID para garantir que o animal
+     * seja encontrado ao ser buscado pelo seu ID. */
     @Test
     void buscarPorIDTest(){
         A.cadastrarAnimal(animal);
@@ -183,12 +239,15 @@ public class AnimalControllerTest {
         assertNotNull("O animal foi encontrado com sucesso!", animal2);
     }
 
+    /** Não permite que seja encontrado um animal com um ID falso. */
     @Test
     void buscarPorIDFalsoTest(){
         Animal animal2 = A.buscarAnimalPorID("C45");
         assertNull("Nao foi possivel encontrar este animal.", animal2);
     }
 
+    /** Testa o método buscarSetor para encontrar em qual
+     * setor o animal está situado. */
     @Test
     void buscarSetorTest(){
         A.adicionarSetor(animal, setor);
