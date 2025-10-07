@@ -185,7 +185,7 @@ public class TutorController {
      * @return {@code true} caso o ID seja atualizado com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarID (Tutor tutor, String novoID){
-        if (tutor != null && validarIDTutor(novoID)) {
+        if (tutor != null && validarIDTutor(novoID) && !novoID.equalsIgnoreCase(tutor.getID())) {
             tutores.remove(tutor.getID()); // Remove o tutor com ID antigo
             tutor.setID(novoID); // Insere o novo ID no tutor
             tutores.put(tutor.getID(), tutor); // Insere o tutor com o novo ID no Map
@@ -215,7 +215,7 @@ public class TutorController {
      * @return {@code true} caso o endereço seja atualizado com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarEndereco(Tutor tutor, Endereco novoEndereco){
-        if (tutor != null && novoEndereco != null){
+        if (tutor != null && novoEndereco != null && novoEndereco != tutor.getEndereco()){
             tutor.setEndereco(novoEndereco);
             return true;
         }
