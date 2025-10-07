@@ -67,6 +67,24 @@ public class AnimalControllerTest {
     }
 
     @Test
+    void validarIDVazioTest(){
+        boolean resultado = A.validarIDAnimal("");
+        assertFalse(resultado);
+    }
+
+    @Test
+    void validarIDEspacoTest(){
+        boolean resultado = A.validarIDAnimal(" ");
+        assertFalse(resultado);
+    }
+
+    @Test
+    void validarIDEnterTest(){
+        boolean resultado = A.validarIDAnimal("\t\n");
+        assertFalse(resultado);
+    }
+
+    @Test
     void validarDataTest(){
         YearMonth data = YearMonth.of(2018, 6);
         boolean resultado = A.validarData(data);
@@ -103,6 +121,7 @@ public class AnimalControllerTest {
 
     @Test
     void deletarAnimalTest(){
+        A.cadastrarAnimal(animal);
         boolean resultado = A.deletarAnimal(animal);
         assertTrue(resultado);
     }
@@ -147,7 +166,6 @@ public class AnimalControllerTest {
 
     @Test
     void adicionarSetorTest(){
-        A.cadastrarAnimal(animal);
         boolean resultado = A.adicionarSetor(animal, setor);
         assertTrue(resultado);
     }
@@ -161,19 +179,18 @@ public class AnimalControllerTest {
     @Test
     void buscarPorIDTest(){
         A.cadastrarAnimal(animal);
-        Animal animal2 = A.buscarPorID(animal.getID());
+        Animal animal2 = A.buscarAnimalPorID(animal.getID());
         assertNotNull("O animal foi encontrado com sucesso!", animal2);
     }
 
     @Test
     void buscarPorIDFalsoTest(){
-        Animal animal2 = A.buscarPorID("C45");
+        Animal animal2 = A.buscarAnimalPorID("C45");
         assertNull("Nao foi possivel encontrar este animal.", animal2);
     }
 
     @Test
     void buscarSetorTest(){
-        A.cadastrarAnimal(animal);
         A.adicionarSetor(animal, setor);
         Setor setor2 = A.buscarSetor(animal);
         assertNotNull("Setor encontrado com sucesso!", setor2);
@@ -200,7 +217,7 @@ public class AnimalControllerTest {
     }
 
     @Test
-    void listarAnimaisNulosTest(){
+    void listarAnimaisInexistentesTest(){
         List<String> nomes = A.listarAnimais();
         boolean listaCompleta = !nomes.isEmpty();
         assertFalse("Nao foi possivel listar os animais.", listaCompleta);
@@ -221,7 +238,7 @@ public class AnimalControllerTest {
     }
 
     @Test
-    void listarTutoresNulosTest(){
+    void listarTutoresInexistentesTest(){
         List<String> nomes = A.listarTutores(animal);
         boolean listaCompleta = !nomes.isEmpty();
         assertFalse("Nao foi possivel listar os tutores.", listaCompleta);
@@ -240,6 +257,24 @@ public class AnimalControllerTest {
     }
 
     @Test
+    void atualizarIDVazioTest(){
+        boolean resultado = A.atualizarID(animal, "");
+        assertFalse(resultado);
+    }
+
+    @Test
+    void atualizarIDEspacoTest(){
+        boolean resultado = A.atualizarID(animal, "   ");
+        assertFalse(resultado);
+    }
+
+    @Test
+    void atualizarIDEnterTest(){
+        boolean resultado = A.atualizarID(animal, "\t\n");
+        assertFalse(resultado);
+    }
+
+    @Test
     void atualizarNomeTest(){
         boolean resultado = A.atualizarNome(animal, "Aurelio");
         assertTrue("O nome foi atualizado com sucesso!", resultado);
@@ -249,6 +284,24 @@ public class AnimalControllerTest {
     void atualizarNomeIgualTest(){
         boolean resultado = A.atualizarNome(animal, "Lilica");
         assertFalse("Nao foi possivel atualizar o nome.", resultado);
+    }
+
+    @Test
+    void atualizarNomeVazioTest(){
+        boolean resultado = A.atualizarNome(animal, "");
+        assertFalse(resultado);
+    }
+
+    @Test
+    void atualizarNomeEspacoTest(){
+        boolean resultado = A.atualizarNome(animal, "   ");
+        assertFalse(resultado);
+    }
+
+    @Test
+    void atualizarNomeEnterTest(){
+        boolean resultado = A.atualizarNome(animal, "\t\n");
+        assertFalse(resultado);
     }
 
     @Test
@@ -264,6 +317,24 @@ public class AnimalControllerTest {
     }
 
     @Test
+    void atualizarEspecieVaziaTest(){
+        boolean resultado = A.atualizarEspecie(animal, "");
+        assertFalse(resultado);
+    }
+
+    @Test
+    void atualizarEspecieEspacoTest(){
+        boolean resultado = A.atualizarEspecie(animal, "   ");
+        assertFalse(resultado);
+    }
+
+    @Test
+    void atualizarEspecieEnterTest(){
+        boolean resultado = A.atualizarEspecie(animal, "\t\n");
+        assertFalse(resultado);
+    }
+
+    @Test
     void atualizarRacaTest(){
         boolean resultado = A.atualizarRaca(animal, "Bengal");
         assertTrue("A raca foi atualizada com sucesso!", resultado);
@@ -273,6 +344,24 @@ public class AnimalControllerTest {
     void atualizarRacaIgualTest(){
         boolean resultado = A.atualizarRaca(animal, "Siames");
         assertFalse("Nao foi possivel atualizar a raca.", resultado);
+    }
+
+    @Test
+    void atualizarRacaVaziaTest(){
+        boolean resultado = A.atualizarRaca(animal, "");
+        assertFalse(resultado);
+    }
+
+    @Test
+    void atualizarRacaEspacoTest(){
+        boolean resultado = A.atualizarRaca(animal, "  ");
+        assertFalse(resultado);
+    }
+
+    @Test
+    void atualizarRacaEnterTest(){
+        boolean resultado = A.atualizarRaca(animal, "\t\n");
+        assertFalse(resultado);
     }
 
     @Test
@@ -302,6 +391,24 @@ public class AnimalControllerTest {
     }
 
     @Test
+    void atualizarSexoVazioTest(){
+        boolean resultado = A.atualizarSexo(animal, "");
+        assertFalse(resultado);
+    }
+
+    @Test
+    void atualizarSexoEspacoTest(){
+        boolean resultado = A.atualizarSexo(animal, " ");
+        assertFalse(resultado);
+    }
+
+    @Test
+    void atualizarSexoEnterTest(){
+        boolean resultado = A.atualizarSexo(animal, "\t\n");
+        assertFalse(resultado);
+    }
+
+    @Test
     void atualizarSetorTest(){
         A.cadastrarAnimal(animal);
         A.adicionarSetor(animal, setor);
@@ -314,5 +421,13 @@ public class AnimalControllerTest {
     void atualizarSetorNuloTest(){
         boolean resultado = A.atualizarSetor(animal, setor);
         assertFalse("Nao foi possivel atualizar o setor.", resultado);
+    }
+
+    @Test
+    void atualizarSetorIgualTest(){
+        A.cadastrarAnimal(animal);
+        A.adicionarSetor(animal, setor);
+        boolean resultado = A.atualizarSetor(animal, setor);
+        assertFalse(resultado);
     }
 }

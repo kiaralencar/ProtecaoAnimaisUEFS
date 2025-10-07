@@ -112,7 +112,7 @@ public class TutorController {
             tutor.setSetor(null);
             tutores.remove(tutor.getID());
             return true;
-            }
+        }
         return false;
     }
 
@@ -122,6 +122,21 @@ public class TutorController {
      * @return O objeto {@link Tutor} encontrado, ou {@code null} se não for encontrado.
      */
     public Tutor buscarTutorPorID(String ID) { return tutores.get(ID); }
+
+    /** Adiciona o setor do tutor.
+     *
+     * @param tutor O objeto {@link Tutor} a quem será adicionado o setor.
+     * @param setor O objeto {@link Setor} que será adicionado ao tutor.
+     * @return {@code true}, caso o setor seja adiconado com sucesso, ou {@code false}, caso contrário.
+     */
+    public boolean adicionarSetor(Tutor tutor, Setor setor){
+        if (tutor != null && setor != null && tutor.getSetor() == null && !setor.getTutores().contains(tutor)){
+            tutor.setSetor(setor);
+            setor.getTutores().add(tutor);
+            return true;
+        }
+        return false;
+    }
 
     /** Busca em que setor está o tutor.
      *

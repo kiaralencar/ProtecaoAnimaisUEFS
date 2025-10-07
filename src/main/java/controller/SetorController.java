@@ -89,7 +89,7 @@ public class SetorController {
      * @param setor O objeto {@link Setor} a ser verificado.
      * @return {@code true}, caso o setor esteja disponível, ou {@code false}, caso contrário.
      */
-    public boolean setorDisponivel(Setor setor){ return setor != null && !setor.getTutores().isEmpty(); }
+    public boolean setorAtivo(Setor setor){ return setor != null && !setor.getTutores().isEmpty(); }
 
     /** Adiciona um tutor à lista de tutores do setor.
      *
@@ -139,9 +139,10 @@ public class SetorController {
      * @return {@code true}, caso o tutor seja removido com sucesso, ou {@code false}, caso contrário.
      */
     public boolean removerTutor(Setor setor, Tutor tutor){
-        if (setor != null && tutor != null && setor.getTutores().contains(tutor) && tutor.getSetor() == setor ){
-            // Se há outros tutores no setor, o tutor passado como parâmetro pode ser removido
-            if (setor.getTutores().size() > 1){
+        if (setor != null && tutor != null && setor.getTutores().contains(tutor) && tutor.getSetor() == setor){
+            if (!setor.getAnimais().isEmpty() && setor.getTutores().size() == 1){
+                return false; // Se tiver animais e apenas 1 tutor
+            } else {
                 for (Animal animal : setor.getAnimais()){
                     tutor.getAnimais().remove(animal);
                     animal.getTutores().remove(tutor);
@@ -151,8 +152,6 @@ public class SetorController {
                 return true;
             }
         }
-        /* Se não há outros tutores no setor, a pessoa não pode
-        ser removida, pois os animais ficariam sem tutor */
         return false;
     }
 
@@ -163,7 +162,7 @@ public class SetorController {
      * @return {@code true}, caso o animal seja adicionado com sucesso, ou {@code false}, caso contrário.
      */
     public boolean adicionarAnimal(Setor setor, Animal animal){
-        if (setor != null && animal != null && !setor.getAnimais().contains(animal)){
+        if (setor != null && animal != null && !setor.getAnimais().contains(animal) && animal.getSetor() != setor){
             // Se for um animal recém cadastrado, sem setor estabelecido
             if (animal.getSetor() == null){
                 for (Tutor tutor : setor.getTutores()){
@@ -294,7 +293,7 @@ public class SetorController {
                     break;
                 }
             }
-            if (setor != null && !setor.getNome().equalsIgnoreCase(novoNome) && !setorExistente) {
+            if (setor != null && !setor.getNome().equalsIgnoreCase(novoNome) && !setorExistente){
                 setor.setNome(novoNome);
                 return true;
             }

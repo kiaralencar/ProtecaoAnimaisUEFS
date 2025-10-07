@@ -169,7 +169,7 @@ public class AnimalController {
      * @param ID O ID do animal a ser procurado.
      * @return O objeto {@link Animal} encontrado, ou {@code null} se não for encontrado.
      */
-    public Animal buscarPorID(String ID){ return animais.get(ID); }
+    public Animal buscarAnimalPorID(String ID){ return animais.get(ID); }
 
     /** Busca em que setor está o animal.
      *
