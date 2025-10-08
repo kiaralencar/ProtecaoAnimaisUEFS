@@ -15,7 +15,8 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Classe de teste de unidade para o controller da classe Animal.
+ * Classe de teste de unidade para o controller da classe {@link Animal},
+ * chamada de {@link AnimalController}.
  * <p>
  * Esta classe verifica a correta implementação e o comportamento de
  * todas as funcionalidades relacionadas ao gerenciamento de animais.
@@ -26,30 +27,34 @@ import static org.junit.Assert.*;
  * @see Setor
  * @see Tutor
  * @see Endereco
+ * @see AnimalController
+ * @see SetorController
+ * @see TutorController
+ * @see EnderecoController
  */
 public class AnimalControllerTest {
-    /** Instância do controller do animal para o teste. */
+    /** Instância do controller do animal para os testes. */
     private AnimalController A;
 
-    /** Instância do controller do tutor para o teste. */
+    /** Instância do controller do tutor para os testes. */
     private TutorController T;
 
-    /** Instância do controller do endereço para o teste. */
+    /** Instância do controller do endereço para os testes. */
     private EnderecoController E;
 
-    /** Instância do controller do setor para o teste. */
+    /** Instância do controller do setor para os testes. */
     private SetorController S;
 
-    /** Instância do animal para o teste. */
+    /** Instância do animal para os testes. */
     private Animal animal;
 
-    /** Instância do tutor para o teste. */
+    /** Instância do tutor para os testes. */
     private Tutor tutor;
 
-    /** Instância do endereço para o teste. */
+    /** Instância do endereço para os testes. */
     private Endereco endereco;
 
-    /** Instância do setor para o teste. */
+    /** Instância do setor para os testes. */
     private Setor setor;
 
     /** Cria novas instâncias da classes antes de cada teste. */
@@ -255,12 +260,15 @@ public class AnimalControllerTest {
         assertNotNull("Setor encontrado com sucesso!", setor2);
     }
 
+    /** Não permite buscar um setor nulo. */
     @Test
     void buscarSetorNuloTest(){
         Setor setor2 = A.buscarSetor(animal);
         assertNull("Nao foi possivel encontrar o setor do animal.", setor2);
     }
 
+    /** Testa o método listarAnimais para pontuar todos
+     * os animais cadastrados. */
     @Test
     void listarAnimaisTest(){
         Animal animal2 = A.criarAnimal("A2", "Beth", "Cachorro", "Poodle",
@@ -275,6 +283,8 @@ public class AnimalControllerTest {
         assertTrue("Os animais foram listados com sucesso!", listaCompleta);
     }
 
+    /** Não permite listar animais inexistentes, ou seja, que não
+     * foram devidamente cadastrados. */
     @Test
     void listarAnimaisInexistentesTest(){
         List<String> nomes = A.listarAnimais();
@@ -282,6 +292,8 @@ public class AnimalControllerTest {
         assertFalse("Nao foi possivel listar os animais.", listaCompleta);
     }
 
+    /** Testa o método listarTutores para pontuar todos os
+     * tutores do animal. */
     @Test
     void listarTutoresTest(){
         Tutor tutor2 = T.criarTutor("T2", "Maria", endereco, "73765410078",
@@ -296,6 +308,8 @@ public class AnimalControllerTest {
         assertTrue("Os tutores foram listados com sucesso!", listaCompleta);
     }
 
+    /** Não permite listar tutores inexistentes, ou seja, aqueles que não
+     * foram adicionados ao setor do animal. */
     @Test
     void listarTutoresInexistentesTest(){
         List<String> nomes = A.listarTutores(animal);
@@ -303,6 +317,8 @@ public class AnimalControllerTest {
         assertFalse("Nao foi possivel listar os tutores.", listaCompleta);
     }
 
+    /** A seguir, os métodos testam o método atualizarID para garantir
+     * que o novo ID seja inserido corretamente. */
     @Test
     void atualizarIDTest(){
         boolean resultado = A.atualizarID(animal, "A5");
@@ -333,6 +349,8 @@ public class AnimalControllerTest {
         assertFalse(resultado);
     }
 
+    /** A seguir, os métodos testam o método atualizarNome para garantir
+     * que o novo nome seja inserido corretamente. */
     @Test
     void atualizarNomeTest(){
         boolean resultado = A.atualizarNome(animal, "Aurelio");
@@ -363,6 +381,8 @@ public class AnimalControllerTest {
         assertFalse(resultado);
     }
 
+    /** A seguir, os métodos testam o método atualizarEspecie para garantir
+     * que a nova espécie seja inserida corretamente. */
     @Test
     void atualizarEspecieTest(){
         boolean resultado = A.atualizarEspecie(animal, "Cavalo");
@@ -393,6 +413,8 @@ public class AnimalControllerTest {
         assertFalse(resultado);
     }
 
+    /** A seguir, os métodos testam o método atualizarRaca para garantir
+     * que a nova raça seja inserida corretamente. */
     @Test
     void atualizarRacaTest(){
         boolean resultado = A.atualizarRaca(animal, "Bengal");
@@ -423,6 +445,8 @@ public class AnimalControllerTest {
         assertFalse(resultado);
     }
 
+    /** Testa o método atualizarData para garantir que a nova data de
+     * nascimento inserida seja válida. */
     @Test
     void atualizarDataTest(){
         YearMonth novaData = YearMonth.of(2018, 7);
@@ -430,6 +454,7 @@ public class AnimalControllerTest {
         assertTrue("A data de nascimento foi atualizada com sucesso!", resultado);
     }
 
+    /** Não permite a atualização para uma data adiantada. */
     @Test
     void atualizarDataFalsaTest(){
         YearMonth novaData = YearMonth.of(2045, 5);
@@ -437,6 +462,8 @@ public class AnimalControllerTest {
         assertFalse("Nao foi possivel atualizar a data de nascimento.", resultado);
     }
 
+    /** A seguir, os métodos testam o método atualizarSexo para garantir
+     * que o novo sexo seja inserido corretamente. */
     @Test
     void atualizarSexoTest(){
         boolean resultado = A.atualizarSexo(animal, "Macho");
@@ -467,6 +494,8 @@ public class AnimalControllerTest {
         assertFalse(resultado);
     }
 
+    /** Testa o método atualizarSetor para garantir que o novo setor inserido
+     * seja válido. */
     @Test
     void atualizarSetorTest(){
         A.cadastrarAnimal(animal);
@@ -476,12 +505,14 @@ public class AnimalControllerTest {
         assertTrue("O setor foi atualizado com sucesso!", resultado);
     }
 
+    /** Não permite a atualização dpara um setor nulo. */
     @Test
     void atualizarSetorNuloTest(){
         boolean resultado = A.atualizarSetor(animal, setor);
         assertFalse("Nao foi possivel atualizar o setor.", resultado);
     }
 
+    /** Não permite a atualização para o mesmo setor. */
     @Test
     void atualizarSetorIgualTest(){
         A.cadastrarAnimal(animal);

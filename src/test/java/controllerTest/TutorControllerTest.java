@@ -21,15 +21,31 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class TutorControllerTest {
+    /** Instância do controller do animal para os testes. */
     private AnimalController A;
+
+    /** Instância do controller do tutor para os testes. */
     private TutorController T;
+
+    /** Instância do controller do endereço para os testes. */
     private EnderecoController E;
+
+    /** Instância do controller do setor para os testes. */
     private SetorController S;
+
+    /** Instância do animal para os testes. */
     private Animal animal;
+
+    /** Instância do tutor para os testes. */
     private Tutor tutor;
+
+    /** Instância do endereço para os testes. */
     private Endereco endereco;
+
+    /** Instância do setor para os testes. */
     private Setor setor;
 
+    /** Cria novas instâncias da classes antes de cada teste. */
     @BeforeEach
     void setUp(){
         T = new TutorController();
@@ -44,6 +60,8 @@ public class TutorControllerTest {
         setor = S.criarSetor("S1", "Modulo 1", new ArrayList<>(), new ArrayList<>());
     }
 
+    /** Testa o método criarTutor para garantir que o tutor
+     * seja definido corretamente. */
     @Test
     void criarTutorTest(){
         assertNotNull(tutor);
@@ -57,6 +75,8 @@ public class TutorControllerTest {
         assertTrue(tutor.getAnimais().isEmpty());
     }
 
+    /** A seguir, os métodos testam o método validarIDTutor para garantir
+     * que o ID seja inserido corretamente. */
     @Test
     void validarIDTest(){
         boolean resultado = T.validarIDTutor("T4");
@@ -69,6 +89,26 @@ public class TutorControllerTest {
         assertFalse(resultado);
     }
 
+    @Test
+    void validarIDVazioTest(){
+        boolean resultado = T.validarIDTutor("");
+        assertFalse(resultado);
+    }
+
+    @Test
+    void validarIDEspacoTest(){
+        boolean resultado = T.validarIDTutor(" ");
+        assertFalse(resultado);
+    }
+
+    @Test
+    void validarIDEnterTest(){
+        boolean resultado = T.validarIDTutor("\t\n");
+        assertFalse(resultado);
+    }
+
+    /** A seguir, os métodos testam o método validarEmail para garantir
+     * que o email seja inserido corretamente. */
     @Test
     void validarEmailTest(){
         boolean resultado = T.validarEmail("anacarolina2020@hotmail.com");
@@ -99,6 +139,8 @@ public class TutorControllerTest {
         assertFalse(resultado);
     }
 
+    /** A seguir, os métodos testam o método validarTelefone para garantir
+     * que o ID seja inserido corretamente. */
     @Test
     void validarTelefoneTest(){
         boolean resultado = T.validarTelefone("65342178950");
@@ -129,18 +171,23 @@ public class TutorControllerTest {
         assertFalse(resultado);
     }
 
+    /** Testa o método cadastrarTutor para garantir que o tutor seja
+     * inserido do Map de tutores. */
     @Test
     void cadastrarTutorTest(){
         boolean resultado = T.cadastrarTutor(tutor);
         assertTrue(resultado);
     }
 
+    /** Não permite o cadastro de um tutor nulo. */
     @Test
     void cadastrarTutorNuloTest(){
         boolean resultado = T.cadastrarTutor(null);
         assertFalse(resultado);
     }
 
+    /** Testa o método deletarTutor para garantir que o tutor seja
+     * removido do Map de tutores. */
     @Test
     void deletarTutorTest(){
         T.cadastrarTutor(tutor);
@@ -148,12 +195,15 @@ public class TutorControllerTest {
         assertTrue(resultado);
     }
 
+    /** Não permite deletar um tutor nulo. */
     @Test
     void deletarTutorNuloTest(){
         boolean resultado = T.deletarTutor(null);
         assertFalse(resultado);
     }
 
+    /** Testa o método buscarTutorPorID para garantir que o tutor
+     * seja encontrado ao ser buscado pelo seu ID. */
     @Test
     void buscarPorIDTest(){
         T.cadastrarTutor(tutor);
@@ -161,24 +211,30 @@ public class TutorControllerTest {
         assertNotNull(tutor2);
     }
 
+    /** Não permite que seja encontrado um tutor com um ID falso. */
     @Test
     void buscarPorIDFalsoTest(){
         Tutor tutor2 = T.buscarTutorPorID("D5P");
         assertNull(tutor2);
     }
 
+    /** Testa o método adicionarSetor para garantir que o setor do
+     * tutor seja adicionado corretamente. */
     @Test
     void adicionarSetorTest(){
         boolean resultado = T.adicionarSetor(tutor, setor);
         assertTrue(resultado);
     }
 
+    /** Não permite que seja adicionado um setor nulo. */
     @Test
     void adicionarSetorNuloTest(){
         boolean resultado = T.adicionarSetor(tutor, null);
         assertFalse(resultado);
     }
 
+    /** Testa o método buscarSetor para encontrar em qual
+     * setor o tutor está situado. */
     @Test
     void buscarSetorTest(){
         T.adicionarSetor(tutor, setor);
@@ -186,12 +242,15 @@ public class TutorControllerTest {
         assertNotNull(setor2);
     }
 
+    /** Não permite buscar um setor nulo. */
     @Test
     void buscarSetorNuloTest(){
         Setor setor2 = T.buscarSetor(tutor);
         assertNull(setor2);
     }
 
+    /** Testa o método listarTutores para pontuar todos os
+     * tutores cadastrados. */
     @Test
     void listarTutoresTest(){
         Tutor tutor2 = T.criarTutor("T5", "Bia", null, "76543212345",
@@ -206,6 +265,8 @@ public class TutorControllerTest {
         assertTrue(listaCompleta);
     }
 
+    /** Não permite listar tutores inexistentes, ou seja, aqueles que não
+     * foram cadastrados. */
     @Test
     void listarTutoresInexistentesTest(){
         List<String> nomes = T.listarTutores();
@@ -213,6 +274,8 @@ public class TutorControllerTest {
         assertFalse(listaCompleta);
     }
 
+    /** Testa o método listarAnimais para pontuar todos
+     * os animais do tutor. */
     @Test
     void listarAnimaisTest(){
         T.adicionarSetor(tutor, setor);
@@ -228,6 +291,8 @@ public class TutorControllerTest {
         assertTrue(listaCompleta);
     }
 
+    /** Não permite listar animais inexistentes, ou seja, que não
+     * foram adicionados à lista de animais do tutor. */
     @Test
     void listarAnimaisInexistentesTest(){
         List<String> nomes = T.listarAnimais(tutor);
@@ -235,6 +300,8 @@ public class TutorControllerTest {
         assertFalse(listaCompleta);
     }
 
+    /** A seguir, os métodos testam o método atualizarID para garantir
+     * que o novo ID seja inserido corretamente. */
     @Test
     void atualizarIDTest(){
         boolean resultado = T.atualizarID(tutor, "T9");
@@ -271,6 +338,8 @@ public class TutorControllerTest {
         assertFalse(resultado);
     }
 
+    /** A seguir, os métodos testam o método atualizarNome para garantir
+     * que o novo nome seja inserido corretamente. */
     @Test
     void atualizarNomeTest(){
         boolean resultado = T.atualizarNome(tutor, "Freitas");
@@ -301,6 +370,8 @@ public class TutorControllerTest {
         assertFalse(resultado);
     }
 
+    /** Testa o método atualizarEndereco para garantir
+     * que o novo endereço seja definido corretamente. */
     @Test
     void atualizarEnderecoTest(){
         Endereco endereco2 = E.criarEndereco("F", "G", "H", "I", "J");
@@ -308,18 +379,22 @@ public class TutorControllerTest {
         assertTrue(resultado);
     }
 
+    /** Não permite a atualização para um endereço nulo. */
     @Test
     void atualizarEnderecoNuloTest(){
         boolean resultado = T.atualizarEndereco(tutor, null);
         assertFalse(resultado);
     }
 
+    /** Não permite a atualização para o mesmo endereço. */
     @Test
     void atualizarEnderecoIgualTest(){
         boolean resultado = T.atualizarEndereco(tutor, endereco);
         assertFalse(resultado);
     }
 
+    /** A seguir, os métodos testam o método atualizarTelefone para garantir
+     * que o telefone nome seja inserido corretamente. */
     @Test
     void atualizarTelefoneTest(){
         boolean resultado = T.atualizarTelefone(tutor, "45874563214");
@@ -350,6 +425,8 @@ public class TutorControllerTest {
         assertFalse(resultado);
     }
 
+    /** A seguir, os métodos testam o método atualizarEmail para garantir
+     * que o novo email seja inserido corretamente. */
     @Test
     void atualizarEmailTest(){
         boolean resultado = T.atualizarEmail(tutor, "lucinda@gmail.com");
@@ -380,6 +457,8 @@ public class TutorControllerTest {
         assertFalse(resultado);
     }
 
+    /** Testa o método atualizarSetor para garantir
+     * que o novo setor seja definido corretamente. */
     @Test
     void atualizarSetorTest(){
         Setor setor2 = S.criarSetor("S4", "Modulo 5", new ArrayList<>(), new ArrayList<>());
@@ -387,12 +466,14 @@ public class TutorControllerTest {
         assertTrue(resultado);
     }
 
+    /** Não permite a atualização para um setor nulo. */
     @Test
     void atualizarSetorNuloTest(){
         boolean resultado = T.atualizarSetor(tutor, null);
         assertFalse(resultado);
     }
 
+    /** Não permite a atualização para o mesmo setor. */
     @Test
     void atualizarSetorIgualTest(){
         T.adicionarSetor(tutor, setor);
