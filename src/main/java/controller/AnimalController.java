@@ -2,6 +2,7 @@ package controller;
 import model.Animal;
 import model.Setor;
 import model.Tutor;
+import dao.AnimalDAO;
 import java.time.YearMonth;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -20,15 +21,24 @@ import java.util.List;
  * @see Tutor
  */
 public class AnimalController {
+    /** Objeto DAO (Data Access Object) responsável por gerenciar a persistência de dados. */
+    private final AnimalDAO animalDAO;
+
     /** Um mapa que armazena objetos do tipo {@link Animal}, usando o ID como chave. */
     private HashMap<String, Animal> animais;
 
     /** Construtor  da classe AnimalController.
      * <p>
-     * Incializa o mapa como uma nova instância de HashMap.
+     * Incializa o DAO do animal e carrega os dados do JSON para o Map de animais.
      *
      */
-    public AnimalController(){ this.animais = new HashMap<>(); }
+    public AnimalController(){
+        this.animalDAO = new AnimalDAO();
+        this.animais = animalDAO.carregarAnimais();
+    }
+
+    /** Salva os dados do animal no aqruivo JSON. */
+    private void salvarDadosAnimal(){ animalDAO.salvarAnimal(this.animais); }
 
     /** Cria uma nova instância de {@link Animal} com as informações fornecidas.
      * Este método não persiste o animal; ele apenas o instancia.
@@ -90,6 +100,7 @@ public class AnimalController {
     public boolean cadastrarAnimal(Animal animal){
         if (animal == null || animais.containsKey(animal.getID())) return false;
         animais.put(animal.getID(), animal);
+        salvarDadosAnimal();
         return true;
     }
 
@@ -114,6 +125,7 @@ public class AnimalController {
         }
         animal.setSetor(null); // Setor do animal agora é nulo
         animais.remove(animal); // Remove o animal do Map de animais
+        salvarDadosAnimal();
         return true;
     }
 
@@ -127,6 +139,7 @@ public class AnimalController {
         if (animal != null && tutor != null && !animal.getTutores().contains(tutor)){
             animal.getTutores().add(tutor);
             tutor.getAnimais().add(animal);
+            salvarDadosAnimal();
             return true;
         }
         return false;
@@ -143,6 +156,7 @@ public class AnimalController {
                 && tutor.getAnimais().contains(animal)){
             animal.getTutores().remove(tutor); // Remove a pessoa da lista de tutores do animal
             tutor.getAnimais().remove(animal); // Remove o animal da lista de animais da pessoa tutor
+            salvarDadosAnimal();
             return true;
         }
         return false;
@@ -158,6 +172,7 @@ public class AnimalController {
         if (animal != null && setor != null && animal.getSetor() == null && !setor.getAnimais().contains(animal)){
             animal.setSetor(setor);
             setor.getAnimais().add(animal);
+            salvarDadosAnimal();
             return true;
         }
         return false;
@@ -221,6 +236,7 @@ public class AnimalController {
             animais.remove(animal.getID()); // Remove o animal com ID antigo
             animal.setID(novoID); // Insere o novo ID no animal
             animais.put(animal.getID(), animal); // Insere o animal com o novo ID no Map
+            salvarDadosAnimal();
             return true;
         }
         return false;
@@ -235,6 +251,7 @@ public class AnimalController {
     public boolean atualizarNome(Animal animal, String novoNome){
         if (animal != null && !animal.getNome().equalsIgnoreCase(novoNome) && !novoNome.isBlank()){
             animal.setNome(novoNome);
+            salvarDadosAnimal();
             return true;
         }
         return false;
@@ -249,6 +266,7 @@ public class AnimalController {
     public boolean atualizarEspecie(Animal animal, String novaEspecie){
         if (animal != null && !animal.getEspecie().equalsIgnoreCase(novaEspecie) && !novaEspecie.isBlank()){
             animal.setEspecie(novaEspecie);
+            salvarDadosAnimal();
             return true;
         }
         return false;
@@ -263,6 +281,7 @@ public class AnimalController {
     public boolean atualizarRaca(Animal animal, String novaRaca){
         if (animal != null && !animal.getRaca().equalsIgnoreCase(novaRaca) && !novaRaca.isBlank()){
             animal.setRaca(novaRaca);
+            salvarDadosAnimal();
             return true;
         }
         return false;
@@ -277,6 +296,7 @@ public class AnimalController {
     public boolean atualizarData(Animal animal, YearMonth novaData){
         if (animal != null && !animal.getData().equals(novaData) && validarData(novaData)){
             animal.setData(novaData);
+            salvarDadosAnimal();
             return true;
         }
         return false;
@@ -291,6 +311,7 @@ public class AnimalController {
     public boolean atualizarSexo(Animal animal, String novoSexo){
         if (animal != null && !animal.getSexo().equalsIgnoreCase(novoSexo) && !novoSexo.isBlank()){
             animal.setSexo(novoSexo);
+            salvarDadosAnimal();
             return true;
         }
         return false;
@@ -306,10 +327,12 @@ public class AnimalController {
         if (animal != null && novoSetor != null && animal.getSetor() != null &&
                 !animal.getSetor().getNome().equalsIgnoreCase(novoSetor.getNome())){
             animal.setSetor(novoSetor);
+            salvarDadosAnimal();
             return true;
         }
         return false;
     }
+}
 
 
 
@@ -335,4 +358,3 @@ public class AnimalController {
     - atualizar sexo do animal *FEITO*
     - atualizar setor do animal *FEITO*
     */
-}
