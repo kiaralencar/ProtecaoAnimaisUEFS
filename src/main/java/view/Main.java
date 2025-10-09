@@ -43,7 +43,9 @@ public class Main {
         }
 
         System.out.println("Dados do animal: ");
-        System.out.println(A.);
+        System.out.println(animal.getNome());
+        System.out.println(animal.getRaca());
+        System.out.println(animal.getEspecie());
     }
 }
 

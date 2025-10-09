@@ -1,0 +1,20 @@
+{
+  "S3" : {
+    "nome" : "Modulo 3",
+    "tutores" : [ ],
+    "animais" : [ ],
+    "id" : "S3"
+  },
+  "S6" : {
+    "nome" : "Reitoria",
+    "tutores" : [ ],
+    "animais" : [ ],
+    "id" : "S6"
+  },
+  "S2" : {
+    "nome" : "Modulo 2",
+    "tutores" : [ ],
+    "animais" : [ ],
+    "id" : "S2"
+  }
+}

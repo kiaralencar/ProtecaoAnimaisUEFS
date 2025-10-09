@@ -43,8 +43,15 @@ public class Setor {
     public Setor(String ID, String nome, List<Tutor> tutores, List<Animal> animais){
         this.ID = ID;
         this.nome = nome;
-        this.tutores = (tutores != null) ? tutores : new ArrayList<>();
-        this.animais = (animais != null) ? animais : new ArrayList<>();
+        this.tutores = tutores;
+        this.animais = animais;
+    }
+
+    /** Outro construtor da classe Setor, para a biblioteca Jackson
+     * conseguir instanciar a classe antes de preencher os atributos. */
+    public Setor() {
+        this.tutores = new ArrayList<>();
+        this.animais = new ArrayList<>();
     }
 
     /** Retorna o ID do setor.

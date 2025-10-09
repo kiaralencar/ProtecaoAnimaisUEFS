@@ -41,6 +41,10 @@ public class Endereco {
         this.estado = estado;
     }
 
+    /** Outro construtor da classe Animal, para a biblioteca Jackson
+     * conseguir instanciar a classe antes de preencher os atributos. */
+    public Endereco(){}
+
     /** Retorna o nome da rua.
      *
      * @return A rua do endereço.

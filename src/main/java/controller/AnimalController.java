@@ -59,6 +59,10 @@ public class AnimalController {
         return new Animal(ID, nome, especie, raca, data, sexo, situacao, setor, new ArrayList<>());
     }
 
+    /** Limpa todos os dados da coleção em memória.
+     * Este método deve ser usado apenas para fins de teste. */
+    public void limparDadosParaTeste() { this.animais.clear(); }
+
     /** Valida se o ID inserido pelo usuário segue o padrão estipulado e
      * se já não é um ID existente.
      *
@@ -183,7 +187,27 @@ public class AnimalController {
      * @param ID O ID do animal a ser procurado.
      * @return O objeto {@link Animal} encontrado, ou {@code null} se não for encontrado.
      */
-    public Animal buscarAnimalPorID(String ID){ return animais.get(ID); }
+    public Animal buscarAnimalPorID(String ID){ return animais.get(ID.trim()); }
+
+    /** Busca um animal pelo seu nome. Caso haja mais de um animal com o mesmo
+     * nome, todos estes animais são retornados numa lista.
+     *
+     * @param nome O nome a ser procurado
+     * @return Uma lista de objetos do tipo {@link Animal}
+     * Retorna uma lista vazia se nenhum animal for encontrado ou se o nome for inválido.
+     */
+    public List<Animal> buscarAnimalPorNome(String nome){
+        if (!nome.isBlank()) {
+            List<Animal> nomes = new ArrayList<>();
+            for (Animal animal : animais.values()) {
+                if (animal.getNome().equalsIgnoreCase(nome.trim())) {
+                    nomes.add(animal);
+                }
+            }
+            return nomes;
+        }
+        return new ArrayList<>();
+    }
 
     /** Busca em que setor está o animal.
      *
@@ -249,7 +273,7 @@ public class AnimalController {
      * @return {@code true} caso o nome seja atualizado com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarNome(Animal animal, String novoNome){
-        if (animal != null && !animal.getNome().equalsIgnoreCase(novoNome) && !novoNome.isBlank()){
+        if (animal != null && !animal.getNome().equalsIgnoreCase(novoNome.trim()) && !novoNome.isBlank()){
             animal.setNome(novoNome);
             salvarDadosAnimal();
             return true;
@@ -264,7 +288,7 @@ public class AnimalController {
      * @return {@code true} caso a espécie seja atualizada com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarEspecie(Animal animal, String novaEspecie){
-        if (animal != null && !animal.getEspecie().equalsIgnoreCase(novaEspecie) && !novaEspecie.isBlank()){
+        if (animal != null && !animal.getEspecie().equalsIgnoreCase(novaEspecie.trim()) && !novaEspecie.isBlank()){
             animal.setEspecie(novaEspecie);
             salvarDadosAnimal();
             return true;
@@ -279,7 +303,7 @@ public class AnimalController {
      * @return {@code true} caso a raça seja atualizada com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarRaca(Animal animal, String novaRaca){
-        if (animal != null && !animal.getRaca().equalsIgnoreCase(novaRaca) && !novaRaca.isBlank()){
+        if (animal != null && !animal.getRaca().equalsIgnoreCase(novaRaca.trim()) && !novaRaca.isBlank()){
             animal.setRaca(novaRaca);
             salvarDadosAnimal();
             return true;
@@ -309,7 +333,7 @@ public class AnimalController {
      * @return {@code true} caso o sexo seja atualizado com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarSexo(Animal animal, String novoSexo){
-        if (animal != null && !animal.getSexo().equalsIgnoreCase(novoSexo) && !novoSexo.isBlank()){
+        if (animal != null && !animal.getSexo().equalsIgnoreCase(novoSexo.trim()) && !novoSexo.isBlank()){
             animal.setSexo(novoSexo);
             salvarDadosAnimal();
             return true;
@@ -325,7 +349,7 @@ public class AnimalController {
      */
     public boolean atualizarSetor(Animal animal, Setor novoSetor){
         if (animal != null && novoSetor != null && animal.getSetor() != null &&
-                !animal.getSetor().getNome().equalsIgnoreCase(novoSetor.getNome())){
+                !animal.getSetor().getNome().equalsIgnoreCase(novoSetor.getNome().trim())){
             animal.setSetor(novoSetor);
             salvarDadosAnimal();
             return true;
@@ -333,28 +357,3 @@ public class AnimalController {
         return false;
     }
 }
-
-
-
-
-
-    /* métodos a implementar:
-    - construtor *FEITO*
-    - validar ID *FEITO*
-    - calcular idade *FEITO*
-    - cadastrar animal *FEITO*
-    - deletar animal (tirar o animal do setor e da pessoa tutora) *FEITO*
-    - adicionar pessoa tutora (listar disponiveis) *FEITO*
-    - remover pessoa tutora (tirar o animal da lista dessa pessoa) *FEITO*
-    - buscar animal por id *FEITO*
-    - buscar setor do animal *FEITO*
-    - listar pessoas tutoras do animal *FEITO*
-    - listar animais *FEITO*
-    - atualizar id do animal *FEITO*
-    - atualizar nome do animal *FEITO*
-    - atualizar especie do animal *FEITO*
-    - atualizar raca do animal *FEITO*
-    - atualizar data de nascimento do animal *FEITO*
-    - atualizar sexo do animal *FEITO*
-    - atualizar setor do animal *FEITO*
-    */

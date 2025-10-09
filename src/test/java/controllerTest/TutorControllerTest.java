@@ -218,6 +218,24 @@ public class TutorControllerTest {
         assertNull(tutor2);
     }
 
+    /** Testa o método buscarTutorPorNome para garantir que o tutor
+     * seja encontrado ao ser buscado pelo seu nome. Caso haja mais de
+     * um tutor com mesmo nome, todos são retornados numa lista. */
+    @Test
+    void buscarPorNomeTest(){
+        List<Tutor> listaTutores = T.buscarTutorPorNome(" ana   ");
+        boolean naoVazia = !listaTutores.isEmpty();
+        assertTrue(naoVazia);
+    }
+
+    /** Não permite a busca de um tutor com nome não cadastrado. */
+    @Test
+    void buscarPorNomeInexistenteTest(){
+        List<Tutor> listaTutores = T.buscarTutorPorNome("Luciano");
+        boolean naoVazia = !listaTutores.isEmpty();
+        assertFalse(naoVazia);
+    }
+
     /** Testa o método adicionarSetor para garantir que o setor do
      * tutor seja adicionado corretamente. */
     @Test
@@ -269,6 +287,7 @@ public class TutorControllerTest {
      * foram cadastrados. */
     @Test
     void listarTutoresInexistentesTest(){
+        T.limparDadosParaTeste();
         List<String> nomes = T.listarTutores();
         boolean listaCompleta = !nomes.isEmpty();
         assertFalse(listaCompleta);
@@ -304,6 +323,7 @@ public class TutorControllerTest {
      * que o novo ID seja inserido corretamente. */
     @Test
     void atualizarIDTest(){
+        T.limparDadosParaTeste();
         boolean resultado = T.atualizarID(tutor, "T9");
         assertTrue(resultado);
     }
@@ -481,3 +501,5 @@ public class TutorControllerTest {
         assertFalse(resultado);
     }
 }
+
+// testar buscartutorpornome

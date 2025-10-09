@@ -1,4 +1,6 @@
 package model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +38,9 @@ public class Animal {
     /** A situação do animal. */
     private String situacao;
 
-    /** O setor do animal. */
+    /** O setor do animal, que será ignorado pelo JSON durante
+     * a serialização para evitar loops infinitos. */
+    @JsonIgnore
     private Setor setor;
 
     /** As pessoas responsáveis pelo animal. */
@@ -158,10 +162,12 @@ public class Animal {
      */
     public void setSituacao(String situacao) { this.situacao = situacao; }
 
-    /** Retorna o setor do animal.
+    /** Retorna o setor do animal, que será ignorado pelo JSON durante
+     * a serialização para evitar loops infinitos.
      *
      * @return O setor do animal.
      */
+    @JsonIgnore
     public Setor getSetor (){ return setor; }
 
     /** Define o setor.

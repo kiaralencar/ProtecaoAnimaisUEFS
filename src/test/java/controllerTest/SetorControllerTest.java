@@ -92,6 +92,7 @@ public class SetorControllerTest {
      * que o ID seja inserido corretamente. */
     @Test
     void validarIDTest(){
+        S.limparDadosParaTeste();
         boolean resultado = S.validarIDSetor("S3");
         assertTrue(resultado);
     }
@@ -120,10 +121,26 @@ public class SetorControllerTest {
         assertFalse(resultado);
     }
 
+    /** Testa o método validarNomeSetor para garantir que não haja
+     * setores com mesmo nome. */
+    @Test
+    void validarNomeSetorTest(){
+        boolean resultado = S.validarNomeSetor("Modulo 5");
+        assertTrue(resultado);
+    }
+
+    /** Não permite setores de mesmo nome. */
+    @Test
+    void validarNomeIgualTest(){
+        boolean resultado = S.validarNomeSetor("Reitoria    ");
+        assertFalse(resultado);
+    }
+
     /** Testa o método cadastrarSetor para garantir que o setor seja
      * inserido do Map de setores. */
     @Test
     void cadastrarSetorTest(){
+        S.limparDadosParaTeste();
         boolean resultado = S.cadastrarSetor(setor);
         assertTrue(resultado);
     }
@@ -262,6 +279,24 @@ public class SetorControllerTest {
         assertNull("Nao foi possivel encontrar este setor.", setor2);
     }
 
+    /** Testa o método buscarSetorPorNome para garantir que o setor
+     * seja encontrado ao ser buscado pelo seu nome. Caso haja mais de
+     * um setor com mesmo nome, todos são retornados numa lista. */
+    @Test
+    void buscarPorNomeTest(){
+        List<Setor> listaSetores = S.buscarSetorPorNome("Reitoria   ");
+        boolean naoVazia = !listaSetores.isEmpty();
+        assertTrue(naoVazia);
+    }
+
+    /** Não permite a busca de um tutor com nome não cadastrado. */
+    @Test
+    void buscarPorNomeInexistenteTest(){
+        List<Setor> listaSetores = S.buscarSetorPorNome("Modulo 8");
+        boolean naoVazia = !listaSetores.isEmpty();
+        assertFalse(naoVazia);
+    }
+
     /** Testa o método listarSetores para pontuar todos os
      * setores cadastrados. */
     @Test
@@ -280,6 +315,7 @@ public class SetorControllerTest {
      * foram cadastrados. */
     @Test
     void listarSetoresInexistentesTest(){
+        S.limparDadosParaTeste();
         List<String> nomes = S.listarSetores();
         boolean listaCompleta = !nomes.isEmpty();
         assertFalse(listaCompleta);
@@ -381,3 +417,6 @@ public class SetorControllerTest {
         assertFalse(resultado);
     }
 }
+
+
+// testar buscarsetorpornome e validarnomesetor

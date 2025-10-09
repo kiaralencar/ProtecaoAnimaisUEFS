@@ -154,6 +154,7 @@ public class AnimalControllerTest {
      * inserido do Map de animais. */
     @Test
     void cadastrarAnimalTest(){
+        A.limparDadosParaTeste();
         boolean resultado = A.cadastrarAnimal(animal);
         assertTrue(resultado);
     }
@@ -251,6 +252,24 @@ public class AnimalControllerTest {
         assertNull("Nao foi possivel encontrar este animal.", animal2);
     }
 
+    /** Testa o método buscarAnimalPorNome para garantir que o animal
+     * seja encontrado ao ser buscado pelo seu nome. Caso haja mais de
+     * um animal com mesmo nome, todos são retornados numa lista. */
+    @Test
+    void buscarPorNomeTest(){
+        List<Animal> listaAnimais = A.buscarAnimalPorNome("lilica ");
+        boolean naoVazia = !listaAnimais.isEmpty();
+        assertTrue(naoVazia);
+    }
+
+    /** Não permite a busca de um animal com nome não cadastrado. */
+    @Test
+    void buscarPorNomeInexistenteTest(){
+        List<Animal> listaAnimais = A.buscarAnimalPorNome("Julio");
+        boolean naoVazia = !listaAnimais.isEmpty();
+        assertFalse(naoVazia);
+    }
+
     /** Testa o método buscarSetor para encontrar em qual
      * setor o animal está situado. */
     @Test
@@ -287,6 +306,7 @@ public class AnimalControllerTest {
      * foram devidamente cadastrados. */
     @Test
     void listarAnimaisInexistentesTest(){
+        A.limparDadosParaTeste();
         List<String> nomes = A.listarAnimais();
         boolean listaCompleta = !nomes.isEmpty();
         assertFalse("Nao foi possivel listar os animais.", listaCompleta);
@@ -521,3 +541,5 @@ public class AnimalControllerTest {
         assertFalse(resultado);
     }
 }
+
+// testar buscaranimalpornome

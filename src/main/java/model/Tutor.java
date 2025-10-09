@@ -1,4 +1,6 @@
 package model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +32,9 @@ public class Tutor {
     /** O email da pessoa tutora. */
     private String email;
 
-    /** O setor da pessoa tutra. */
+    /** O setor da pessoa tutra, que será ignorado pelo JSON durante
+     * a serialização para evitar loops infinitos. */
+    @JsonIgnore
     private Setor setor;
 
     /** Os animais da pessoa tutora. */
@@ -55,6 +59,12 @@ public class Tutor {
         this.email = email;
         this.setor = setor;
         this.animais= (animais != null) ? animais : new ArrayList<>();
+    }
+
+    /** Outro construtor da classe Tutor, para a biblioteca Jackson
+     * conseguir instanciar a classe antes de preencher os atributos. */
+    public Tutor() {
+        this.animais = new ArrayList<>();
     }
 
     /** Retorna o ID da pessoa tutora.
@@ -133,10 +143,12 @@ public class Tutor {
         this.email = email;
     }
 
-    /** Retorna o setor da pessoa tutora.
+    /** Retorna o setor da pessoa tutora, que será ignorado pelo JSON durante
+     * a serialização para evitar loops infinitos.
      *
      * @return O setor da pessoa tutora.
      */
+    @JsonIgnore
     public Setor getSetor (){ return setor; }
 
     /** Define o setor.

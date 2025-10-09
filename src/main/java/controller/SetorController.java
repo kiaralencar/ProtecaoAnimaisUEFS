@@ -1,9 +1,8 @@
 package controller;
+import dao.SetorDAO;
 import model.Animal;
 import model.Setor;
 import model.Tutor;
-
-import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,19 +16,44 @@ import java.util.List;
  * @author Kiara Alencar
  * @version 1.2
  * @see Setor
+ * @see SetorDAO
  * @see Animal
  * @see Tutor
  */
 public class SetorController {
+    /** Objeto DAO (Data Access Object) responsável por gerenciar a persistência de dados. */
+    private final SetorDAO setorDAO;
+
     /** Um mapa que armazena objetos do tipo {@link Setor}, usando o ID como chave. */
     private HashMap<String, Setor> setores;
 
+    /** Restaura o relacionamento bidirecional entre Setor e Tutor/Animal
+     * após a desserialização do JSON, pois a referência de volta foi ignorada
+     * pelo Jackson (via {@code JsonIgnore}). */
+    private void ligarReferencias(){
+        for (Setor setor : setores.values()){
+            for (Tutor tutor : setor.getTutores()){
+                tutor.setSetor(setor);
+            }
+            for (Animal animal : setor.getAnimais()){
+                animal.setSetor(setor);
+            }
+        }
+    }
+
     /** Construtor  da classe SetorController.
      * <p>
-     * Incializa o mapa como uma nova instância de HashMap.
+     * Incializa o DAO do setor e carrega os dados do JSON para o Map de setores.
      *
      */
-    public SetorController(){ this.setores = new HashMap<>(); }
+    public SetorController(){
+        this.setorDAO = new SetorDAO();
+        this.setores = setorDAO.carregarSetores();
+        ligarReferencias();
+    }
+
+    /** Salva os dados do setor no aqruivo JSON. */
+    private void salvarDadosSetor(){ setorDAO.salvarSetor(this.setores); }
 
     /** Cria uma nova instância de {@link Setor} com as informações fornecidas.
      * Este método não persiste o setor; ele apenas o instancia.
@@ -54,6 +78,27 @@ public class SetorController {
         return ID.matches("S[0-9]+") && !setores.containsKey(ID) && !ID.isBlank();
     }
 
+    /** Valida o nome do setor, já que não pode haver setores com mesmo nome.
+     *
+     * @param nome O nome a ser validado
+     * @return {@code true}, caso o nome seja válido, ou {@code false}, caso contrário.
+     */
+    public boolean validarNomeSetor(String nome){
+        if (!nome.isBlank()) {
+            for (Setor setor : setores.values()) {
+                if (setor.getNome().equalsIgnoreCase(nome.trim())) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /** Limpa todos os dados da coleção em memória.
+     * Este método deve ser usado apenas para fins de teste. */
+    public void limparDadosParaTeste() { this.setores.clear(); }
+
     /** Cadastra um novo setor no mapa de setores.
      *
      * @param setor O objeto {@link Setor} a ser cadastrado.
@@ -66,6 +111,7 @@ public class SetorController {
             if (s.getNome().equalsIgnoreCase(novoNome)) return false;
         }
         setores.put(setor.getID(), setor);
+        salvarDadosSetor();
         return true;
     }
 
@@ -78,6 +124,7 @@ public class SetorController {
         if (setor != null) {
             if (!setor.getTutores().isEmpty() || !setor.getAnimais().isEmpty()) return false;
             setores.remove(setor.getID());
+            salvarDadosSetor();
             return true;
         }
         return false;
@@ -107,6 +154,7 @@ public class SetorController {
                 }
                 setor.getTutores().add(tutor);
                 tutor.setSetor(setor);
+                salvarDadosSetor();
                 return true;
             }
             Setor setorAntigo = tutor.getSetor();
@@ -124,6 +172,7 @@ public class SetorController {
                     tutor.getAnimais().add(animal);
                     animal.getTutores().add(tutor);
                 }
+                salvarDadosSetor();
                 return true;
             }
         }
@@ -149,6 +198,7 @@ public class SetorController {
                 }
                 setor.getTutores().remove(tutor);
                 tutor.setSetor(null);
+                salvarDadosSetor();
                 return true;
             }
         }
@@ -171,6 +221,7 @@ public class SetorController {
                 }
                 animal.setSetor(setor);
                 setor.getAnimais().add(animal);
+                salvarDadosSetor();
                 return true;
             }
             // Se o animal vier de outro setor
@@ -186,6 +237,7 @@ public class SetorController {
                 animal.getTutores().add(tutor);
                 tutor.getAnimais().add(animal);
             }
+            salvarDadosSetor();
             return true;
         }
         return false;
@@ -206,6 +258,7 @@ public class SetorController {
             }
             setor.getAnimais().remove(animal);
             animal.setSetor(null);
+            salvarDadosSetor();
             return true;
         }
         return false;
@@ -216,7 +269,27 @@ public class SetorController {
      * @param ID O ID do setor a ser procurado.
      * @return O objeto {@link Setor} encontrado, ou {@code null} se não for encontrado.
      */
-    public Setor buscarSetorPorID(String ID){ return setores.get(ID); }
+    public Setor buscarSetorPorID(String ID){ return setores.get(ID.trim()); }
+
+    /** Busca um setor pelo seu nome. Caso haja mais de um setor com o mesmo
+     * nome, todos estes setores são retornados numa lista.
+     *
+     * @param nome O nome a ser procurado
+     * @return Uma lista de objetos do tipo {@link Setor}
+     * Retorna uma lista vazia se nenhum setor for encontrado ou se o nome for inválido.
+     */
+    public List<Setor> buscarSetorPorNome(String nome){
+        if (!nome.isBlank()) {
+            List<Setor> nomes = new ArrayList<>();
+            for (Setor setor : setores.values()) {
+                if (setor.getNome().equalsIgnoreCase(nome.trim())) {
+                    nomes.add(setor);
+                }
+            }
+            return nomes;
+        }
+        return new ArrayList<>();
+    }
 
     /** Lista todos os setores cadastrados no mapa de setores.
      *
@@ -273,6 +346,7 @@ public class SetorController {
             setores.remove(setor.getID()); // Remove o setor com ID antigo
             setor.setID(novoID); // Insere o novo ID no setor
             setores.put(setor.getID(), setor); // Insere o setor com o novo ID no Map
+            salvarDadosSetor();
             return true;
         }
         return false;
@@ -295,27 +369,10 @@ public class SetorController {
             }
             if (setor != null && !setor.getNome().equalsIgnoreCase(novoNome) && !setorExistente){
                 setor.setNome(novoNome);
+                salvarDadosSetor();
                 return true;
             }
         }
         return false;
     }
-
-     /* métodos a implementar:
-    - validar ID *FEITO*
-    - construtor *FEITO*
-    - cadastrar setor *FEITO*
-    - deletar setor (apenas se nao houver animais nem pessoas tutoras) *FEITO*
-    - validar setor (se ele esta disponivel) *FEITO*
-    - adicionar pessoa tutora (tem que colocar os animais nela) *FEITO*
-    - remover pessoa tutora (tem que tirar os animais dela) *FEITO*
-    - adicionar animal (tem que colocar pessoas tutoras nele) *FEITO*
-    - remover animal (tem que tirar pessoas tutoras dele) *FEITO*
-    - buscar setor por ID *FEITO*
-    - listar setores *FEITO*
-    - listar pessoas tutoras do setor *FEITO*
-    - listar animais do setor *FEITO*
-    - atualizar ID do setor *FEITO*
-    - atualizar nome do setor *FEITO*
-    */
 }

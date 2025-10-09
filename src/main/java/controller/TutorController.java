@@ -1,10 +1,9 @@
 package controller;
+import dao.TutorDAO;
 import model.Animal;
 import model.Endereco;
 import model.Setor;
 import model.Tutor;
-
-import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,17 +19,27 @@ import java.util.List;
  * @see Tutor
  * @see Setor
  * @see Animal
+ * @see TutorDAO
  */
 public class TutorController {
+    /** Objeto DAO (Data Access Object) responsável por gerenciar a persistência de dados. */
+    private final TutorDAO tutorDAO;
+
     /** Um mapa que armazena objetos do tipo {@link Tutor}, usando o ID como chave. */
     private HashMap<String, Tutor> tutores;
 
     /** Construtor  da classe TutorController.
      * <p>
-     * Incializa o mapa como uma nova instância de HashMap.
+     * Incializa o DAO do tutor e carrega os dados do JSON para o Map de tutores.
      *
      */
-    public TutorController(){ this.tutores = new HashMap<>(); }
+    public TutorController(){
+        this.tutorDAO = new TutorDAO();
+        this.tutores = tutorDAO.carregarTutores();
+    }
+
+    /** Salva os dados do tutor no aqruivo JSON. */
+    private void salvarDadosTutor(){ tutorDAO.salvarTutor(this.tutores); }
 
     /** Cria uma nova instância de {@link Tutor} com as informações fornecidas.
      * Este método não persiste o tutor; ele apenas o instancia.
@@ -59,6 +68,10 @@ public class TutorController {
         return ID.matches("T[0-9]+") && !tutores.containsKey(ID) && !ID.isBlank();
     }
 
+    /** Limpa todos os dados da coleção em memória.
+     * Este método deve ser usado apenas para fins de teste. */
+    public void limparDadosParaTeste() { this.tutores.clear(); }
+
     /** Valida se o email inserido pelo usuário segue o padrão estipulado.
      *
      * @param email O email inserido pelo usuário.
@@ -82,6 +95,7 @@ public class TutorController {
     public boolean cadastrarTutor(Tutor tutor){
         if (tutor == null || tutores.containsKey(tutor.getID())) return false;
         tutores.put(tutor.getID(), tutor);
+        salvarDadosTutor();
         return true;
     }
 
@@ -95,6 +109,7 @@ public class TutorController {
             Setor setor = tutor.getSetor();
             if (setor == null) {
                 tutores.remove(tutor.getID()); // Se o tutor já está sem setor, é só remover ele do Map
+                salvarDadosTutor();
                 return true;
             }
             // Caso haja apenas este tutor no setor e o setor tenha animais
@@ -111,6 +126,7 @@ public class TutorController {
             setor.getTutores().remove(tutor);
             tutor.setSetor(null);
             tutores.remove(tutor.getID());
+            salvarDadosTutor();
             return true;
         }
         return false;
@@ -121,7 +137,27 @@ public class TutorController {
      * @param ID O ID do tutor a ser procurado.
      * @return O objeto {@link Tutor} encontrado, ou {@code null} se não for encontrado.
      */
-    public Tutor buscarTutorPorID(String ID) { return tutores.get(ID); }
+    public Tutor buscarTutorPorID(String ID) { return tutores.get(ID.trim()); }
+
+    /** Busca um tutor pelo seu nome. Caso haja mais de um tutor com o mesmo
+     * nome, todos estes tutores são retornados numa lista.
+     *
+     * @param nome O nome a ser procurado
+     * @return Uma lista de objetos do tipo {@link Tutor}
+     * Retorna uma lista vazia se nenhum tutor for encontrado ou se o nome for inválido.
+     */
+    public List<Tutor> buscarTutorPorNome(String nome){
+        if (!nome.isBlank()) {
+            List<Tutor> nomes = new ArrayList<>();
+            for (Tutor tutor : tutores.values()) {
+                if (tutor.getNome().equalsIgnoreCase(nome.trim())) {
+                    nomes.add(tutor);
+                }
+            }
+            return nomes;
+        }
+        return new ArrayList<>();
+    }
 
     /** Adiciona o setor do tutor.
      *
@@ -133,6 +169,7 @@ public class TutorController {
         if (tutor != null && setor != null && tutor.getSetor() == null && !setor.getTutores().contains(tutor)){
             tutor.setSetor(setor);
             setor.getTutores().add(tutor);
+            salvarDadosTutor();
             return true;
         }
         return false;
@@ -189,6 +226,7 @@ public class TutorController {
             tutores.remove(tutor.getID()); // Remove o tutor com ID antigo
             tutor.setID(novoID); // Insere o novo ID no tutor
             tutores.put(tutor.getID(), tutor); // Insere o tutor com o novo ID no Map
+            salvarDadosTutor();
             return true;
         }
         return false;
@@ -203,6 +241,7 @@ public class TutorController {
     public boolean atualizarNome(Tutor tutor, String novoNome){
         if (tutor != null && !tutor.getNome().equalsIgnoreCase(novoNome) && !novoNome.isBlank()){
             tutor.setNome(novoNome);
+            salvarDadosTutor();
             return true;
         }
         return false;
@@ -217,6 +256,7 @@ public class TutorController {
     public boolean atualizarEndereco(Tutor tutor, Endereco novoEndereco){
         if (tutor != null && novoEndereco != null && novoEndereco != tutor.getEndereco()){
             tutor.setEndereco(novoEndereco);
+            salvarDadosTutor();
             return true;
         }
         return false;
@@ -231,6 +271,7 @@ public class TutorController {
     public boolean atualizarTelefone(Tutor tutor, String novoTelefone){
         if (tutor != null && !novoTelefone.equalsIgnoreCase(tutor.getTelefone()) && validarTelefone(novoTelefone)){
             tutor.setTelefone(novoTelefone);
+            salvarDadosTutor();
             return true;
         }
         return false;
@@ -245,6 +286,7 @@ public class TutorController {
     public boolean atualizarEmail(Tutor tutor, String novoEmail){
         if (tutor != null && !novoEmail.equalsIgnoreCase(tutor.getEmail()) && validarEmail(novoEmail)){
             tutor.setTelefone(novoEmail);
+            salvarDadosTutor();
             return true;
         }
         return false;
@@ -276,25 +318,9 @@ public class TutorController {
                 animal.getTutores().add(tutor);
                 tutor.getAnimais().add(animal);
             }
+            salvarDadosTutor();
             return true;
         }
         return false;
     }
 }
-
-/* métodos a implementar:
-    - construtor *FEITO*
-    - validar ID *FEITO*
-    - cadastrar tutor *FEITO*
-    - deletar tutor *FEITO*
-    - buscar tutor por id *FEITO*
-    - buscar setor do tutor *FEITO*
-    - listar tutores (mostrar seus setores) *FEITO*
-    - listar animais do tutor *FEITO*
-    - atualizar id do tutor *FEITO*
-    - atualizar nome do tutor *FEITO*
-    - atualizar endereco do tutor *FEITO*
-    - atualizar telefone do tutor *FEITO*
-    - atualizar email do tutor *FEITO*
-    - atualizar setor do tutor *FEITO*
-    */
