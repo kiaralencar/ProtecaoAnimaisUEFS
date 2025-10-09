@@ -69,7 +69,7 @@ public class Animal {
         this.sexo = sexo;
         this.situacao = situacao;
         this.setor = setor;
-        this.tutores = (tutores != null) ? tutores : new ArrayList<>();
+        this.tutores = tutores;
     }
 
     /**

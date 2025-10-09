@@ -58,7 +58,7 @@ public class Tutor {
         this.telefone = telefone;
         this.email = email;
         this.setor = setor;
-        this.animais= (animais != null) ? animais : new ArrayList<>();
+        this.animais = animais;
     }
 
     /** Outro construtor da classe Tutor, para a biblioteca Jackson
