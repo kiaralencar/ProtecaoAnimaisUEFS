@@ -306,8 +306,8 @@ public class SetorControllerTest {
         S.cadastrarSetor(setor);
         S.cadastrarSetor(setor2);
         S.cadastrarSetor(setor3);
-        List<String> nomes = S.listarSetores();
-        boolean listaCompleta = !nomes.isEmpty();
+        List<Setor> setores = S.listarSetores();
+        boolean listaCompleta = !setores.isEmpty();
         assertTrue(listaCompleta);
     }
 
@@ -316,8 +316,8 @@ public class SetorControllerTest {
     @Test
     void listarSetoresInexistentesTest(){
         S.limparDadosParaTeste();
-        List<String> nomes = S.listarSetores();
-        boolean listaCompleta = !nomes.isEmpty();
+        List<Setor> setores = S.listarSetores();
+        boolean listaCompleta = !setores.isEmpty();
         assertFalse(listaCompleta);
     }
 

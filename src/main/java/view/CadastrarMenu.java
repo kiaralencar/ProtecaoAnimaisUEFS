@@ -15,8 +15,7 @@ public class CadastrarMenu{
             opcao = Main.validarOpcao();
             switch (opcao) {
                 case 1:
-                    System.out.println("Voce selecionou 1");
-                    // A implementar...
+                    CadastrarAnimal.cadastrar();
                     break;
                 case 2:
                     System.out.println("Voce selecionou 2");

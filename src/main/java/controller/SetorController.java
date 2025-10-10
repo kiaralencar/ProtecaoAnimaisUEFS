@@ -65,7 +65,7 @@ public class SetorController {
      * @return Uma nova instância de {@link Setor}.
      */
     public Setor criarSetor(String ID, String nome, List<Tutor> tutores, List<Animal> animais){
-        return new Setor(ID, nome, new ArrayList<>(), new ArrayList<>());
+        return new Setor(ID, nome, tutores, animais);
     }
 
     /** Valida se o ID inserido pelo usuário segue o padrão estipulado e
@@ -75,7 +75,9 @@ public class SetorController {
      * @return {@code true}, caso o ID seja válido, ou {@code false}, caso contrário.
      */
     public boolean validarIDSetor(String ID){
-        return ID.matches("S[0-9]+") && !setores.containsKey(ID) && !ID.isBlank();
+        return ID.trim().toUpperCase().matches("S[0-9]+") &&
+                !setores.containsKey(ID.trim().toUpperCase()) &&
+                !ID.trim().toUpperCase().isBlank();
     }
 
     /** Valida o nome do setor, já que não pode haver setores com mesmo nome.
@@ -84,7 +86,7 @@ public class SetorController {
      * @return {@code true}, caso o nome seja válido, ou {@code false}, caso contrário.
      */
     public boolean validarNomeSetor(String nome){
-        if (!nome.isBlank()) {
+        if (!nome.trim().isBlank()) {
             for (Setor setor : setores.values()) {
                 if (setor.getNome().equalsIgnoreCase(nome.trim())) {
                     return false;
@@ -293,16 +295,9 @@ public class SetorController {
 
     /** Lista todos os setores cadastrados no mapa de setores.
      *
-     * @return Uma lista contendo os nomes todos os setores.
+     * @return Uma lista contendo todos os setores.
      */
-    public List<String> listarSetores (){
-        if (setores.isEmpty()) return new ArrayList<>();
-        List<String> nomesSetores = new ArrayList<>();
-        for (Setor setor : setores.values()){
-            nomesSetores.add(setor.getNome());
-        }
-        return nomesSetores;
-    }
+    public List<Setor> listarSetores (){ return new ArrayList<>(setores.values()); }
 
     /** Lista todos os tutores do setor.
      *

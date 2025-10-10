@@ -3,45 +3,60 @@ import controller.GeralController;
 import model.Animal;
 import model.Setor;
 
+import java.time.DateTimeException;
 import java.time.YearMonth;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class CadastrarAnimal {
     static Scanner scan = new Scanner(System.in);
-    public void cadastrar() {
-        List<String> nomesSetores = GeralController.S.listarSetores();
-        if (nomesSetores.isEmpty()){
+
+    public static void cadastrar() {
+        List<Setor> setores = GeralController.S.listarSetores();
+        if (setores.isEmpty()){
             System.out.println("Nao eh possivel cadastrar animais,\npois nao ha setores cadastrados.");
             System.out.println("Aperte Enter para voltar ao menu de cadastro.");
             scan.nextLine();
             return;
         }
-        String ID;
+        int mes = 0, ano = 0;
+        String ID, sexo;
         String situacao = "";
+        Setor setorAnimal = null;
+        boolean dataValida = false;
         boolean situacaoValida = false;
+        boolean setorEscolhido = false;
         System.out.println("\n------> CADASTRO DO ANIMAL\n");
         do {
-            System.out.println("Insira o ID do animal (formato A + numero. Ex.: A1): ");
+            System.out.println("Insira o ID do animal (A + numero. Ex.: A1): ");
             ID = scan.nextLine();
-        } while (GeralController.A.validarIDAnimal(ID));
+        } while (!GeralController.A.validarIDAnimal(ID));
         System.out.println("Nome: ");
         String nome = scan.nextLine();
         System.out.print("Especie: ");
         String especie = scan.nextLine();
         System.out.print("Raca: ");
         String raca = scan.nextLine();
-        System.out.print("Mes de nascimento: ");
-        int mes = scan.nextInt();
-        scan.nextLine();
-        System.out.print("Ano de nascimento: ");
-        int ano = scan.nextInt();
-        scan.nextLine();
-        System.out.print("Sexo: ");
-        String sexo = scan.nextLine();
         do {
-            System.out.print("\nSelecione a situacao do animal:");
+            try {
+                System.out.print("Mes de nascimento: ");
+                mes = Main.validarOpcao();
+                System.out.print("Ano de nascimento: ");
+                ano = Main.validarOpcao();
+                dataValida = GeralController.A.validarData(YearMonth.of(ano, mes));
+            } catch (DateTimeException e) {
+                System.err.println("ERRO. Data invalida: " + e.getMessage());
+                scan.nextLine();
+            }
+        } while (!dataValida);
+        do {
+            System.out.print("Sexo [F/M]: ");
+            sexo = scan.nextLine();
+        } while (!sexo.trim().equalsIgnoreCase("F") && !sexo.trim().equalsIgnoreCase("M"));
+        if (sexo.equalsIgnoreCase("F")) sexo = "Femea";
+        else sexo = "Macho";
+        do {
+            System.out.print("\nSelecione a situacao do animal:\n");
             System.out.println("[1] Em observacao");
             System.out.println("[2] Em tratamento");
             System.out.println("[3] Disponivel para adocao");
@@ -58,6 +73,7 @@ public class CadastrarAnimal {
                 case 3:
                     situacao = "Animal disponivel para adocao";
                     situacaoValida = true;
+                    break;
                 default:
                     System.out.println("Opcao '" + escolha + "' eh invalida.");
                     System.out.println("Por favor, selecione um numero inteiro entre 1 e 3.");
@@ -66,23 +82,30 @@ public class CadastrarAnimal {
                     break;
             }
         } while (!situacaoValida);
-        System.out.println("Escolha o setor do animal:");
-        for (String nomeSetor : nomesSetores){
-            System.out.println("[" + + "] "+ nomeSetor);
-        }
-        Animal animal = new Animal(ID, nome, especie, raca, YearMonth.of(ano, mes), sexo, situacao, null, new ArrayList<>());
-
-        // Cadastrar via GeralController
+        do {
+            System.out.println("\nSetores ativos:");
+            for (int i = 0; i < setores.size(); i++) {
+                Setor setorAtivo = setores.get(i);
+                System.out.println(setorAtivo.getID() + " - " + setorAtivo.getNome());
+            }
+            System.out.println("\nInsira o ID do setor escolhido: ");
+            String IDsetor = scan.nextLine();
+            for (Setor setor : setores){
+                if (setor.getID().equalsIgnoreCase(IDsetor.trim())){
+                    setorAnimal = setor;
+                    setorEscolhido = true;
+                }
+            }
+        } while (!setorEscolhido);
+        Animal animal = GeralController.A.criarAnimal(ID.trim().toUpperCase(), nome.trim(), especie.trim(), raca.trim(),
+                YearMonth.of(ano, mes), sexo, situacao, setorAnimal, setorAnimal.getTutores());
         boolean cadastrado = GeralController.A.cadastrarAnimal(animal);
         if (cadastrado) {
-            System.out.println("Animal cadastrado com sucesso!");
+            System.out.println("\n✅ Animal cadastrado com sucesso!");
         } else {
-            System.out.println("ERRO. ID invalido ou existente!");
+            System.out.println("\n❌ ERRO. Nao foi possivel cadastrar este animal.");
         }
-
-        System.out.println("Dados do animal: ");
-        System.out.println(animal.getNome());
-        System.out.println(animal.getRaca());
-        System.out.println(animal.getEspecie());
+        System.out.println("Aperte Enter para voltar ao menu de cadastro.");
+        scan.nextLine();
     }
 }

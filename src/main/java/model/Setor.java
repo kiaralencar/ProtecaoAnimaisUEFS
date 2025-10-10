@@ -25,7 +25,7 @@ public class Setor {
      * final: garante que o endereço não poderá ser alterado depois
      * de definido (é uma constante).
      * */
-    private static final String ENDERECO = "Universidade Estadual de Feira de Santana (UEFS)";
+    private static final String ENDERECO = "Av. Transnordestina — UEFS";
 
     /** Pessoas tutoras do setor. */
     private List<Tutor> tutores;

@@ -56,7 +56,7 @@ public class AnimalController {
      */
     public Animal criarAnimal(String ID, String nome, String especie, String raca, YearMonth data,
                             String sexo, String situacao, Setor setor, List<Tutor> tutores) {
-        return new Animal(ID, nome, especie, raca, data, sexo, situacao, setor, new ArrayList<>());
+        return new Animal(ID, nome, especie, raca, data, sexo, situacao, setor, tutores);
     }
 
     /** Limpa todos os dados da coleção em memória.
@@ -70,7 +70,9 @@ public class AnimalController {
      * @return {@code true}, caso o ID seja válido, ou {@code false}, caso contrário.
      */
     public boolean validarIDAnimal(String ID){
-        return ID.matches("A[0-9]+") && !animais.containsKey(ID) && !ID.isBlank();
+        return ID.trim().toUpperCase().matches("A[0-9]+") &&
+                !animais.containsKey(ID.trim().toUpperCase()) &&
+                !ID.trim().toUpperCase().isBlank();
     }
 
     /** Valida se a data de nascimento inserida pelo usuário é válida,

@@ -13,9 +13,8 @@ public class Main {
                 opcao = scan.nextInt();
                 scan.nextLine();
                 opcaoValida = true;
-                break;
             } catch (InputMismatchException e) {
-                System.out.println("INVALIDO. Por favor, digite um número inteiro.\n");
+                System.out.println("INVALIDO. Por favor, digite um número inteiro.");
                 scan.nextLine();
             }
         } while (!opcaoValida);

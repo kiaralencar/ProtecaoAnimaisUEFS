@@ -55,7 +55,7 @@ public class TutorController {
      */
     public Tutor criarTutor(String ID, String nome, Endereco endereco, String telefone,
                             String email, Setor setor, List<Animal> animais) {
-        return new Tutor(ID, nome, endereco, telefone, email, setor, new ArrayList<>());
+        return new Tutor(ID, nome, endereco, telefone, email, setor, animais);
     }
 
     /** Valida se o ID inserido pelo usuário segue o padrão estipulado e
@@ -65,7 +65,9 @@ public class TutorController {
      * @return {@code true}, caso o ID seja válido, ou {@code false}, caso contrário.
      */
     public boolean validarIDTutor(String ID){
-        return ID.matches("T[0-9]+") && !tutores.containsKey(ID) && !ID.isBlank();
+        return ID.trim().toUpperCase().matches("T[0-9]+") &&
+                !tutores.containsKey(ID.trim().toUpperCase()) &&
+                !ID.trim().toUpperCase().isBlank();
     }
 
     /** Limpa todos os dados da coleção em memória.
