@@ -40,23 +40,4 @@ public class AnimalView {
         }
     }
 
-/* métodos a implementar:
-    - validar animal (ID >= 0 e inexistente) *FEITO*
-    - calcular idade *FEITO*
-    - cadastrar animal *FEITO*
-    - deletar animal *FEITO*
-    - adicionar pessoa tutora *FEITO*
-    - remover pessoa tutora *FEITO*
-    - buscar animal por id *FEITO*
-    - buscar setor do animal *FEITO*
-    - listar pessoas tutoras do animal *FEITO*
-    - listar animais *FEITO*
-    - atualizar id do animal *FEITO*
-    - atualizar nome do animal *FEITO*
-    - atualizar especie do animal *FEITO*
-    - atualizar raca do animal *FEITO*
-    - atualizar data de nascimento do animal *FEITO*
-    - atualizar sexo do animal *FEITO*
-    - atualizar setor do animal *FEITO*
-
 }*/
