@@ -79,7 +79,7 @@ public class TutorController {
      * @param email O email inserido pelo usuário.
      * @return {@code true}, caso o email seja válido, ou {@code false}, caso contrário.
      */
-    public boolean validarEmail(String email){ return email.matches("^[a-zA-Z0-9_!#$%&'*+/=?{|}~^-]" +
+    public boolean validarEmail(String email){ return email.matches("^[a-zA-Z0-9]" +
             "+(\\.[a-zA-Z0-9_!#$%&'*+/=?{|}~^-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.[a-zA-Z]{2,}$"); }
 
     /** Valida se o telefone inserido pelo usuário segue o padrão estipulado.

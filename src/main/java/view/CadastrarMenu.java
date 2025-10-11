@@ -19,7 +19,7 @@ public class CadastrarMenu{
                     break;
                 case 2:
                     System.out.println("Voce selecionou 2");
-                    // A implementar...
+                    CadastrarTutor.cadastrar();
                     break;
                 case 3:
                     System.out.println("Voce selecionou 3");

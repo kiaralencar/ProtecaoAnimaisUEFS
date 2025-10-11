@@ -3,6 +3,7 @@ import controller.GeralController;
 import model.Animal;
 import model.Setor;
 
+import java.sql.SQLOutput;
 import java.time.DateTimeException;
 import java.time.YearMonth;
 import java.util.List;
@@ -26,11 +27,13 @@ public class CadastrarAnimal {
         boolean dataValida = false;
         boolean situacaoValida = false;
         boolean setorEscolhido = false;
-        System.out.println("\n------> CADASTRO DO ANIMAL\n");
-        do {
-            System.out.println("Insira o ID do animal (A + numero. Ex.: A1): ");
+        System.out.println("\n------------> CADASTRO DO ANIMAL\n");
+        System.out.println("Insira o ID do animal (A + numero. Ex.: A1): ");
+        ID = scan.nextLine();
+        while (!GeralController.A.validarIDAnimal(ID)){
+            System.out.println("ID invalido ou existente. Por favor, tente novamente.");
             ID = scan.nextLine();
-        } while (!GeralController.A.validarIDAnimal(ID));
+        }
         System.out.println("Nome: ");
         String nome = scan.nextLine();
         System.out.print("Especie: ");
@@ -49,10 +52,12 @@ public class CadastrarAnimal {
                 scan.nextLine();
             }
         } while (!dataValida);
-        do {
-            System.out.print("Sexo [F/M]: ");
+        System.out.print("Sexo [F/M]: ");
+        sexo = scan.nextLine();
+        while (!sexo.trim().equalsIgnoreCase("F") && !sexo.trim().equalsIgnoreCase("M")){
+            System.out.println("Entrada invalida. Por favor, digite F ou M.");
             sexo = scan.nextLine();
-        } while (!sexo.trim().equalsIgnoreCase("F") && !sexo.trim().equalsIgnoreCase("M"));
+        }
         if (sexo.equalsIgnoreCase("F")) sexo = "Femea";
         else sexo = "Macho";
         do {
