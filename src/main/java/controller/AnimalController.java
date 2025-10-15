@@ -200,13 +200,13 @@ public class AnimalController {
      */
     public List<Animal> buscarAnimalPorNome(String nome){
         if (!nome.isBlank()) {
-            List<Animal> nomes = new ArrayList<>();
+            List<Animal> animaisNome = new ArrayList<>();
             for (Animal animal : animais.values()) {
                 if (animal.getNome().equalsIgnoreCase(nome.trim())) {
-                    nomes.add(animal);
+                    animaisNome.add(animal);
                 }
             }
-            return nomes;
+            return animaisNome;
         }
         return new ArrayList<>();
     }
@@ -343,6 +343,21 @@ public class AnimalController {
         return false;
     }
 
+    /** Atualiza a situação do animal.
+     *
+     * @param animal O objeto {@link Animal} a ter a situação atualizada.
+     * @param novaSituacao A a situação a ser atribuída.
+     * @return {@code true} caso a situação seja atualizada com sucesso, ou {@code false}, caso contrário.
+     */
+    public boolean atualizarSituacao(Animal animal, String novaSituacao){
+        if (animal != null && !animal.getSituacao().equalsIgnoreCase(novaSituacao.trim()) && !novaSituacao.isBlank()){
+            animal.setSituacao(novaSituacao);
+            salvarDadosAnimal();
+            return true;
+        }
+        return false;
+    }
+
     /** Atualiza o setor do animal.
      *
      * @param animal O objeto {@link Animal} a ter o setor atualizado.
@@ -350,12 +365,11 @@ public class AnimalController {
      * @return {@code true} caso o setor seja atualizado com sucesso, ou {@code false}, caso contrário.
      */
     public boolean atualizarSetor(Animal animal, Setor novoSetor){
-        if (animal != null && novoSetor != null && animal.getSetor() != null &&
-                !animal.getSetor().getNome().equalsIgnoreCase(novoSetor.getNome().trim())){
-            animal.setSetor(novoSetor);
-            salvarDadosAnimal();
-            return true;
-        }
-        return false;
+        if (animal == null || novoSetor == null) return false;
+        // Caso o animal já esteja nesse setor
+        if (animal.getSetor() != null && animal.getSetor().getID().equalsIgnoreCase(novoSetor.getID())) return false;
+        animal.setSetor(novoSetor);
+        salvarDadosAnimal();
+        return true;
     }
 }

@@ -3,28 +3,25 @@ import java.util.Scanner;
 
 public class AtualizarMenu {
     static Scanner scan = new Scanner(System.in);
-    public static void exibirMenu() {
+    public static void exibirMenu(){
         int opcao;
         do {
             System.out.println("\n------------- MENU DE ATUALIZACAO -------------");
             System.out.println("\nSelecione a opcao desejada:");
             System.out.println("[1] Atualizar animal");
             System.out.println("[2] Atualizar pessoa tutora");
-            System.out.println("[3] Atualizar setor responsável");
+            System.out.println("[3] Atualizar setor responsavel");
             System.out.println("[0] Voltar ao menu inicial");
             opcao = Main.validarOpcao();
             switch (opcao) {
                 case 1:
-                    System.out.println("Voce selecionou 1");
-                    // A implementar...
+                    AtualizarAnimal.exibirMenu();
                     break;
                 case 2:
-                    System.out.println("Voce selecionou 2");
-                    // A implementar...
+                    AtualizarTutor.exibirMenu();
                     break;
                 case 3:
-                    System.out.println("Voce selecionou 3");
-                    // A implementar...
+                    AtualizarSetor.exibirMenu();
                     break;
                 case 0:
                     break;

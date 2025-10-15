@@ -85,6 +85,7 @@ public class CadastrarTutor {
                 if (setor.getID().equalsIgnoreCase(IDsetor.trim())){
                     setorTutor = setor;
                     setorEscolhido = true;
+                    break;
                 }
             }
         } while (!setorEscolhido);

@@ -18,12 +18,10 @@ public class CadastrarMenu{
                     CadastrarAnimal.cadastrar();
                     break;
                 case 2:
-                    System.out.println("Voce selecionou 2");
                     CadastrarTutor.cadastrar();
                     break;
                 case 3:
-                    System.out.println("Voce selecionou 3");
-                    // A implementar...
+                    CadastrarSetor.cadastrar();
                     break;
                 case 0:
                     break;

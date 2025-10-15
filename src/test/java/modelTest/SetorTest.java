@@ -93,7 +93,7 @@ public class SetorTest {
      */
     @Test
     void getEnderecoTest(){
-        assertEquals("Universidade Estadual de Feira de Santana (UEFS)", Setor.getEndereco(),
+        assertEquals("Av. Transnordestina — UEFS", Setor.getEndereco(),
                 "O endereco do setor deve ser 'Universidade Estadual de Feira de Santana (UEFS)'");
     }
 }

@@ -2,8 +2,6 @@ package view;
 import controller.GeralController;
 import model.Animal;
 import model.Setor;
-
-import java.sql.SQLOutput;
 import java.time.DateTimeException;
 import java.time.YearMonth;
 import java.util.List;
@@ -12,7 +10,7 @@ import java.util.Scanner;
 public class CadastrarAnimal {
     static Scanner scan = new Scanner(System.in);
 
-    public static void cadastrar() {
+    public static void cadastrar(){
         List<Setor> setores = GeralController.S.listarSetores();
         if (setores.isEmpty()){
             System.out.println("Nao eh possivel cadastrar animais,\npois nao ha setores cadastrados.");
@@ -99,6 +97,7 @@ public class CadastrarAnimal {
                 if (setor.getID().equalsIgnoreCase(IDsetor.trim())){
                     setorAnimal = setor;
                     setorEscolhido = true;
+                    break;
                 }
             }
         } while (!setorEscolhido);

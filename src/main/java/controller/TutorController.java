@@ -150,13 +150,13 @@ public class TutorController {
      */
     public List<Tutor> buscarTutorPorNome(String nome){
         if (!nome.isBlank()) {
-            List<Tutor> nomes = new ArrayList<>();
+            List<Tutor> tutoresNome = new ArrayList<>();
             for (Tutor tutor : tutores.values()) {
                 if (tutor.getNome().equalsIgnoreCase(nome.trim())) {
-                    nomes.add(tutor);
+                    tutoresNome.add(tutor);
                 }
             }
-            return nomes;
+            return tutoresNome;
         }
         return new ArrayList<>();
     }
@@ -205,13 +205,9 @@ public class TutorController {
      * @param tutor O objeto {@link Setor} a ter a lista de animais procurada.
      * @return Uma lista com os nomes de todos os animais do tutor.
      */
-    public List<String> listarAnimais (Tutor tutor){
+    public List<Animal> listarAnimais (Tutor tutor){
         if (tutor.getAnimais().isEmpty()) return new ArrayList<>();
-        List<String> nomesAnimais = new ArrayList<>();
-        for (Animal animal : tutor.getAnimais()){
-            nomesAnimais.add(animal.getNome());
-        }
-        return nomesAnimais;
+        return tutor.getAnimais();
     }
 
     /** Atualiza o ID do tutor.

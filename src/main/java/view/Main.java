@@ -37,8 +37,7 @@ public class Main {
                     CadastrarMenu.exibirMenu();
                     break;
                 case 2:
-                    System.out.println("Voce selecionou 2");
-                    // A implementar...
+                    AtualizarMenu.exibirMenu();
                     break;
                 case 3:
                     System.out.println("Voce selecionou 3");

@@ -5,11 +5,11 @@
     "animais" : [ ],
     "id" : "S3"
   },
-  "S6" : {
-    "nome" : "Reitoria",
+  "S5" : {
+    "nome" : "Modulo 5",
     "tutores" : [ ],
     "animais" : [ ],
-    "id" : "S6"
+    "id" : "S5"
   },
   "S2" : {
     "nome" : "Modulo 2",
