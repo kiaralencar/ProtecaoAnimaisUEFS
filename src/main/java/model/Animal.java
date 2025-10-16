@@ -1,6 +1,7 @@
 package model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +17,13 @@ import java.util.List;
  * @see Setor
  * @see Tutor
  */
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Animal {
     /** O ID do animal. */
-    private String ID;
+    private String id;
 
     /** O nome do animal. */
     private String nome;
@@ -38,12 +43,20 @@ public class Animal {
     /** A situação do animal. */
     private String situacao;
 
+    /** O ID do setor do animal. */
+    private String setorID;
+
+    /** A lista dos IDs dos tutores do animal. */
+    private List<String> tutoresID;
+
     /** O setor do animal, que será ignorado pelo JSON durante
      * a serialização para evitar loops infinitos. */
     @JsonIgnore
     private Setor setor;
 
-    /** As pessoas responsáveis pelo animal. */
+    /** As pessoas responsáveis pelo animal, que serão ignoradas pelo JSON durante
+     * a serialização para evitar loops infinitos. */
+    @JsonIgnore
     private List<Tutor> tutores;
 
     /**
@@ -56,39 +69,43 @@ public class Animal {
      * @param data      A data de nascimento do animal.
      * @param sexo      O sexo do animal.
      * @param situacao  A situacao do animal.
-     * @param setor     O setor do animal.
-     * @param tutores   As pessoas tutoras do animal.
+     * @param setorID   O ID do setor do animal.
+     * @param tutoresID Os IDs dos tutores do animal.
      */
     public Animal(String ID, String nome, String especie, String raca, YearMonth data, String sexo,
-                  String situacao, Setor setor, List<Tutor> tutores){
-        this.ID = ID;
+                  String situacao, String setorID, List<String> tutoresID){
+        this.id = ID;
         this.nome = nome;
         this.especie = especie;
         this.raca = raca;
         this.data = data;
         this.sexo = sexo;
         this.situacao = situacao;
-        this.setor = setor;
-        this.tutores = tutores;
+        this.setorID = setorID;
+        this.tutoresID = tutoresID;
+        this.tutores = new ArrayList<>();
     }
 
     /**
      * Outro construtor da classe Animal, para a biblioteca Jackson
      * conseguir instanciar a classe antes de preencher os atributos.
      */
-    public Animal() { this.tutores = new ArrayList<>(); }
+    public Animal() {
+        this.tutores = new ArrayList<>();
+        this.tutoresID = new ArrayList<>();
+    }
 
     /** Retorna o ID do animal.
      *
      * @return O ID do animal.
      */
-    public String getID (){ return ID; }
+    public String getID (){ return id; }
 
     /** Define o ID.
      *
      * @param ID O novo ID a ser atribuído.
      */
-    public void setID(String ID) { this.ID = ID; }
+    public void setID(String ID) { this.id = ID; }
 
     /** Retorna o nome do animal.
      *
@@ -176,10 +193,12 @@ public class Animal {
      */
     public void setSetor(Setor setor) { this.setor = setor; }
 
-    /** Retorna as pessoas responsaveis pelo animal.
+    /** Retorna as pessoas responsaveis pelo animal, que será ignorado pelo JSON
+     * durante a serialização para evitar loops infinitos.
      *
      * @return as pessoas responsaveis pelo animal.
      */
+    @JsonIgnore
     public List<Tutor> getTutores(){ return tutores; }
 
     /** Define as pessoas responsaveis pelo animal.
@@ -187,4 +206,28 @@ public class Animal {
      * @param tutores Os novos tutores a serem atribuídos.
      */
     public void setTutores(List<Tutor> tutores) { this.tutores = tutores; }
+
+    /** Retorna o ID do setor do animal.
+     *
+     * @return O ID do setor do animal.
+     */
+    public String getSetorID(){ return setorID; }
+
+    /** Define o ID do setor do animal.
+     *
+     * @param ID O novo ID do setor do animal a ser atribuído.
+     */
+    public void setSetorID(String ID) { this.setorID = ID; }
+
+    /** Retorna os IDs dos tutores do animal.
+     *
+     * @return Os IDs dos tutores do animal.
+     */
+    public List<String> getTutoresIDs(){ return tutoresID; }
+
+    /** Define os IDs dos tutores do animal.
+     *
+     * @param tutoresIDs Os novos IDs a serem atribuídos.
+     */
+    public void setTutoresIDs(List<String> tutoresIDs) { this.tutoresID = tutoresIDs; }
 }

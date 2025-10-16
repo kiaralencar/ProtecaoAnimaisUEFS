@@ -88,6 +88,10 @@ public class AtualizarSetor {
     public static void atualizarNome(Setor setor){
         System.out.println("Insira o novo nome do setor: ");
         String nome = scan.nextLine();
+        while (!GeralController.S.validarNomeSetor(nome)){
+            System.out.println("Nome invalido ou existente. Por favor, tente novamente.");
+            nome = scan.nextLine();
+        }
         boolean sucesso = GeralController.S.atualizarNome(setor, nome.trim());
         if (sucesso) {
             System.out.println("\n✅ Nome do setor atualizado com sucesso!");

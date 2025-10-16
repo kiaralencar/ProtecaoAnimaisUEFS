@@ -69,10 +69,10 @@ public class SetorControllerTest {
         E = new EnderecoController();
         setor = S.criarSetor("S1", "Reitoria", new ArrayList<>(), new ArrayList<>());
         animal = A.criarAnimal("A1", "Lilica", "Gato", "Siames",
-                YearMonth.of(2020, 9), "Femea", "Disponivel", null, new ArrayList<>());
+                YearMonth.of(2020, 9), "Femea", "Disponivel", "S1", new ArrayList<>());
         endereco = E.criarEndereco("A", "B", "C", "D", "E");
         tutor = T.criarTutor("T1", "Ana", endereco, "73765413278",
-                "ana@gmail.com", null, new ArrayList<>());
+                "ana@gmail.com", "S1", new ArrayList<>());
     }
 
     /** Testa o método criarSetor para garantir que o setor
@@ -326,9 +326,9 @@ public class SetorControllerTest {
     @Test
     void listarTutoresTest(){
         Tutor tutor2 = T.criarTutor("T2", "Maria", endereco, "73765410078",
-                "maria@gmail.com", setor, new ArrayList<>());
+                "maria@gmail.com", "S1", new ArrayList<>());
         Tutor tutor3 = T.criarTutor("T3", "Braga", endereco, "73723410078",
-                "braga@gmail.com", setor, new ArrayList<>());
+                "braga@gmail.com", "S1", new ArrayList<>());
         S.adicionarTutor(setor, tutor);
         S.adicionarTutor(setor, tutor2);
         S.adicionarTutor(setor, tutor3);
@@ -375,6 +375,7 @@ public class SetorControllerTest {
      * que o novo ID seja inserido corretamente. */
     @Test
     void atualizarIDTest(){
+        S.limparDadosParaTeste();
         boolean resultado = S.atualizarID(setor, "S6");
         assertTrue(resultado);
     }

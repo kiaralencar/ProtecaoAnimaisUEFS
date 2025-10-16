@@ -1,4 +1,6 @@
 package controller;
+import dao.AnimalDAO;
+import dao.SetorDAO;
 import dao.TutorDAO;
 import model.Animal;
 import model.Endereco;
@@ -28,6 +30,24 @@ public class TutorController {
     /** Um mapa que armazena objetos do tipo {@link Tutor}, usando o ID como chave. */
     private HashMap<String, Tutor> tutores;
 
+    /** Restaura o relacionamento bidirecional entre Tutor e Animal/Setor
+     * após a desserialização do JSON, pois a referência de volta foi ignorada
+     * pelo Jackson (via {@code JsonIgnore}). */
+    private void ligarReferencias(HashMap<String, Setor> setores, HashMap<String, Animal> animais){
+        for (Tutor tutor : tutores.values()){
+            // Liga tutor ao setor
+            Setor setor = setores.get(tutor.getSetorID());
+            if (setor != null) tutor.setSetor(setor);
+            // Liga o tutor aos animais
+            for (String animalID : tutor.getAnimaisIDs()){
+                Animal animal = animais.get(animalID);
+                if (animal != null && !tutor.getAnimais().contains(animal)) {
+                    tutor.getAnimais().add(animal);
+                }
+            }
+        }
+    }
+
     /** Construtor  da classe TutorController.
      * <p>
      * Incializa o DAO do tutor e carrega os dados do JSON para o Map de tutores.
@@ -36,6 +56,11 @@ public class TutorController {
     public TutorController(){
         this.tutorDAO = new TutorDAO();
         this.tutores = tutorDAO.carregarTutores();
+        SetorDAO setorDAO = new SetorDAO();
+        AnimalDAO animalDAO = new AnimalDAO();
+        HashMap<String, Setor> setores = setorDAO.carregarSetores();
+        HashMap<String, Animal> animais = animalDAO.carregarAnimais();
+        ligarReferencias(setores, animais);
     }
 
     /** Salva os dados do tutor no aqruivo JSON. */
@@ -49,13 +74,13 @@ public class TutorController {
      * @param endereco   O objeto {@link Endereco} do tutor.
      * @param telefone   O telefone do tutor.
      * @param email      O email do tutor.
-     * @param setor      O setor do tutor.
-     * @param animais    A lista de animais do tutor.
+     * @param setorID    O setor do tutor.
+     * @param animaisID  A lista de IDs dos animais do tutor.
      * @return Uma nova instância de {@link Tutor}.
      */
     public Tutor criarTutor(String ID, String nome, Endereco endereco, String telefone,
-                            String email, Setor setor, List<Animal> animais) {
-        return new Tutor(ID, nome, endereco, telefone, email, setor, animais);
+                            String email, String setorID, List<String> animaisID) {
+        return new Tutor(ID, nome, endereco, telefone, email, setorID, animaisID);
     }
 
     /** Valida se o ID inserido pelo usuário segue o padrão estipulado e

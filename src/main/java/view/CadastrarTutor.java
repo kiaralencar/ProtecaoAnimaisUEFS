@@ -8,6 +8,7 @@ import model.Tutor;
 
 import java.time.DateTimeException;
 import java.time.YearMonth;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -89,8 +90,12 @@ public class CadastrarTutor {
                 }
             }
         } while (!setorEscolhido);
+        List<String> animaisID = new ArrayList<>();
+        for (Animal animal : setorTutor.getAnimais()){
+            animaisID.add(animal.getID());
+        }
         Tutor tutor = GeralController.T.criarTutor(ID.trim().toUpperCase(), nome.trim(),
-                endereco, telefone, email, setorTutor, setorTutor.getAnimais());
+                endereco, telefone, email, setorTutor.getID(), animaisID);
         boolean cadastrado = GeralController.T.cadastrarTutor(tutor);
         if (cadastrado) {
             System.out.println("\n✅ Tutor cadastrado com sucesso!");

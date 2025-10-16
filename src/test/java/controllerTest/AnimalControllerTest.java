@@ -65,11 +65,11 @@ public class AnimalControllerTest {
         E = new EnderecoController();
         S = new SetorController();
         animal = A.criarAnimal("A1", "Lilica", "Gato", "Siames",
-                YearMonth.of(2020, 9), "Femea", "Disponivel", null, new ArrayList<>());
+                YearMonth.of(2020, 9), "Femea", "Disponivel", "S1", new ArrayList<>());
         endereco = E.criarEndereco("A", "B", "C", "D", "E");
         setor = S.criarSetor("S1", "Modulo 1", new ArrayList<>(), new ArrayList<>());
         tutor = T.criarTutor("T1", "Ana", endereco, "73765413278",
-                "ana@gmail.com", setor, new ArrayList<>());
+                "ana@gmail.com", "S1", new ArrayList<>());
     }
 
     /** Testa o método criarAnimal para garantir que o animal
@@ -297,8 +297,8 @@ public class AnimalControllerTest {
         A.cadastrarAnimal(animal);
         A.cadastrarAnimal(animal2);
         A.cadastrarAnimal(animal3);
-        List<String> nomes = A.listarAnimais();
-        boolean listaCompleta = !nomes.isEmpty();
+        List<Animal> animais = A.listarAnimais();
+        boolean listaCompleta = !animais.isEmpty();
         assertTrue("Os animais foram listados com sucesso!", listaCompleta);
     }
 
@@ -307,8 +307,8 @@ public class AnimalControllerTest {
     @Test
     void listarAnimaisInexistentesTest(){
         A.limparDadosParaTeste();
-        List<String> nomes = A.listarAnimais();
-        boolean listaCompleta = !nomes.isEmpty();
+        List<Animal> animais = A.listarAnimais();
+        boolean listaCompleta = !animais.isEmpty();
         assertFalse("Nao foi possivel listar os animais.", listaCompleta);
     }
 
@@ -317,9 +317,9 @@ public class AnimalControllerTest {
     @Test
     void listarTutoresTest(){
         Tutor tutor2 = T.criarTutor("T2", "Maria", endereco, "73765410078",
-                "maria@gmail.com", setor, new ArrayList<>());
+                "maria@gmail.com", "S1", new ArrayList<>());
         Tutor tutor3 = T.criarTutor("T3", "Braga", endereco, "73723410078",
-                "braga@gmail.com", setor, new ArrayList<>());
+                "braga@gmail.com", "S1", new ArrayList<>());
         A.adicionarTutor(animal, tutor);
         A.adicionarTutor(animal, tutor2);
         A.adicionarTutor(animal, tutor3);
@@ -341,6 +341,7 @@ public class AnimalControllerTest {
      * que o novo ID seja inserido corretamente. */
     @Test
     void atualizarIDTest(){
+        A.limparDadosParaTeste();
         boolean resultado = A.atualizarID(animal, "A5");
         assertTrue("O ID foi atualizado com sucesso!", resultado);
     }
@@ -528,7 +529,7 @@ public class AnimalControllerTest {
     /** Não permite a atualização dpara um setor nulo. */
     @Test
     void atualizarSetorNuloTest(){
-        boolean resultado = A.atualizarSetor(animal, setor);
+        boolean resultado = A.atualizarSetor(animal, null);
         assertFalse("Nao foi possivel atualizar o setor.", resultado);
     }
 

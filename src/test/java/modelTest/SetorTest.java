@@ -58,9 +58,9 @@ public class SetorTest {
     @Test
     void testSetTutores(){
         Endereco endereco1 = new Endereco("A", "B", "C", "D", "E");
-        Tutor tutor1 = new Tutor("T2", "Kamilly", endereco1, "75999854777", "kamilly@gmail.com", setor, new ArrayList<>());
+        Tutor tutor1 = new Tutor("T2", "Kamilly", endereco1, "75999854777", "kamilly@gmail.com", setor.getID(), new ArrayList<>());
         Endereco endereco2 = new Endereco("F", "G", "H", "I", "J");
-        Tutor tutor2 = new Tutor("T3", "Marcelly", endereco2, "75951432567", "marcelly@gmail.com", setor, new ArrayList<>());
+        Tutor tutor2 = new Tutor("T3", "Marcelly", endereco2, "75951432567", "marcelly@gmail.com", setor.getID(), new ArrayList<>());
         List<Tutor> tutores = new ArrayList<>();
         tutores.add(tutor1);
         tutores.add(tutor2);
@@ -76,9 +76,9 @@ public class SetorTest {
     @Test
     void testSetAnimais(){
         Animal animal1 = new Animal("A2", "Mily", "Gato", "Sem raca",
-                YearMonth.of(2022, 8), "Femea", "Em tratamento", setor, new ArrayList<>());
+                YearMonth.of(2022, 8), "Femea", "Em tratamento", setor.getID(), new ArrayList<>());
         Animal animal2 = new Animal("A3", "Nick", "Cachorro", "Sem raca",
-                YearMonth.of(2024, 10), "Macho", "Em observacao", setor, new ArrayList<>());
+                YearMonth.of(2024, 10), "Macho", "Em observacao", setor.getID(), new ArrayList<>());
         List<Animal> animais = new ArrayList<>();
         animais.add(animal1);
         animais.add(animal2);

@@ -1,42 +1,46 @@
 {
   "A1" : {
-    "nome" : "July",
-    "especie" : "Gato",
-    "raca" : "Persa",
-    "data" : [ 2019, 4 ],
-    "sexo" : "Femea",
-    "situacao" : "Animal em tratamento",
-    "tutores" : [ ],
-    "id" : "A1"
-  },
-  "A3" : {
-    "nome" : "Rex",
-    "especie" : "Cachorro",
-    "raca" : "Pitbull",
-    "data" : [ 2009, 3 ],
-    "sexo" : "Macho",
-    "situacao" : "Animal disponivel para adocao",
-    "tutores" : [ ],
-    "id" : "A3"
-  },
-  "A4" : {
-    "nome" : "July",
-    "especie" : "Cachorro",
-    "raca" : "Salsicha",
-    "data" : [ 2023, 9 ],
-    "sexo" : "Femea",
-    "situacao" : "Animal em tratamento",
-    "tutores" : [ ],
-    "id" : "A4"
-  },
-  "A5" : {
+    "id" : "A1",
     "nome" : "Lilica",
     "especie" : "Gato",
     "raca" : "Siames",
     "data" : [ 2020, 9 ],
     "sexo" : "Femea",
     "situacao" : "Disponivel",
-    "tutores" : [ ],
-    "id" : "A5"
+    "setorID" : "S1",
+    "tutoresIDs" : [ ]
+  },
+  "A2" : {
+    "id" : "A2",
+    "nome" : "Beth",
+    "especie" : "Cachorro",
+    "raca" : "Poodle",
+    "data" : [ 2021, 2 ],
+    "sexo" : "Femea",
+    "situacao" : "Tratamento",
+    "setorID" : null,
+    "tutoresIDs" : [ ]
+  },
+  "A3" : {
+    "id" : "A3",
+    "nome" : "Tony",
+    "especie" : "Cachorro",
+    "raca" : "Salsicha",
+    "data" : [ 2019, 3 ],
+    "sexo" : "Macho",
+    "situacao" : "Observacao",
+    "setorID" : null,
+    "tutoresIDs" : [ ]
+  },
+  "A5" : {
+    "id" : "A5",
+    "nome" : "Lilica",
+    "especie" : "Gato",
+    "raca" : "Siames",
+    "data" : [ 2020, 9 ],
+    "sexo" : "Femea",
+    "situacao" : "Disponivel",
+    "setorID" : "S1",
+    "tutoresIDs" : [ ]
   }
 }

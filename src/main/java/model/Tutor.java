@@ -1,5 +1,5 @@
 package model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +16,13 @@ import java.util.List;
  * @see Setor
  * @see Animal
  */
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Tutor {
     /** O ID da pessoa tutora. */
-    private String ID;
+    private String id;
 
     /** O nome da pessoa tutora. */
     private String nome;
@@ -32,12 +36,20 @@ public class Tutor {
     /** O email da pessoa tutora. */
     private String email;
 
-    /** O setor da pessoa tutra, que será ignorado pelo JSON durante
+    /** O ID do setor da pessoa tutora. */
+    private String setorID;
+
+    /** A lista dos IDs dos animais da pessoa tutora. */
+    private List<String> animaisID;
+
+    /** O setor da pessoa tutora, que será ignorado pelo JSON durante
      * a serialização para evitar loops infinitos. */
     @JsonIgnore
     private Setor setor;
 
-    /** Os animais da pessoa tutora. */
+    /** Os animais da pessoa tutora, que serão ignorados pelo JSON durante
+     * a serialização para evitar loops infinitos. */
+    @JsonIgnore
     private List<Animal> animais;
 
     /**
@@ -48,36 +60,39 @@ public class Tutor {
      * @param endereco   O enderço da pessoa tutora.
      * @param telefone   O telefone da pessoa tutora.
      * @param email      O email da pessoa tutora.
-     * @param setor      O setor da pessoa tutora.
-     * @param animais    Os animais da pessoa tutora.
+     * @param setorID    O ID do setor da pessoa tutora.
+     * @param animaisID  Os IDs dos animais da pessoa tutora.
      */
-    public Tutor(String ID, String nome, Endereco endereco, String telefone, String email, Setor setor, List<Animal> animais){
-        this.ID = ID;
+    public Tutor(String ID, String nome, Endereco endereco, String telefone, String email,
+                 String setorID, List<String> animaisID){
+        this.id = ID;
         this.nome = nome;
         this.endereco = endereco;
         this.telefone = telefone;
         this.email = email;
-        this.setor = setor;
-        this.animais = animais;
+        this.setorID = setorID;
+        this.animaisID = animaisID;
+        this.animais = new ArrayList<>();
     }
 
     /** Outro construtor da classe Tutor, para a biblioteca Jackson
      * conseguir instanciar a classe antes de preencher os atributos. */
     public Tutor() {
         this.animais = new ArrayList<>();
+        this.animaisID = new ArrayList<>();
     }
 
     /** Retorna o ID da pessoa tutora.
      *
      * @return O ID da pessoa tutora.
      */
-    public String getID() { return ID; }
+    public String getID() { return id; }
 
     /** Define o ID.
      *
      * @param ID O novo ID a ser atribuído.
      */
-    public void setID(String ID) { this.ID = ID; }
+    public void setID(String ID) { this.id = ID; }
 
     /** Retorna o nome da pessoa tutora.
      *
@@ -144,7 +159,7 @@ public class Tutor {
     }
 
     /** Retorna o setor da pessoa tutora, que será ignorado pelo JSON durante
-     * a serialização para evitar loops infinitos.
+     * a serialização para evitar loops infinitos..
      *
      * @return O setor da pessoa tutora.
      */
@@ -159,10 +174,12 @@ public class Tutor {
         this.setor = setor;
     }
 
-    /** Retorna os animais da pessoa tutora.
+    /** Retorna os animais da pessoa tutora, que será ignorado pelo JSON durante
+     * a serialização para evitar loops infinitos..
      *
      * @return os animais da pessoa tutora.
      */
+    @JsonIgnore
     public List<Animal> getAnimais(){ return animais; }
 
     /** Define os animais da pessoa tutora.
@@ -172,6 +189,31 @@ public class Tutor {
     public void setAnimais(List<Animal> animais) {
         this.animais = animais;
     }
+
+
+    /** Retorna o ID do setor do tutor.
+     *
+     * @return O ID do setor do tutor.
+     */
+    public String getSetorID(){ return setorID; }
+
+    /** Define o ID do setor do tutor.
+     *
+     * @param ID O novo ID do setor do tutor a ser atribuído.
+     */
+    public void setSetorID(String ID) { this.setorID = ID; }
+
+    /** Retorna os IDs dos animais do tutor.
+     *
+     * @return Os IDs dos animais do tutor.
+     */
+    public List<String> getAnimaisIDs(){ return animaisID; }
+
+    /** Define os IDs dos animais do tutor.
+     *
+     * @param animaisID Os novos IDs a serem atribuídos.
+     */
+    public void setAnimaisIDs(List<String> animaisID) { this.animaisID = animaisID; }
 
     /** Retorna uma representação em String formatada do telefone da pessoa tutora.
      *

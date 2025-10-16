@@ -45,12 +45,14 @@ public class AnimalDAO {
     /** Serializa e salva todo o mapa de animais no arquivo JSON, sobrescrevendo
      * qualquer conteúdo existente.
      *
-     * @param animais O {@code Map} completo contendo todos os objetos {@link Animal} a serem salvos.
+     * @param novosAnimais O {@code Map} completo contendo todos os objetos {@link Animal} a serem salvos.
      */
-    public void salvarAnimal(Map<String, Animal> animais){
+    public void salvarAnimal(Map<String, Animal> novosAnimais){
+        HashMap<String, Animal> existentes = carregarAnimais(); // Carrega o que já está no arquivo
+        existentes.putAll(novosAnimais); // Adiciona os novos, mantendo os antigos
         try {
             ObjectWriter writer = mapper.writerWithDefaultPrettyPrinter();
-            writer.writeValue(arquivo, animais);
+            writer.writeValue(arquivo, existentes);
         } catch (IOException e) {
             System.err.println("Erro ao salvar o animal no arquivo: " + e.getMessage());
         }

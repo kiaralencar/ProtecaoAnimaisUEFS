@@ -2,8 +2,11 @@ package view;
 import controller.GeralController;
 import model.Animal;
 import model.Setor;
+import model.Tutor;
+
 import java.time.DateTimeException;
 import java.time.YearMonth;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -101,8 +104,12 @@ public class CadastrarAnimal {
                 }
             }
         } while (!setorEscolhido);
+        List<String> tutoresID = new ArrayList<>();
+        for (Tutor tutor: setorAnimal.getTutores()){
+            tutoresID.add(tutor.getID());
+        }
         Animal animal = GeralController.A.criarAnimal(ID.trim().toUpperCase(), nome.trim(), especie.trim(), raca.trim(),
-                YearMonth.of(ano, mes), sexo, situacao, setorAnimal, setorAnimal.getTutores());
+                YearMonth.of(ano, mes), sexo, situacao, setorAnimal.getID(), tutoresID);
         boolean cadastrado = GeralController.A.cadastrarAnimal(animal);
         if (cadastrado) {
             System.out.println("\n✅ Animal cadastrado com sucesso!");

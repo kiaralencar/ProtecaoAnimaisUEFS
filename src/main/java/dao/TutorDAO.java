@@ -1,5 +1,6 @@
 package dao;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import model.Setor;
 import model.Tutor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
@@ -42,12 +43,14 @@ public class TutorDAO {
     /** Serializa e salva todo o mapa de tutores no arquivo JSON, sobrescrevendo
      * qualquer conteúdo existente.
      *
-     * @param tutores O {@code Map} completo contendo todos os objetos {@link Tutor} a serem salvos.
+     * @param novosTutores O {@code Map} completo contendo todos os objetos {@link Tutor} a serem salvos.
      */
-    public void salvarTutor(Map<String, Tutor> tutores){
+    public void salvarTutor(Map<String, Tutor> novosTutores){
+        HashMap<String, Tutor> existentes = carregarTutores(); // Carrega o que já está no arquivo
+        existentes.putAll(novosTutores); // Adiciona os novos, mantendo os antigos
         try {
             ObjectWriter writer = mapper.writerWithDefaultPrettyPrinter();
-            writer.writeValue(arquivo, tutores);
+            writer.writeValue(arquivo, existentes);
         } catch (IOException e) {
             System.err.println("Erro ao salvar o tutor no arquivo: " + e.getMessage());
         }

@@ -1,4 +1,6 @@
 package controller;
+import dao.SetorDAO;
+import dao.TutorDAO;
 import model.Animal;
 import model.Setor;
 import model.Tutor;
@@ -7,6 +9,7 @@ import java.time.YearMonth;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A classe AnimalController é responsável por gerenciar as operações
@@ -35,6 +38,29 @@ public class AnimalController {
     public AnimalController(){
         this.animalDAO = new AnimalDAO();
         this.animais = animalDAO.carregarAnimais();
+        SetorDAO setorDAO = new SetorDAO();
+        TutorDAO tutorDAO = new TutorDAO();
+        HashMap<String, Setor> setores = setorDAO.carregarSetores();
+        HashMap<String, Tutor> tutores = tutorDAO.carregarTutores();
+        ligarReferencias(setores, tutores);
+    }
+
+    /** Restaura o relacionamento bidirecional entre Animal e Tutor/Setor
+     * após a desserialização do JSON, pois a referência de volta foi ignorada
+     * pelo Jackson (via {@code JsonIgnore}). */
+    private void ligarReferencias(HashMap<String, Setor> setores, HashMap<String, Tutor> tutores){
+        for (Animal animal : animais.values()){
+            // Liga animal ao setor
+            Setor setor = setores.get(animal.getSetorID());
+            if (setor != null) animal.setSetor(setor);
+            // Liga o animal aos tutores
+            for (String tutorID : animal.getTutoresIDs()){
+                Tutor tutor = tutores.get(tutorID);
+                if (tutor != null && !animal.getTutores().contains(tutor)) {
+                    animal.getTutores().add(tutor);
+                }
+            }
+        }
     }
 
     /** Salva os dados do animal no aqruivo JSON. */
@@ -50,13 +76,13 @@ public class AnimalController {
      * @param data       A data de nascimento do animal.
      * @param sexo       O sexo do animal.
      * @param situacao   A situacao do animal.
-     * @param setor      O setor do animal.
-     * @param tutores    A lista de tutores do animal.
+     * @param setorID    O ID do setor do animal.
+     * @param tutoresID  A lista de IDs dos tutores.
      * @return Uma nova instância de {@link Animal}.
      */
     public Animal criarAnimal(String ID, String nome, String especie, String raca, YearMonth data,
-                            String sexo, String situacao, Setor setor, List<Tutor> tutores) {
-        return new Animal(ID, nome, especie, raca, data, sexo, situacao, setor, tutores);
+                            String sexo, String situacao, String setorID, List<String> tutoresID) {
+        return new Animal(ID, nome, especie, raca, data, sexo, situacao, setorID, tutoresID);
     }
 
     /** Limpa todos os dados da coleção em memória.

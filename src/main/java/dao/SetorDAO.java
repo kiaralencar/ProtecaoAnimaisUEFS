@@ -1,5 +1,6 @@
 package dao;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import model.Animal;
 import model.Setor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
@@ -42,12 +43,14 @@ public class SetorDAO {
     /** Serializa e salva todo o mapa de setores no arquivo JSON, sobrescrevendo
      * qualquer conteúdo existente.
      *
-     * @param setores O {@code Map} completo contendo todos os objetos {@link Setor} a serem salvos.
+     * @param novosSetores O {@code Map} completo contendo todos os objetos {@link Setor} a serem salvos.
      */
-    public void salvarSetor(Map<String, Setor> setores){
+    public void salvarSetor(Map<String, Setor> novosSetores){
+        HashMap<String, Setor> existentes = carregarSetores(); // Carrega o que já está no arquivo
+        existentes.putAll(novosSetores); // Adiciona os novos, mantendo os antigos
         try {
             ObjectWriter writer = mapper.writerWithDefaultPrettyPrinter();
-            writer.writeValue(arquivo, setores);
+            writer.writeValue(arquivo, existentes);
         } catch (IOException e) {
             System.err.println("Erro ao salvar o setor no arquivo: " + e.getMessage());
         }

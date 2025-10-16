@@ -54,9 +54,9 @@ public class TutorControllerTest {
         S = new SetorController();
         endereco = E.criarEndereco("A", "B", "C", "D", "E");
         tutor = T.criarTutor("T1", "Ana", endereco, "73765413278",
-                "ana@gmail.com", null, new ArrayList<>());
+                "ana@gmail.com", "S1", new ArrayList<>());
         animal = A.criarAnimal("A1", "Lilica", "Gato", "Siames",
-                YearMonth.of(2020, 9), "Femea", "Disponivel", null, new ArrayList<>());
+                YearMonth.of(2020, 9), "Femea", "Disponivel", "S1", new ArrayList<>());
         setor = S.criarSetor("S1", "Modulo 1", new ArrayList<>(), new ArrayList<>());
     }
 
@@ -175,6 +175,7 @@ public class TutorControllerTest {
      * inserido do Map de tutores. */
     @Test
     void cadastrarTutorTest(){
+        T.limparDadosParaTeste();
         boolean resultado = T.cadastrarTutor(tutor);
         assertTrue(resultado);
     }
@@ -305,8 +306,8 @@ public class TutorControllerTest {
         S.adicionarAnimal(setor, animal);
         S.adicionarAnimal(setor, animal2);
         S.adicionarAnimal(setor, animal3);
-        List<String> nomes = T.listarAnimais(tutor);
-        boolean listaCompleta = !nomes.isEmpty();
+        List<Animal> animais = T.listarAnimais(tutor);
+        boolean listaCompleta = !animais.isEmpty();
         assertTrue(listaCompleta);
     }
 
@@ -314,8 +315,8 @@ public class TutorControllerTest {
      * foram adicionados à lista de animais do tutor. */
     @Test
     void listarAnimaisInexistentesTest(){
-        List<String> nomes = T.listarAnimais(tutor);
-        boolean listaCompleta = !nomes.isEmpty();
+        List<Animal> animais = T.listarAnimais(tutor);
+        boolean listaCompleta = !animais.isEmpty();
         assertFalse(listaCompleta);
     }
 
