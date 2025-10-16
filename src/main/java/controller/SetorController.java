@@ -27,26 +27,36 @@ public class SetorController {
     private final SetorDAO setorDAO;
 
     /** Um mapa que armazena objetos do tipo {@link Setor}, usando o ID como chave. */
-    private HashMap<String, Setor> setores;
+    private static HashMap<String, Setor> setores;
 
     /** Restaura o relacionamento bidirecional entre Setor e Tutor/Animal
      * após a desserialização do JSON, pois a referência de volta foi ignorada
      * pelo Jackson (via {@code JsonIgnore}). */
     private void ligarReferencias(HashMap<String, Tutor> tutores, HashMap<String, Animal> animais){
         for (Setor setor : setores.values()){
-            // Liga setor ao tutor
-            for (String tutorID : setor.getTutoresIDs()){
-                Tutor tutor = tutores.get(tutorID);
-                if (tutor != null && !setor.getTutores().contains(tutor)) {
-                    setor.getTutores().add(tutor);
+            // Liga tutor ao setor
+            if (setor.getTutoresIDs() != null) {
+                List<Tutor> listaTutores = new ArrayList<>();
+                for (String tutorID : setor.getTutoresIDs()) {
+                    Tutor tutor = tutores.get(tutorID);
+                    if (tutor != null && !setor.getTutores().contains(tutor)) {
+                        listaTutores.add(tutor);
+                        tutor.setSetor(setor);
+                    }
                 }
+                setor.setTutores(listaTutores);
             }
-            // Liga setor ao animal
-            for (String animalID : setor.getAnimaisIDs()){
-                Animal animal = animais.get(animalID);
-                if (animal != null && !setor.getAnimais().contains(animal)) {
-                    setor.getAnimais().add(animal);
+            // Liga animal ao setor
+            if (setor.getAnimaisIDs() != null){
+                List<Animal> listaAnimais = new ArrayList<>();
+                for (String animalID : setor.getAnimaisIDs()){
+                    Animal animal = animais.get(animalID);
+                    if (animal != null && !setor.getAnimais().contains(animal)) {
+                        listaAnimais.add(animal);
+                        animal.setSetor(setor);
+                    }
                 }
+                setor.setAnimais(listaAnimais);
             }
         }
     }
@@ -126,10 +136,33 @@ public class SetorController {
         for (Setor s : setores.values()){
             if (s.getNome().equalsIgnoreCase(novoNome)) return false;
         }
+        List<Tutor> tutoresReais = new ArrayList<>();
+        for (String tutorID : setor.getTutoresIDs()) {
+            Tutor tutor = TutorController.buscarTutorPorID(tutorID);
+            if (tutor != null) {
+                tutor.setSetor(setor);
+                if (setor.getTutores() == null) setor.setTutores(new ArrayList<>());
+                setor.getTutores().add(tutor);
+                tutoresReais.add(tutor);
+            }
+        }
+        setor.setTutores(tutoresReais);
+        List<Animal> animaisReais = new ArrayList<>();
+        for (String animalID : setor.getAnimaisIDs()) {
+            Animal animal = AnimalController.buscarAnimalPorID(animalID);
+            if (animal != null) {
+                animal.setSetor(setor);
+                if (setor.getAnimais() == null) setor.setAnimais(new ArrayList<>());
+                setor.getAnimais().add(animal);
+                animaisReais.add(animal);
+            }
+        }
+        setor.setAnimais(animaisReais);
         setores.put(setor.getID(), setor);
         salvarDadosSetor();
         return true;
     }
+
 
     /** Exclui um setor do mapa de setores.
      *
@@ -285,7 +318,7 @@ public class SetorController {
      * @param ID O ID do setor a ser procurado.
      * @return O objeto {@link Setor} encontrado, ou {@code null} se não for encontrado.
      */
-    public Setor buscarSetorPorID(String ID){ return setores.get(ID.trim()); }
+    public static Setor buscarSetorPorID(String ID){ return setores.get(ID.trim()); }
 
     /** Busca um setor pelo seu nome. Caso haja mais de um setor com o mesmo
      * nome, todos estes setores são retornados numa lista.

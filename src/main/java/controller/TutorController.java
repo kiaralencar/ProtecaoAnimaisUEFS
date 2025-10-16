@@ -28,22 +28,36 @@ public class TutorController {
     private final TutorDAO tutorDAO;
 
     /** Um mapa que armazena objetos do tipo {@link Tutor}, usando o ID como chave. */
-    private HashMap<String, Tutor> tutores;
+    private static HashMap<String, Tutor> tutores;
 
     /** Restaura o relacionamento bidirecional entre Tutor e Animal/Setor
      * após a desserialização do JSON, pois a referência de volta foi ignorada
      * pelo Jackson (via {@code JsonIgnore}). */
     private void ligarReferencias(HashMap<String, Setor> setores, HashMap<String, Animal> animais){
         for (Tutor tutor : tutores.values()){
-            // Liga tutor ao setor
-            Setor setor = setores.get(tutor.getSetorID());
-            if (setor != null) tutor.setSetor(setor);
-            // Liga o tutor aos animais
-            for (String animalID : tutor.getAnimaisIDs()){
-                Animal animal = animais.get(animalID);
-                if (animal != null && !tutor.getAnimais().contains(animal)) {
-                    tutor.getAnimais().add(animal);
+            // Liga setor ao tutor
+            if (tutor.getSetorID() != null){
+                Setor setor = setores.get(tutor.getSetorID());
+                if (setor != null) {
+                    tutor.setSetor(setor);
+                    if (!setor.getTutores().contains(tutor)){
+                        setor.getTutores().add(tutor);
+                    }
                 }
+            }
+            // Liga animais ao tutor
+            if (tutor.getAnimaisIDs() != null) {
+                List<Animal> listaAnimais = new ArrayList<>();
+                for (String animalID : tutor.getAnimaisIDs()){
+                    Animal animal = animais.get(animalID);
+                    if (animal != null) {
+                        listaAnimais.add(animal);
+                        if (!animal.getTutores().contains(tutor)){
+                            animal.getTutores().add(tutor);
+                        }
+                    }
+                }
+                tutor.setAnimais(listaAnimais);
             }
         }
     }
@@ -121,6 +135,22 @@ public class TutorController {
      */
     public boolean cadastrarTutor(Tutor tutor){
         if (tutor == null || tutores.containsKey(tutor.getID())) return false;
+        Setor setor = SetorController.buscarSetorPorID(tutor.getSetorID());
+        tutor.setSetor(setor);
+        if (setor != null) {
+            if (setor.getTutores() == null) setor.setTutores(new ArrayList<>());
+            setor.getTutores().add(tutor);
+        }
+        List<Animal> animais = new ArrayList<>();
+        for (String animalID : tutor.getAnimaisIDs()) {
+            Animal animal = AnimalController.buscarAnimalPorID(animalID);
+            if (animal != null) {
+                if (animal.getTutores() == null) animal.setTutores(new ArrayList<>());
+                animal.getTutores().add(tutor);
+                animais.add(animal);
+            }
+        }
+        tutor.setAnimais(animais);
         tutores.put(tutor.getID(), tutor);
         salvarDadosTutor();
         return true;
@@ -164,7 +194,7 @@ public class TutorController {
      * @param ID O ID do tutor a ser procurado.
      * @return O objeto {@link Tutor} encontrado, ou {@code null} se não for encontrado.
      */
-    public Tutor buscarTutorPorID(String ID) { return tutores.get(ID.trim()); }
+    public static Tutor buscarTutorPorID(String ID) { return tutores.get(ID.trim()); }
 
     /** Busca um tutor pelo seu nome. Caso haja mais de um tutor com o mesmo
      * nome, todos estes tutores são retornados numa lista.

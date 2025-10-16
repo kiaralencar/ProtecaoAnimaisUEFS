@@ -28,7 +28,7 @@ public class AnimalController {
     private final AnimalDAO animalDAO;
 
     /** Um mapa que armazena objetos do tipo {@link Animal}, usando o ID como chave. */
-    private HashMap<String, Animal> animais;
+    private static HashMap<String, Animal> animais;
 
     /** Construtor  da classe AnimalController.
      * <p>
@@ -50,15 +50,29 @@ public class AnimalController {
      * pelo Jackson (via {@code JsonIgnore}). */
     private void ligarReferencias(HashMap<String, Setor> setores, HashMap<String, Tutor> tutores){
         for (Animal animal : animais.values()){
-            // Liga animal ao setor
-            Setor setor = setores.get(animal.getSetorID());
-            if (setor != null) animal.setSetor(setor);
-            // Liga o animal aos tutores
-            for (String tutorID : animal.getTutoresIDs()){
-                Tutor tutor = tutores.get(tutorID);
-                if (tutor != null && !animal.getTutores().contains(tutor)) {
-                    animal.getTutores().add(tutor);
+            // Liga setor ao animal
+            if (animal.getSetorID() != null){
+                Setor setor = setores.get(animal.getSetorID());
+                if (setor != null) {
+                    animal.setSetor(setor);
+                    if (!setor.getAnimais().contains(animal)){
+                        setor.getAnimais().add(animal);
+                    }
                 }
+            }
+            // Liga tutores ao animal
+            if (animal.getTutoresIDs() != null){
+                List<Tutor> listaTutores = new ArrayList<>();
+                for (String tutorID : animal.getTutoresIDs()){
+                    Tutor tutor = tutores.get(tutorID);
+                    if (tutor != null) {
+                        listaTutores.add(tutor);
+                        if (!tutor.getAnimais().contains(animal)){
+                            tutor.getAnimais().add(animal);
+                        }
+                    }
+                }
+                animal.setTutores(listaTutores);
             }
         }
     }
@@ -131,6 +145,22 @@ public class AnimalController {
      */
     public boolean cadastrarAnimal(Animal animal){
         if (animal == null || animais.containsKey(animal.getID())) return false;
+        Setor setor = SetorController.buscarSetorPorID(animal.getSetorID());
+        animal.setSetor(setor);
+        if (setor != null) {
+            if (setor.getAnimais() == null) setor.setAnimais(new ArrayList<>());
+            setor.getAnimais().add(animal);
+        }
+        List<Tutor> tutores = new ArrayList<>();
+        for (String tutorID : animal.getTutoresIDs()) {
+            Tutor tutor = TutorController.buscarTutorPorID(tutorID);
+            if (tutor != null) {
+                if (tutor.getAnimais() == null) tutor.setAnimais(new ArrayList<>());
+                tutor.getAnimais().add(animal);
+                tutores.add(tutor);
+            }
+        }
+        animal.setTutores(tutores);
         animais.put(animal.getID(), animal);
         salvarDadosAnimal();
         return true;
@@ -215,7 +245,7 @@ public class AnimalController {
      * @param ID O ID do animal a ser procurado.
      * @return O objeto {@link Animal} encontrado, ou {@code null} se não for encontrado.
      */
-    public Animal buscarAnimalPorID(String ID){ return animais.get(ID.trim()); }
+    public static Animal buscarAnimalPorID(String ID){ return animais.get(ID.trim()); }
 
     /** Busca um animal pelo seu nome. Caso haja mais de um animal com o mesmo
      * nome, todos estes animais são retornados numa lista.
