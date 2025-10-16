@@ -28,7 +28,7 @@ public class BuscarAnimal {
             System.out.println("\nID: " + animal.getID());
             System.out.println("Nome: " + animal.getNome());
             System.out.println("Data de nascimento: " + animal.getData().format(DateTimeFormatter.ofPattern("MM/yyyy")));
-            System.out.println("Idade: " + GeralController.A.calcularIdade(animal.getData()));
+            System.out.println("Idade: " + GeralController.A.calcularIdade(animal.getData()) + " ano(s)");
             System.out.println("Especie: " + animal.getEspecie());
             System.out.println("Raca: " + animal.getRaca());
             System.out.println("Sexo: " + animal.getSexo());
