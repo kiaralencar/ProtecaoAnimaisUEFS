@@ -11,9 +11,17 @@ import java.util.List;
  * raça, data de nascimento, sexo, situação (em observação, disponível
  * para adoção ou em tratamento), setor responsável {@link Setor} e pessoas
  * tutoras {@link Tutor}. Além disso, esta classe implementa métodos e atributos próprios.
+ * <p>
+ * O @JsonIdentityInfo garante que, durante a serializacao para JSON,
+ * o objeto seja serializado de forma completa apenas na primeira ocorrencia.
+ * Em ocorrencias subsequentes (como em listas de referencia cruzada),
+ * o Jackson serializa apenas uma referencia ao seu ID.
+ * Isso evita loops infinitos e garante que o objeto seja desserializado corretamente
+ * com todas as suas referencias em tempo de execucao.
+ *</p>
  *
  * @author Kiara Alencar
- * @version 1.1
+ * @version 1.6
  * @see Setor
  * @see Tutor
  */

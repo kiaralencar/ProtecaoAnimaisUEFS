@@ -1,5 +1,6 @@
 package view;
 import controller.GeralController;
+import model.Animal;
 import model.Setor;
 import java.util.List;
 import java.util.Scanner;
@@ -17,6 +18,13 @@ public class AtualizarSetor {
      * em toda a aplicação. */
     static Scanner scan = new Scanner(System.in);
 
+    /** Método responsável por buscar o setor desejado pelo usuário.
+     * Primeiramente, é solocitado o nome do setor. Depois de serem
+     * listados todos os setores com o nome inserido, é solicitado
+     * o ID do setor desejado.
+     *
+     * @return Um objeto do tipo {@link Animal}
+     */
     public static Setor buscar(){
         boolean setorEscolhido = false;
         Setor setorEncontrado = null;
@@ -48,6 +56,8 @@ public class AtualizarSetor {
         return setorEncontrado;
     }
 
+    /** Método responsável por exibir o menu de atualização do setor.
+     * Este menu lista as opções de atualização disponíveis no sistema. */
     public static void exibirMenu() {
         Setor setor = buscar();
         int opcao;
@@ -78,6 +88,8 @@ public class AtualizarSetor {
         } while (opcao != 0);
     }
 
+    /** Método responsável por atualizar o ID do setor.
+     * O ID é solicitado e validado antes de ser atualizado. */
     public static void atualizarID(Setor setor){
         System.out.println("Insira o novo ID do setor (S + numero. Ex.: S1): ");
         String ID = scan.nextLine();
@@ -95,6 +107,7 @@ public class AtualizarSetor {
         scan.nextLine();
     }
 
+    /** Método responsável por atualizar o nome do setor. */
     public static void atualizarNome(Setor setor){
         System.out.println("Insira o novo nome do setor: ");
         String nome = scan.nextLine();

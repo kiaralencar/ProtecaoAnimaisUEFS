@@ -18,6 +18,7 @@ public class BuscarSetor {
      * em toda a aplicação. */
     static Scanner scan = new Scanner(System.in);
 
+    /** Método responsável por exibir o relatório com todos os dados do setor. */
     public static void exibirDados(){
         Setor setor = AtualizarSetor.buscar();
         System.out.println("--------------- RELATORIO DO SETOR ---------------");

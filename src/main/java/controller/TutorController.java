@@ -21,7 +21,10 @@ import java.util.List;
  * @see Tutor
  * @see Setor
  * @see Animal
+ * @see Endereco
  * @see TutorDAO
+ * @see AnimalDAO
+ * @see SetorDAO
  */
 public class TutorController {
     /** Objeto DAO (Data Access Object) responsável por gerenciar a persistência de dados. */

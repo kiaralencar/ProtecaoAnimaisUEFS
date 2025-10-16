@@ -51,6 +51,8 @@ public class DeletarMenu {
         } while (opcao != 0);
     }
 
+    /** Método responsável por deletar um animal do sistema. Porém, esta ação
+     * apenas é concretizada após a confirmação do usuário. */
     public static void deletarAnimal(){
         Animal animal = AtualizarAnimal.buscar();
         System.out.println("\nTem certeza que deseja deletar este animal?\nOBS.: Todos os dados serão perdidos.");
@@ -75,6 +77,8 @@ public class DeletarMenu {
         scan.nextLine();
     }
 
+    /** Método responsável por deletar um tutor do sistema. Porém, esta ação
+     * apenas é concretizada após a confirmação do usuário. */
     public static void deletarTutor(){
         Tutor tutor = AtualizarTutor.buscar();
         System.out.println("\nTem certeza que deseja deletar este tutor?\nOBS.: Todos os dados serão perdidos.");
@@ -99,6 +103,8 @@ public class DeletarMenu {
         scan.nextLine();
     }
 
+    /** Método responsável por deletar um setor do sistema. Porém, esta ação
+     * apenas é concretizada após a confirmação do usuário. */
     public static void deletarSetor(){
         Setor setor = AtualizarSetor.buscar();
         System.out.println("\nTem certeza que deseja deletar este setor?\nOBS.: Todos os dados serão perdidos.");

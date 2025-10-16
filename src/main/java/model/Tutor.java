@@ -1,6 +1,5 @@
 package model;
 import com.fasterxml.jackson.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +8,17 @@ import java.util.List;
  * {@link Endereco}, telefone, email, setor em que está inserida {@link Setor} e
  * animais de quem é responsável {@link Animal}. Além disso, esta classe implementa
  * métodos e atributos próprios.
+ *<p>
+ * O @JsonIdentityInfo garante que, durante a serializacao para JSON,
+ * o objeto seja serializado de forma completa apenas na primeira ocorrencia.
+ * Em ocorrencias subsequentes (como em listas de referencia cruzada),
+ * o Jackson serializa apenas uma referencia ao seu ID.
+ * Isso evita loops infinitos e garante que o objeto seja desserializado corretamente
+ * com todas as suas referencias em tempo de execucao.
+ *</p>
  *
  * @author Kiara Alencar
- * @version 1.2
+ * @version 1.5
  * @see Endereco
  * @see Setor
  * @see Animal

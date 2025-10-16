@@ -18,6 +18,7 @@ public class BuscarTutor {
      * em toda a aplicação. */
     static Scanner scan = new Scanner(System.in);
 
+    /** Método responsável por exibir o relatório com todos os dados do tutor. */
     public static void exibirDados(){
         Tutor tutor = AtualizarTutor.buscar();
         System.out.println("--------------- RELATORIO DO TUTOR ---------------");

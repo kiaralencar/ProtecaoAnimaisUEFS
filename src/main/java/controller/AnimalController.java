@@ -23,6 +23,9 @@ import static controller.TutorController.tutores;
  * @see Animal
  * @see Setor
  * @see Tutor
+ * @see AnimalDAO
+ * @see SetorDAO
+ * @see TutorDAO
  */
 public class AnimalController {
     /** Objeto DAO (Data Access Object) responsável por gerenciar a persistência de dados. */

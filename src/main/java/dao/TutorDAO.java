@@ -1,6 +1,5 @@
 package dao;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import model.Setor;
 import model.Tutor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;

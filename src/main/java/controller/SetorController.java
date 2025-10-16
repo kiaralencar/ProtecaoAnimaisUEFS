@@ -18,9 +18,11 @@ import java.util.List;
  * @author Kiara Alencar
  * @version 1.2
  * @see Setor
- * @see SetorDAO
  * @see Animal
  * @see Tutor
+ * @see SetorDAO
+ * @see AnimalDAO
+ * @see TutorDAO
  */
 public class SetorController {
     /** Objeto DAO (Data Access Object) responsável por gerenciar a persistência de dados. */

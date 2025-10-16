@@ -1,5 +1,6 @@
 package view;
 import controller.GeralController;
+import model.Animal;
 import model.Endereco;
 import model.Setor;
 import model.Tutor;
@@ -21,6 +22,13 @@ public class AtualizarTutor {
      * em toda a aplicação. */
     static Scanner scan = new Scanner(System.in);
 
+    /** Método responsável por buscar o tutor desejado pelo usuário.
+     * Primeiramente, é solocitado o nome do tutor. Depois de serem
+     * listados todos os tutores com o nome inserido, é solicitado
+     * o ID do tutor desejado.
+     *
+     * @return Um objeto do tipo {@link Animal}
+     */
     public static Tutor buscar(){
         boolean tutorEscolhido = false;
         Tutor tutorEncontrado = null;
@@ -52,6 +60,8 @@ public class AtualizarTutor {
         return tutorEncontrado;
     }
 
+    /** Método responsável por exibir o menu de atualização do tutor.
+     * Este menu lista as opções de atualização disponíveis no sistema. */
     public static void exibirMenu() {
         Tutor tutor = buscar();
         int opcao;
@@ -98,6 +108,8 @@ public class AtualizarTutor {
         } while (opcao != 0);
     }
 
+    /** Método responsável por atualizar o ID do tutor.
+     * O ID é solicitado e validado antes de ser atualizado. */
     public static void atualizarID(Tutor tutor){
         System.out.println("Insira o novo ID do tutor (T + numero. Ex.: T1): ");
         String ID = scan.nextLine();
@@ -114,7 +126,7 @@ public class AtualizarTutor {
         System.out.println("Aperte Enter para voltar ao menu de atualizacao.");
         scan.nextLine();
     }
-
+    /** Método responsável por atualizar o nome do tutor. */
     public static void atualizarNome(Tutor tutor){
         System.out.println("Insira o novo nome do tutor: ");
         String nome = scan.nextLine();
@@ -128,6 +140,7 @@ public class AtualizarTutor {
         scan.nextLine();
     }
 
+    /** Método responsável por atualizar o endereço do tutor. */
     public static void atualizarEndereco(Tutor tutor){
         Endereco novoEndereco = CadastrarTutor.lerEndereco();
         boolean sucesso = GeralController.T.atualizarEndereco(tutor, novoEndereco);
@@ -140,6 +153,8 @@ public class AtualizarTutor {
         scan.nextLine();
     }
 
+    /** Método responsável por atualizar o telefone do tutor.
+     * O telefone é solicitado e validado antes de ser atualizado. */
     public static void atualizarTelefone(Tutor tutor){
         System.out.println("Insira o novo telefone do tutor (11 numeros sem pontuacao): ");
         String telefone = scan.nextLine();
@@ -157,6 +172,8 @@ public class AtualizarTutor {
         scan.nextLine();
     }
 
+    /** Método responsável por atualizar o email do tutor.
+     * O email é solicitado e validado antes de ser atualizado. */
     public static void atualizarEmail(Tutor tutor){
         System.out.println("Insira o novo email do tutor: ");
         String email = scan.nextLine();
@@ -174,6 +191,8 @@ public class AtualizarTutor {
         scan.nextLine();
     }
 
+    /** Método responsável por atualizar o setor do animal.
+     * Antes do setor ser atualizado, verifica-se se há setores ativos. */
     public static void atualizarSetor(Tutor tutor){
         List<Setor> setores = GeralController.S.listarSetores();
         boolean setorEscolhido = false;

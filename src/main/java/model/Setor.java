@@ -1,7 +1,6 @@
 package model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.ArrayList;
@@ -11,6 +10,14 @@ import java.util.List;
  * A classe Setor representa um setor da UEFS com informações de nome,
  * endereço, pessoas tutoras {@link Tutor} e animais {@link Animal}.
  * Além disso, esta classe implementa métodos e atributos próprios.
+ * <p>
+ * O @JsonIdentityInfo garante que, durante a serializacao para JSON,
+ * o objeto seja serializado de forma completa apenas na primeira ocorrencia.
+ * Em ocorrencias subsequentes (como em listas de referencia cruzada),
+ * o Jackson serializa apenas uma referencia ao seu ID.
+ * Isso evita loops infinitos e garante que o objeto seja desserializado corretamente
+ * com todas as suas referencias em tempo de execucao.
+ * </p>
  *
  * @author Kiara Alencar
  * @version 1.4

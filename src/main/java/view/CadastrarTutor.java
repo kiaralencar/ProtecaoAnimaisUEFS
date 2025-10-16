@@ -49,7 +49,8 @@ public class CadastrarTutor {
         String estado = scan.nextLine();
         return GeralController.E.criarEndereco(rua, bairro, CEP, cidade, estado);
     }
-
+    /** Método responsável por cadastrar um tutor, solicitando todos os dados
+     * necessários e fazendo todas as devidas verificações. */
     public static void cadastrar() {
         List<Setor> setores = GeralController.S.listarSetores();
         if (setores.isEmpty()){

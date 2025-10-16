@@ -1,7 +1,6 @@
 package view;
 import controller.GeralController;
 import model.Setor;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,6 +17,8 @@ public class CadastrarSetor {
      * em toda a aplicação. */
     static Scanner scan = new Scanner(System.in);
 
+    /** Método responsável por cadastrar um setor, solicitando todos os dados
+     * necessários e fazendo todas as devidas verificações. */
     public static void cadastrar() {
         System.out.println("\n------------> CADASTRO DO SETOR\n");
         System.out.println("Insira o ID do setor (S + numero. Ex.: S1): ");

@@ -19,6 +19,7 @@ public class BuscarAnimal {
      * em toda a aplicação. */
     static Scanner scan = new Scanner(System.in);
 
+    /** Método responsável por exibir o relatório com todos os dados do animal. */
     public static void exibirDados(){
         try {
             Animal animal = AtualizarAnimal.buscar();
