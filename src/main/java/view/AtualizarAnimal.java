@@ -14,19 +14,21 @@ public class AtualizarAnimal {
         boolean animalEscolhido = false;
         Animal animalEncontrado = null;
         String IDanimal;
-        System.out.println("\n--------------- ATUALIZAR ANIMAL ---------------\n");
         System.out.println("Insira o nome do animal:");
         String nome = scan.nextLine();
         List<Animal> animais = GeralController.A.buscarAnimalPorNome(nome.trim());
-        if (animais.isEmpty()){
+        while (animais.isEmpty()){
             System.out.println("Nenhum animal com este nome foi encontrado.");
+            System.out.println("Insira o nome do animal:");
+            nome = scan.nextLine();
+            animais = GeralController.A.buscarAnimalPorNome(nome.trim());
         }
         do {
             for (int i = 0; i < animais.size(); i++) {
                 Animal animal = animais.get(i);
                 System.out.println(animal.getID() + " - " + animal.getNome());
             }
-            System.out.println("\nInsira o ID do animal a ser atualizado: ");
+            System.out.println("\nInsira o ID do animal desejado: ");
             IDanimal = scan.nextLine();
             for (Animal animal : animais) {
                 if (animal.getID().equalsIgnoreCase(IDanimal.trim())) {
@@ -42,7 +44,8 @@ public class AtualizarAnimal {
     public static void exibirMenu() {
         Animal animal = buscar();
         int opcao;
-        System.out.println("\nAnimal escolhido: " + animal.getNome() + " (" + animal.getID() + ")");
+        System.out.println("\n--------------- ATUALIZAR ANIMAL ---------------\n");
+        System.out.println("Animal escolhido: " + animal.getNome() + " (" + animal.getID() + ")");
         do {
             System.out.println("\nSelecione a opcao desejada:");
             System.out.println("[1] Atualizar ID");

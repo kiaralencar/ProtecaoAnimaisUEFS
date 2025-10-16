@@ -1,4 +1,7 @@
 package view;
+import controller.GeralController;
+import model.Animal;
+import java.util.List;
 import java.util.Scanner;
 
 public class BuscarMenu {
@@ -8,33 +11,45 @@ public class BuscarMenu {
         do {
             System.out.println("\n---------------- MENU DE BUSCA ----------------");
             System.out.println("\nSelecione a opcao desejada:");
-            System.out.println("[1] Buscar animal");
-            System.out.println("[2] Buscar pessoa tutora");
-            System.out.println("[3] Buscar setor responsável");
+            System.out.println("[1] Relacao completa de animais");
+            System.out.println("[2] Relatorio animal");
+            System.out.println("[3] Relatorio pessoa tutora");
+            System.out.println("[4] Relatorio setor responsavel");
             System.out.println("[0] Voltar ao menu inicial");
             opcao = Main.validarOpcao();
             switch (opcao) {
                 case 1:
-                    System.out.println("Voce selecionou 1");
-                    // A implementar...
+                    exibirAnimais();
                     break;
                 case 2:
-                    System.out.println("Voce selecionou 2");
-                    // A implementar...
+                    BuscarAnimal.exibirDados();
                     break;
                 case 3:
-                    System.out.println("Voce selecionou 3");
-                    // A implementar...
+                    BuscarTutor.exibirDados();
+                    break;
+                case 4:
+                    BuscarSetor.exibirDados();
                     break;
                 case 0:
                     break;
                 default:
                     System.out.println("Opcao '" + opcao + "' eh invalida.");
-                    System.out.println("Por favor, selecione um numero inteiro entre 0 e 3.");
+                    System.out.println("Por favor, selecione um numero inteiro entre 0 e 4.");
                     System.out.println("Aperte Enter para voltar ao menu de busca.");
                     scan.nextLine();
                     break;
             }
         } while (opcao != 0);
+    }
+
+    public static void exibirAnimais(){
+        List<Animal> animais = GeralController.A.listarAnimais();
+        System.out.println("\n---------------- ANIMAIS CADASTRADOS ----------------\n");
+        for (int i = 0; i < animais.size(); i++){
+            Animal animal = animais.get(i);
+            System.out.println(animal.getID() + " - " + animal.getNome());
+        }
+        System.out.println("Aperte Enter para voltar ao menu de busca.");
+        scan.nextLine();
     }
 }

@@ -1,4 +1,9 @@
 package view;
+import controller.GeralController;
+import model.Animal;
+import model.Setor;
+import model.Tutor;
+
 import java.util.Scanner;
 
 public class DeletarMenu {
@@ -15,16 +20,13 @@ public class DeletarMenu {
             opcao = Main.validarOpcao();
             switch (opcao) {
                 case 1:
-                    System.out.println("Voce selecionou 1");
-                    // A implementar...
+                    deletarAnimal();
                     break;
                 case 2:
-                    System.out.println("Voce selecionou 2");
-                    // A implementar...
+                    deletarTutor();
                     break;
                 case 3:
-                    System.out.println("Voce selecionou 3");
-                    // A implementar...
+                    deletarSetor();
                     break;
                 case 0:
                     break;
@@ -36,5 +38,77 @@ public class DeletarMenu {
                     break;
             }
         } while (opcao != 0);
+    }
+
+    public static void deletarAnimal(){
+        Animal animal = AtualizarAnimal.buscar();
+        System.out.println("\nTem certeza que deseja deletar este animal?\nOBS.: Todos os dados serão perdidos.");
+        System.out.println("\n[1] Sim, tenho certeza.");
+        System.out.println("[2] Nao, desejo voltar.");
+        int resposta = Main.validarOpcao();
+        while (resposta != 1 && resposta != 2){
+            System.out.println("Opcao invalida. Por favor, selecione 1 ou 2.");
+            resposta = Main.validarOpcao();
+        }
+        if (resposta == 1){
+            boolean sucesso = GeralController.A.deletarAnimal(animal);
+            if (sucesso){
+                System.out.println("\n✅ Animal deletado com sucesso!");
+            } else {
+                System.out.println("\n❌ ERRO. Nao foi possivel deletar este animal.");
+            }
+        } else {
+            return;
+        }
+        System.out.println("Aperte Enter para voltar ao menu inicial.");
+        scan.nextLine();
+    }
+
+    public static void deletarTutor(){
+        Tutor tutor = AtualizarTutor.buscar();
+        System.out.println("\nTem certeza que deseja deletar este tutor?\nOBS.: Todos os dados serão perdidos.");
+        System.out.println("\n[1] Sim, tenho certeza.");
+        System.out.println("[2] Nao, desejo voltar.");
+        int resposta = Main.validarOpcao();
+        while (resposta != 1 && resposta != 2){
+            System.out.println("Opcao invalida. Por favor, selecione 1 ou 2.");
+            resposta = Main.validarOpcao();
+        }
+        if (resposta == 1){
+            boolean sucesso = GeralController.T.deletarTutor(tutor);
+            if (sucesso){
+                System.out.println("\n✅ Tutor deletado com sucesso!");
+            } else {
+                System.out.println("\n❌ ERRO. Nao foi possivel deletar este tutor.");
+            }
+        } else {
+            return;
+        }
+        System.out.println("Aperte Enter para voltar ao menu inicial.");
+        scan.nextLine();
+    }
+
+    public static void deletarSetor(){
+        Setor setor = AtualizarSetor.buscar();
+        System.out.println("\nTem certeza que deseja deletar este setor?\nOBS.: Todos os dados serão perdidos.");
+        System.out.println("\n[1] Sim, tenho certeza.");
+        System.out.println("[2] Nao, desejo voltar.");
+        int resposta = Main.validarOpcao();
+        while (resposta != 1 && resposta != 2){
+            System.out.println("Opcao invalida. Por favor, selecione 1 ou 2.");
+            resposta = Main.validarOpcao();
+        }
+        if (resposta == 1){
+            boolean sucesso = GeralController.S.deletarSetor(setor);
+            if (sucesso){
+                System.out.println("\n✅ Setor deletado com sucesso!");
+            } else {
+                System.out.println("\n❌ ERRO. Nao foi possivel deletar este setor.");
+            }
+        } else {
+            return;
+        }
+        System.out.println("Aperte Enter para voltar ao menu inicial.");
+        scan.nextLine();
     }
 }

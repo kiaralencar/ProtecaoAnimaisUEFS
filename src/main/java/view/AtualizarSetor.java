@@ -11,19 +11,21 @@ public class AtualizarSetor {
         boolean setorEscolhido = false;
         Setor setorEncontrado = null;
         String IDsetor;
-        System.out.println("\n--------------- ATUALIZAR SETOR ---------------\n");
         System.out.println("Insira o nome do setor:");
         String nome = scan.nextLine();
         List<Setor> setores = GeralController.S.buscarSetorPorNome(nome.trim());
-        if (setores.isEmpty()){
+        while (setores.isEmpty()){
             System.out.println("Nenhum setor com este nome foi encontrado.");
+            System.out.println("Insira o nome do setor:");
+            nome = scan.nextLine();
+            setores = GeralController.S.buscarSetorPorNome(nome.trim());
         }
         do {
             for (int i = 0; i < setores.size(); i++) {
                 Setor setor = setores.get(i);
                 System.out.println(setor.getID() + " - " + setor.getNome());
             }
-            System.out.println("\nInsira o ID do setor a ser atualizado: ");
+            System.out.println("\nInsira o ID do setor desejado: ");
             IDsetor = scan.nextLine();
             for (Setor setor : setores) {
                 if (setor.getID().equalsIgnoreCase(IDsetor.trim())) {
@@ -39,7 +41,8 @@ public class AtualizarSetor {
     public static void exibirMenu() {
         Setor setor = buscar();
         int opcao;
-        System.out.println("\nSetor escolhido: " + setor.getNome() + " (" + setor.getID() + ")");
+        System.out.println("\n--------------- ATUALIZAR SETOR ---------------\n");
+        System.out.println("Setor escolhido: " + setor.getNome() + " (" + setor.getID() + ")");
         do {
             System.out.println("\nSelecione a opcao desejada:");
             System.out.println("[1] Atualizar ID");

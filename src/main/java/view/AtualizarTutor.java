@@ -13,19 +13,21 @@ public class AtualizarTutor {
         boolean tutorEscolhido = false;
         Tutor tutorEncontrado = null;
         String IDtutor;
-        System.out.println("\n--------------- ATUALIZAR TUTOR ---------------\n");
         System.out.println("Insira o nome do tutor:");
         String nome = scan.nextLine();
         List<Tutor> tutores = GeralController.T.buscarTutorPorNome(nome.trim());
-        if (tutores.isEmpty()){
+        while (tutores.isEmpty()){
             System.out.println("Nenhum tutor com este nome foi encontrado.");
+            System.out.println("Insira o nome do tutor:");
+            nome = scan.nextLine();
+            tutores = GeralController.T.buscarTutorPorNome(nome.trim());
         }
         do {
             for (int i = 0; i < tutores.size(); i++) {
                 Tutor tutor = tutores.get(i);
                 System.out.println(tutor.getID() + " - " + tutor.getNome());
             }
-            System.out.println("\nInsira o ID do tutor a ser atualizado: ");
+            System.out.println("\nInsira o ID do tutor desejado: ");
             IDtutor = scan.nextLine();
             for (Tutor tutor : tutores) {
                 if (tutor.getID().equalsIgnoreCase(IDtutor.trim())) {
@@ -41,7 +43,8 @@ public class AtualizarTutor {
     public static void exibirMenu() {
         Tutor tutor = buscar();
         int opcao;
-        System.out.println("\nTutor escolhido: " + tutor.getNome() + " (" + tutor.getID() + ")");
+        System.out.println("\n--------------- ATUALIZAR TUTOR ---------------\n");
+        System.out.println("Tutor escolhido: " + tutor.getNome() + " (" + tutor.getID() + ")");
         do {
             System.out.println("\nSelecione a opcao desejada:");
             System.out.println("[1] Atualizar ID");

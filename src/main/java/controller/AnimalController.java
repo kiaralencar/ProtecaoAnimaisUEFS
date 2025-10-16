@@ -130,7 +130,7 @@ public class AnimalController {
             setor.getAnimais().remove(animal);
         }
         animal.setSetor(null); // Setor do animal agora é nulo
-        animais.remove(animal); // Remove o animal do Map de animais
+        animais.remove(animal.getID()); // Remove o animal do Map de animais
         salvarDadosAnimal();
         return true;
     }
@@ -225,13 +225,9 @@ public class AnimalController {
      *
      * @return Uma lista contendo os nomes todos os animais.
      */
-    public List<String> listarAnimais (){
+    public List<Animal> listarAnimais (){
         if (animais.isEmpty()) return new ArrayList<>();
-        List<String> nomesAnimais = new ArrayList<>();
-        for (Animal animal : animais.values()){
-            nomesAnimais.add(animal.getNome());
-        }
-        return nomesAnimais;
+        return new ArrayList<Animal>(animais.values());
     }
 
     /** Lista todos os tutores do animal.

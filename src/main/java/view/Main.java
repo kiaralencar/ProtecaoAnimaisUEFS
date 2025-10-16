@@ -40,12 +40,10 @@ public class Main {
                     AtualizarMenu.exibirMenu();
                     break;
                 case 3:
-                    System.out.println("Voce selecionou 3");
-                    // A implementar...
+                    BuscarMenu.exibirMenu();
                     break;
                 case 4:
-                    System.out.println("Voce selecionou 4");
-                    // A implementar...
+                    DeletarMenu.exibirMenu();
                     break;
                 case 0:
                     System.out.println("\n🐾🐾🐾 Sistema encerrado! 🐾🐾🐾");
