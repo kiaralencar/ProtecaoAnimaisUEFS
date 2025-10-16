@@ -12,8 +12,17 @@ import java.util.Scanner;
  * @version 1.3
  */
 public class Main {
+
+    /** Um objeto Scanner estático e compartilhado para gerenciar a entrada do usuário
+     * em toda a aplicação. */
     static Scanner scan = new Scanner(System.in);
 
+    /** Valida a entrada do usuário para garantir que seja um número inteiro.
+     * O método continua solicitando a entrada até que um valor válido seja fornecido,
+     * prevenindo exceções de tipo (`InputMismatchException`).
+     *
+     * @return O valor inteiro digitado pelo usuário.
+     */
     public static int validarOpcao() {
         int opcao = -1;
         boolean opcaoValida = false;
@@ -30,6 +39,7 @@ public class Main {
         return opcao;
     }
 
+    /** Método principal, responsável pelo o fluxo do programa. */
     public static void main(String[] args) {
         int opcao;
         do {

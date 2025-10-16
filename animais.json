@@ -8,7 +8,7 @@
     "sexo" : "Femea",
     "situacao" : "Disponivel",
     "setorID" : "S1",
-    "tutoresIDs" : [ "T1", "T9" ]
+    "tutoresIDs" : [ ]
   },
   "A2" : {
     "id" : "A2",
@@ -52,7 +52,7 @@
     "sexo" : "Femea",
     "situacao" : "Disponivel",
     "setorID" : "S1",
-    "tutoresIDs" : [ "T1", "T9" ]
+    "tutoresIDs" : [ ]
   },
   "A6" : {
     "id" : "A6",

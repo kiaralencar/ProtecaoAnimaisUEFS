@@ -4,6 +4,7 @@ import model.Animal;
 import model.Setor;
 import java.time.DateTimeException;
 import java.time.YearMonth;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,8 +17,18 @@ import java.util.Scanner;
  * @see Setor
  * */
 public class AtualizarAnimal {
+
+    /** Um objeto Scanner estático e compartilhado para gerenciar a entrada do usuário
+     * em toda a aplicação. */
     static Scanner scan = new Scanner(System.in);
 
+    /** Método responsável por buscar o animal desejado pelo usuário.
+     * Primeiramente, é solocitado o nome do animal. Depois de serem
+     * listados todos os animais com o nome inserido, é solicitado
+     * o ID do animal desejado.
+     *
+     * @return Um objeto do tipo {@link Animal}
+     */
     public static Animal buscar(){
         boolean animalEscolhido = false;
         Animal animalEncontrado = null;
@@ -49,6 +60,8 @@ public class AtualizarAnimal {
         return animalEncontrado;
     }
 
+    /** Método responsável por exibir o menu de atualização do animal.
+     * Este menu lista as opções de atualização disponíveis no sistema. */
     public static void exibirMenu() {
         Animal animal = buscar();
         int opcao;
@@ -103,6 +116,8 @@ public class AtualizarAnimal {
         } while (opcao != 0);
     }
 
+    /** Método responsável por atualizar o ID do animal.
+     * O ID é solicitado e validado antes de ser atualizado. */
     public static void atualizarID(Animal animal){
         System.out.println("Insira o novo ID do animal (A + numero. Ex.: A1): ");
         String ID = scan.nextLine();
@@ -120,6 +135,7 @@ public class AtualizarAnimal {
         scan.nextLine();
     }
 
+    /** Método responsável por atualizar o nome do animal. */
     public static void atualizarNome(Animal animal){
         System.out.println("Insira o novo nome do animal: ");
         String nome = scan.nextLine();
@@ -133,6 +149,7 @@ public class AtualizarAnimal {
         scan.nextLine();
     }
 
+    /** Método responsável por atualizar a espécie do animal. */
     public static void atualizarEspecie(Animal animal){
         System.out.println("Insira a nova especie do animal: ");
         String especie = scan.nextLine();
@@ -146,6 +163,7 @@ public class AtualizarAnimal {
         scan.nextLine();
     }
 
+    /** Método responsável por atualizar a raça do animal. */
     public static void atualizarRaca(Animal animal){
         System.out.println("Insira a nova raca do animal: ");
         String raca = scan.nextLine();
@@ -158,7 +176,8 @@ public class AtualizarAnimal {
         System.out.println("Aperte Enter para voltar ao menu de atualizacao.");
         scan.nextLine();
     }
-
+    /** Método responsável por atualizar a data de nascimento do animal.
+     * A data é solicitada e validada antes de ser atualizada. */
     public static void atualizarData(Animal animal){
         boolean dataValida = false;
         int mes = 0, ano = 0;
@@ -184,6 +203,7 @@ public class AtualizarAnimal {
         scan.nextLine();
     }
 
+    /** Método responsável por atualizar o sexo do animal. */
     public static void atualizarSexo(Animal animal){
         System.out.println("Insira o novo sexo do animal [F/M]: ");
         String sexo = scan.nextLine();
@@ -203,6 +223,7 @@ public class AtualizarAnimal {
         scan.nextLine();
     }
 
+    /** Método responsável por atualizar a situação do animal. */
     public static void atualizarSituacao(Animal animal){
         boolean situacaoValida = false;
         String situacao = "";
@@ -243,20 +264,34 @@ public class AtualizarAnimal {
         scan.nextLine();
     }
 
+    /** Método responsável por atualizar o setor do animal.
+     * Antes do setor ser atualizado, verifica-se se há setores ativos. */
     public static void atualizarSetor(Animal animal){
         List<Setor> setores = GeralController.S.listarSetores();
+        List<Setor> setoresAtivos = new ArrayList<>();
+        for (int i = 0; i < setores.size(); i++) {
+            Setor setorAtual = setores.get(i);
+            boolean ativo = GeralController.S.setorAtivo(setorAtual);
+            if (ativo) setoresAtivos.add(setorAtual);
+        }
+        if (setoresAtivos.isEmpty()){
+            System.out.println("Ops! Ainda nao ha setores ativos. Nao eh possivel atualizar o");
+            System.out.println("setor do animal pois nao ha nenhum setor ativo.");
+            System.out.println("Aperte Enter para voltar ao menu de atualizacao.");
+            scan.nextLine();
+            return;
+        }
         boolean setorEscolhido = false;
         Setor setorAnimal = null;
         do {
             System.out.println("\nSetores ativos:");
-            for (int i = 0; i < setores.size(); i++) {
-                Setor setorAtivo = setores.get(i);
+            for (Setor setorAtivo : setoresAtivos){
                 System.out.println(setorAtivo.getID() + " - " + setorAtivo.getNome());
             }
-            System.out.println("\nInsira o ID do novo setor do animal: ");
+            System.out.println("\nInsira o ID do novo setor: ");
             String IDsetor = scan.nextLine();
-            for (Setor setor : setores){
-                if (setor.getID().equalsIgnoreCase(IDsetor.trim())){
+            for (Setor setor : setores) {
+                if (setor.getID().equalsIgnoreCase(IDsetor.trim())) {
                     setorAnimal = setor;
                     setorEscolhido = true;
                     break;

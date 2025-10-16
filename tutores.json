@@ -30,7 +30,7 @@
     "telefone" : "77441100223",
     "email" : "henjul@shows.br",
     "setorID" : "S3",
-    "animaisIDs" : [ "A6","A9" ]
+    "animaisIDs" : [ "A6", "A9" ]
   },
   "T9" : {
     "id" : "T9",
@@ -49,7 +49,7 @@
   },
   "T1" : {
     "id" : "T1",
-    "nome" : "Maria",
+    "nome" : "Ana",
     "endereco" : {
       "rua" : "A",
       "bairro" : "B",
@@ -58,7 +58,7 @@
       "estado" : "E"
     },
     "telefone" : "73765413278",
-    "email" : "maria@gmail.com",
+    "email" : "ana@gmail.com",
     "setorID" : "S1",
     "animaisIDs" : [ ]
   },

@@ -95,7 +95,7 @@ public class AnimalControllerTest {
      * que o ID seja inserido corretamente. */
     @Test
     void validarIDTest(){
-        boolean resultado = A.validarIDAnimal("A4");
+        boolean resultado = A.validarIDAnimal("A21");
         assertTrue(resultado);
     }
 

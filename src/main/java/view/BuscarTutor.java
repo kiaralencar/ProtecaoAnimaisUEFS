@@ -13,6 +13,9 @@ import java.util.Scanner;
  * @see Tutor
  * */
 public class BuscarTutor {
+
+    /** Um objeto Scanner estático e compartilhado para gerenciar a entrada do usuário
+     * em toda a aplicação. */
     static Scanner scan = new Scanner(System.in);
 
     public static void exibirDados(){
