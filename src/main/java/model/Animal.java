@@ -83,7 +83,6 @@ public class Animal {
         this.situacao = situacao;
         this.setorID = setorID;
         this.tutoresID = tutoresID;
-        this.tutores = new ArrayList<>();
     }
 
     /**
