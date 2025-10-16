@@ -36,11 +36,9 @@ public class AtualizarAnimal {
         System.out.println("Insira o nome do animal:");
         String nome = scan.nextLine();
         List<Animal> animais = GeralController.A.buscarAnimalPorNome(nome.trim());
-        while (animais.isEmpty()){
+        if (animais.isEmpty()){
             System.out.println("Nenhum animal com este nome foi encontrado.");
-            System.out.println("Insira o nome do animal:");
-            nome = scan.nextLine();
-            animais = GeralController.A.buscarAnimalPorNome(nome.trim());
+            return null;
         }
         do {
             for (int i = 0; i < animais.size(); i++) {
@@ -64,6 +62,7 @@ public class AtualizarAnimal {
      * Este menu lista as opções de atualização disponíveis no sistema. */
     public static void exibirMenu() {
         Animal animal = buscar();
+        if (animal == null) return;
         int opcao;
         System.out.println("\n--------------- ATUALIZAR ANIMAL ---------------\n");
         System.out.println("Animal escolhido: " + animal.getNome() + " (" + animal.getID() + ")");

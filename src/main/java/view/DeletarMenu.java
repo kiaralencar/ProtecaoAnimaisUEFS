@@ -55,6 +55,7 @@ public class DeletarMenu {
      * apenas é concretizada após a confirmação do usuário. */
     public static void deletarAnimal(){
         Animal animal = AtualizarAnimal.buscar();
+        if (animal == null) return;
         System.out.println("\nTem certeza que deseja deletar este animal?\nOBS.: Todos os dados serão perdidos.");
         System.out.println("\n[1] Sim, tenho certeza.");
         System.out.println("[2] Nao, desejo voltar.");
@@ -81,6 +82,7 @@ public class DeletarMenu {
      * apenas é concretizada após a confirmação do usuário. */
     public static void deletarTutor(){
         Tutor tutor = AtualizarTutor.buscar();
+        if (tutor == null) return;
         System.out.println("\nTem certeza que deseja deletar este tutor?\nOBS.: Todos os dados serão perdidos.");
         System.out.println("\n[1] Sim, tenho certeza.");
         System.out.println("[2] Nao, desejo voltar.");
@@ -107,6 +109,7 @@ public class DeletarMenu {
      * apenas é concretizada após a confirmação do usuário. */
     public static void deletarSetor(){
         Setor setor = AtualizarSetor.buscar();
+        if (setor == null) return;
         System.out.println("\nTem certeza que deseja deletar este setor?\nOBS.: Todos os dados serão perdidos.");
         System.out.println("\n[1] Sim, tenho certeza.");
         System.out.println("[2] Nao, desejo voltar.");

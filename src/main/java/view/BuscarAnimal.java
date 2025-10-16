@@ -23,6 +23,7 @@ public class BuscarAnimal {
     public static void exibirDados(){
         try {
             Animal animal = AtualizarAnimal.buscar();
+            if (animal == null) return;
             System.out.println("--------------- RELATORIO DO ANIMAL ---------------");
             System.out.println("\nID: " + animal.getID());
             System.out.println("Nome: " + animal.getNome());

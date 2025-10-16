@@ -21,6 +21,7 @@ public class BuscarTutor {
     /** Método responsável por exibir o relatório com todos os dados do tutor. */
     public static void exibirDados(){
         Tutor tutor = AtualizarTutor.buscar();
+        if (tutor == null) return;
         System.out.println("--------------- RELATORIO DO TUTOR ---------------");
         System.out.println("\nID: " + tutor.getID());
         System.out.println("Nome: " + tutor.getNome());

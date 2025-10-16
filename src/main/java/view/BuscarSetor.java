@@ -21,6 +21,7 @@ public class BuscarSetor {
     /** Método responsável por exibir o relatório com todos os dados do setor. */
     public static void exibirDados(){
         Setor setor = AtualizarSetor.buscar();
+        if (setor == null) return;
         System.out.println("--------------- RELATORIO DO SETOR ---------------");
         System.out.println("\nID: " + setor.getID());
         System.out.println("Nome: " + setor.getNome());

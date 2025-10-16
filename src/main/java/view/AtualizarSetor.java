@@ -32,11 +32,9 @@ public class AtualizarSetor {
         System.out.println("Insira o nome do setor:");
         String nome = scan.nextLine();
         List<Setor> setores = GeralController.S.buscarSetorPorNome(nome.trim());
-        while (setores.isEmpty()){
+        if (setores.isEmpty()){
             System.out.println("Nenhum setor com este nome foi encontrado.");
-            System.out.println("Insira o nome do setor:");
-            nome = scan.nextLine();
-            setores = GeralController.S.buscarSetorPorNome(nome.trim());
+            return null;
         }
         do {
             for (int i = 0; i < setores.size(); i++) {
@@ -60,6 +58,7 @@ public class AtualizarSetor {
      * Este menu lista as opções de atualização disponíveis no sistema. */
     public static void exibirMenu() {
         Setor setor = buscar();
+        if (setor == null) return;
         int opcao;
         System.out.println("\n--------------- ATUALIZAR SETOR ---------------\n");
         System.out.println("Setor escolhido: " + setor.getNome() + " (" + setor.getID() + ")");

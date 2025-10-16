@@ -36,11 +36,9 @@ public class AtualizarTutor {
         System.out.println("Insira o nome do tutor:");
         String nome = scan.nextLine();
         List<Tutor> tutores = GeralController.T.buscarTutorPorNome(nome.trim());
-        while (tutores.isEmpty()){
+        if (tutores.isEmpty()){
             System.out.println("Nenhum tutor com este nome foi encontrado.");
-            System.out.println("Insira o nome do tutor:");
-            nome = scan.nextLine();
-            tutores = GeralController.T.buscarTutorPorNome(nome.trim());
+            return null;
         }
         do {
             for (int i = 0; i < tutores.size(); i++) {
@@ -64,6 +62,7 @@ public class AtualizarTutor {
      * Este menu lista as opções de atualização disponíveis no sistema. */
     public static void exibirMenu() {
         Tutor tutor = buscar();
+        if (tutor == null) return;
         int opcao;
         System.out.println("\n--------------- ATUALIZAR TUTOR ---------------\n");
         System.out.println("Tutor escolhido: " + tutor.getNome() + " (" + tutor.getID() + ")");
