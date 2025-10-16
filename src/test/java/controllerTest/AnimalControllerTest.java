@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import static org.junit.Assert.*;
 
@@ -84,8 +85,8 @@ public class AnimalControllerTest {
         assertEquals("Femea", animal.getSexo());
         assertEquals("Disponivel", animal.getSituacao());
         assertNull(animal.getSetor());
-        assertNotNull(animal.getTutores());
-        assertTrue(animal.getTutores().isEmpty());
+        assertNotNull(animal.getTutoresIDs());
+        assertTrue(animal.getTutoresIDs().isEmpty());
         YearMonth dataEsperada = YearMonth.of(2020, 9);
         assertEquals(dataEsperada, animal.getData());
     }
@@ -182,60 +183,6 @@ public class AnimalControllerTest {
         assertFalse(resultado);
     }
 
-    /** Testa o método adicionarTutor para garantir que o tutor seja
-     * adicionado à lista de tutores do animal corretamente. */
-    @Test
-    void adicionarTutorTest(){
-        boolean resultado = A.adicionarTutor(animal, tutor);
-        assertTrue(resultado);
-    }
-
-    /** Não permite que seja adicionado um tutor nulo. */
-    @Test
-    void adicionarTutorInexistenteTest(){
-        boolean resultado = A.adicionarTutor(animal, null);
-        assertFalse(resultado);
-    }
-
-    /** Não permite que seja adicionado um tutor duplicado. */
-    @Test
-    void adicionarTutorDuplicadoTest(){
-        A.adicionarTutor(animal, tutor);
-        boolean resultado = A.adicionarTutor(animal, tutor);
-        assertFalse("Nao eh possivel adicionar tutores duplicados.", resultado);
-    }
-
-    /** Testa o método removerTutor para garantir que o tutor seja
-     * removido da lista de tutores do animal corretamente. */
-    @Test
-    void removerTutorTest(){
-        A.adicionarTutor(animal, tutor);
-        boolean resultado = A.removerTutor(animal, tutor);
-        assertTrue("Tutor removido com sucesso!", resultado);
-    }
-
-    /** Não permite que seja removido um tutor nulo. */
-    @Test
-    void removerTutorNuloTest(){
-        boolean resultado = A.removerTutor(animal, tutor);
-        assertFalse("Nao foi possivel remover este tutor.", resultado);
-    }
-
-    /** Testa o método adicionarSetor para garantir que o setor do
-     * animal seja adicionado corretamente. */
-    @Test
-    void adicionarSetorTest(){
-        boolean resultado = A.adicionarSetor(animal, setor);
-        assertTrue(resultado);
-    }
-
-    /** Não permite que seja adicionado um setor nulo. */
-    @Test
-    void adicionarSetorNuloTest(){
-        boolean resultado = A.adicionarSetor(animal, null);
-        assertFalse(resultado);
-    }
-
     /** Testa o método buscarAnimalPorID para garantir que o animal
      * seja encontrado ao ser buscado pelo seu ID. */
     @Test
@@ -268,22 +215,6 @@ public class AnimalControllerTest {
         List<Animal> listaAnimais = A.buscarAnimalPorNome("Julio");
         boolean naoVazia = !listaAnimais.isEmpty();
         assertFalse(naoVazia);
-    }
-
-    /** Testa o método buscarSetor para encontrar em qual
-     * setor o animal está situado. */
-    @Test
-    void buscarSetorTest(){
-        A.adicionarSetor(animal, setor);
-        Setor setor2 = A.buscarSetor(animal);
-        assertNotNull("Setor encontrado com sucesso!", setor2);
-    }
-
-    /** Não permite buscar um setor nulo. */
-    @Test
-    void buscarSetorNuloTest(){
-        Setor setor2 = A.buscarSetor(animal);
-        assertNull("Nao foi possivel encontrar o setor do animal.", setor2);
     }
 
     /** Testa o método listarAnimais para pontuar todos
@@ -320,12 +251,12 @@ public class AnimalControllerTest {
                 "maria@gmail.com", "S1", new ArrayList<>());
         Tutor tutor3 = T.criarTutor("T3", "Braga", endereco, "73723410078",
                 "braga@gmail.com", "S1", new ArrayList<>());
-        A.adicionarTutor(animal, tutor);
-        A.adicionarTutor(animal, tutor2);
-        A.adicionarTutor(animal, tutor3);
+        animal = A.criarAnimal("A1", "Lilica", "Gato", "Siames",
+                YearMonth.of(2020, 9), "Femea", "Disponivel",
+                "S1", new ArrayList<>(Arrays.asList("T1", "T2", "T3")));
         List<String> nomes = A.listarTutores(animal);
         boolean listaCompleta = !nomes.isEmpty();
-        assertTrue("Os tutores foram listados com sucesso!", listaCompleta);
+        assertTrue(listaCompleta);
     }
 
     /** Não permite listar tutores inexistentes, ou seja, aqueles que não
@@ -520,7 +451,6 @@ public class AnimalControllerTest {
     @Test
     void atualizarSetorTest(){
         A.cadastrarAnimal(animal);
-        A.adicionarSetor(animal, setor);
         Setor setor2 = S.criarSetor("S4", "Modulo 7", new ArrayList<>(), new ArrayList<>());
         boolean resultado = A.atualizarSetor(animal, setor2);
         assertTrue("O setor foi atualizado com sucesso!", resultado);
@@ -537,10 +467,7 @@ public class AnimalControllerTest {
     @Test
     void atualizarSetorIgualTest(){
         A.cadastrarAnimal(animal);
-        A.adicionarSetor(animal, setor);
         boolean resultado = A.atualizarSetor(animal, setor);
         assertFalse(resultado);
     }
 }
-
-// testar buscaranimalpornome

@@ -1,6 +1,12 @@
 package view;
 import java.util.Scanner;
 
+/** Classe responsável por gerenciar a interface de usuário (View) para o menu
+ * de cadastro, em que o usuário decide qual entidade ele deseja cadastrar.
+ *
+ * @author Kiara Alencar
+ * @version 1.3
+ * */
 public class CadastrarMenu{
     static Scanner scan = new Scanner(System.in);
     public static void exibirMenu() {

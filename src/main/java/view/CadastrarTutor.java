@@ -1,17 +1,23 @@
 package view;
-
 import controller.GeralController;
 import model.Animal;
 import model.Endereco;
 import model.Setor;
 import model.Tutor;
-
-import java.time.DateTimeException;
-import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/** Classe responsável por gerenciar a interface de usuário (View) para a coleta
+ * e registro de dados de um novo objeto {@link Tutor} no sistema.
+ *
+ * @author Kiara Alencar
+ * @version 1.7
+ * @see Animal
+ * @see Setor
+ * @see Tutor
+ * @see Endereco
+ * */
 public class CadastrarTutor {
     static Scanner scan = new Scanner(System.in);
 

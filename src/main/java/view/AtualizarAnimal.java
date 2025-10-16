@@ -7,6 +7,14 @@ import java.time.YearMonth;
 import java.util.List;
 import java.util.Scanner;
 
+/** Classe responsável por gerenciar a interface de usuário (View) para a busca,
+ * seleção e atualização de dados de um objeto {@link Animal}.
+ *
+ * @author Kiara Alencar
+ * @version 1.6
+ * @see Animal
+ * @see Setor
+ * */
 public class AtualizarAnimal {
     static Scanner scan = new Scanner(System.in);
 

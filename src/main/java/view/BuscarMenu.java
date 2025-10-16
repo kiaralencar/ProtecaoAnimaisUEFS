@@ -4,6 +4,12 @@ import model.Animal;
 import java.util.List;
 import java.util.Scanner;
 
+/** Classe responsável por gerenciar a interface de usuário (View) para o menu
+ * de busca, em que o usuário decide qual entidade ele deseja buscar.
+ *
+ * @author Kiara Alencar
+ * @version 1.1
+ * */
 public class BuscarMenu {
     static Scanner scan = new Scanner(System.in);
     public static void exibirMenu() {

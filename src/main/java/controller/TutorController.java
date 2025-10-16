@@ -28,7 +28,7 @@ public class TutorController {
     private final TutorDAO tutorDAO;
 
     /** Um mapa que armazena objetos do tipo {@link Tutor}, usando o ID como chave. */
-    private static HashMap<String, Tutor> tutores;
+    public static HashMap<String, Tutor> tutores;
 
     /** Restaura o relacionamento bidirecional entre Tutor e Animal/Setor
      * após a desserialização do JSON, pois a referência de volta foi ignorada
@@ -216,32 +216,6 @@ public class TutorController {
         return new ArrayList<>();
     }
 
-    /** Adiciona o setor do tutor.
-     *
-     * @param tutor O objeto {@link Tutor} a quem será adicionado o setor.
-     * @param setor O objeto {@link Setor} que será adicionado ao tutor.
-     * @return {@code true}, caso o setor seja adiconado com sucesso, ou {@code false}, caso contrário.
-     */
-    public boolean adicionarSetor(Tutor tutor, Setor setor){
-        if (tutor != null && setor != null && tutor.getSetor() == null && !setor.getTutores().contains(tutor)){
-            tutor.setSetor(setor);
-            setor.getTutores().add(tutor);
-            salvarDadosTutor();
-            return true;
-        }
-        return false;
-    }
-
-    /** Busca em que setor está o tutor.
-     *
-     * @param tutor O objeto {@link Animal} a quem será feita a busca.
-     * @return O setor em que está o tutor, ou {@code null} se houver algum erro.
-     */
-    public Setor buscarSetor(Tutor tutor){
-        if (tutor != null && tutor.getSetor()!= null) return tutor.getSetor();
-        return null;
-    }
-
     /** Lista todos os tutores cadastrados no mapa de tutores.
      *
      * @return Uma lista contendo os nomes todos os tutores.
@@ -260,9 +234,13 @@ public class TutorController {
      * @param tutor O objeto {@link Setor} a ter a lista de animais procurada.
      * @return Uma lista com os nomes de todos os animais do tutor.
      */
-    public List<Animal> listarAnimais (Tutor tutor){
-        if (tutor.getAnimais().isEmpty()) return new ArrayList<>();
-        return tutor.getAnimais();
+    public List<String> listarAnimais (Tutor tutor){
+        if (tutor == null || tutor.getAnimaisIDs().isEmpty()) return new ArrayList<>();
+        List<String> nomeAnimais = new ArrayList<>();
+        for (String animalID : tutor.getAnimaisIDs()){
+            nomeAnimais.add(animalID);
+        }
+        return nomeAnimais;
     }
 
     /** Atualiza o ID do tutor.
@@ -354,6 +332,7 @@ public class TutorController {
     public boolean atualizarSetor(Tutor tutor, Setor novoSetor){
         if (tutor != null && novoSetor != null && tutor.getSetor() != novoSetor
                 && !novoSetor.getTutores().contains(tutor)){
+            if (tutor.getSetorID().equalsIgnoreCase(novoSetor.getID().trim())) return false;
             if (tutor.getSetor() != null) { // Caso o tutor não seja recém criado
                 if (tutor.getSetor().getTutores().size() == 1 && !tutor.getSetor().getAnimais().isEmpty()) {
                     return false; // Caso o setor tenha animais e apenas 1 tutor

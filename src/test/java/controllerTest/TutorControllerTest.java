@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -237,45 +238,14 @@ public class TutorControllerTest {
         assertFalse(naoVazia);
     }
 
-    /** Testa o método adicionarSetor para garantir que o setor do
-     * tutor seja adicionado corretamente. */
-    @Test
-    void adicionarSetorTest(){
-        boolean resultado = T.adicionarSetor(tutor, setor);
-        assertTrue(resultado);
-    }
-
-    /** Não permite que seja adicionado um setor nulo. */
-    @Test
-    void adicionarSetorNuloTest(){
-        boolean resultado = T.adicionarSetor(tutor, null);
-        assertFalse(resultado);
-    }
-
-    /** Testa o método buscarSetor para encontrar em qual
-     * setor o tutor está situado. */
-    @Test
-    void buscarSetorTest(){
-        T.adicionarSetor(tutor, setor);
-        Setor setor2 = T.buscarSetor(tutor);
-        assertNotNull(setor2);
-    }
-
-    /** Não permite buscar um setor nulo. */
-    @Test
-    void buscarSetorNuloTest(){
-        Setor setor2 = T.buscarSetor(tutor);
-        assertNull(setor2);
-    }
-
     /** Testa o método listarTutores para pontuar todos os
      * tutores cadastrados. */
     @Test
     void listarTutoresTest(){
         Tutor tutor2 = T.criarTutor("T5", "Bia", null, "76543212345",
-                "bia@outlook.com", null, new ArrayList<>());
+                "bia@outlook.com", "S1", new ArrayList<>());
         Tutor tutor3 = T.criarTutor("T6", "Joana", null, "76547612345",
-                "jojo@gmail.com", null, new ArrayList<>());
+                "jojo@gmail.com", "S1", new ArrayList<>());
         T.cadastrarTutor(tutor);
         T.cadastrarTutor(tutor2);
         T.cadastrarTutor(tutor3);
@@ -298,15 +268,13 @@ public class TutorControllerTest {
      * os animais do tutor. */
     @Test
     void listarAnimaisTest(){
-        T.adicionarSetor(tutor, setor);
         Animal animal2 = A.criarAnimal("A2", "Beth", "Cachorro", "Poodle",
-                YearMonth.of(2021, 2), "Femea", "Tratamento", null, new ArrayList<>());
+                YearMonth.of(2021, 2), "Femea", "Tratamento", "S1", new ArrayList<>());
         Animal animal3 = A.criarAnimal("A3", "Tony", "Cachorro", "Salsicha",
-                YearMonth.of(2019, 3), "Macho", "Observacao", null, new ArrayList<>());
-        S.adicionarAnimal(setor, animal);
-        S.adicionarAnimal(setor, animal2);
-        S.adicionarAnimal(setor, animal3);
-        List<Animal> animais = T.listarAnimais(tutor);
+                YearMonth.of(2019, 3), "Macho", "Observacao", "S1", new ArrayList<>());
+        tutor = T.criarTutor("T1", "Ana", endereco, "73765413278",
+                "ana@gmail.com", "S1", new ArrayList<>(Arrays.asList("A1", "A2", "A3")));
+        List<String> animais = T.listarAnimais(tutor);
         boolean listaCompleta = !animais.isEmpty();
         assertTrue(listaCompleta);
     }
@@ -315,7 +283,7 @@ public class TutorControllerTest {
      * foram adicionados à lista de animais do tutor. */
     @Test
     void listarAnimaisInexistentesTest(){
-        List<Animal> animais = T.listarAnimais(tutor);
+        List<String> animais = T.listarAnimais(tutor);
         boolean listaCompleta = !animais.isEmpty();
         assertFalse(listaCompleta);
     }
@@ -497,10 +465,7 @@ public class TutorControllerTest {
     /** Não permite a atualização para o mesmo setor. */
     @Test
     void atualizarSetorIgualTest(){
-        T.adicionarSetor(tutor, setor);
         boolean resultado = T.atualizarSetor(tutor, setor);
         assertFalse(resultado);
     }
 }
-
-// testar buscartutorpornome

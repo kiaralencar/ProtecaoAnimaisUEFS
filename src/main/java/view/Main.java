@@ -2,6 +2,15 @@ package view;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/** Classe principal do sistema "Proteção de Animais — UEFS".
+ * <p>
+ * Responsável por inicializar a aplicação (método main), exibir
+ * o menu de navegação principal e delegar o controle para os módulos
+ * específicos (cadastro, atualização, busca e deleção).
+ *
+ * @author Kiara Alencar
+ * @version 1.3
+ */
 public class Main {
     static Scanner scan = new Scanner(System.in);
 

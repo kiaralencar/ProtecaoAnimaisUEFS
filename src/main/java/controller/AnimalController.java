@@ -9,7 +9,8 @@ import java.time.YearMonth;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import static controller.SetorController.setores;
+import static controller.TutorController.tutores;
 
 /**
  * A classe AnimalController é responsável por gerenciar as operações
@@ -18,7 +19,7 @@ import java.util.Map;
  * controle/serviço que orquestra a manipulação dos dados dos animais.
  *
  * @author Kiara Alencar
- * @version 1.3
+ * @version 1.8
  * @see Animal
  * @see Setor
  * @see Tutor
@@ -33,6 +34,7 @@ public class AnimalController {
     /** Construtor  da classe AnimalController.
      * <p>
      * Incializa o DAO do animal e carrega os dados do JSON para o Map de animais.
+     * Além disso, liga as referências ignoradas durante a serialização do JSON.
      *
      */
     public AnimalController(){
@@ -91,7 +93,7 @@ public class AnimalController {
      * @param sexo       O sexo do animal.
      * @param situacao   A situacao do animal.
      * @param setorID    O ID do setor do animal.
-     * @param tutoresID  A lista de IDs dos tutores.
+     * @param tutoresID  A lista de IDs dos tutores do animal.
      * @return Uma nova instância de {@link Animal}.
      */
     public Animal criarAnimal(String ID, String nome, String especie, String raca, YearMonth data,
@@ -129,7 +131,7 @@ public class AnimalController {
     /** Calcula a idade aproximada do animal.
      *
      * @param dataNascimento A data de nascimento do animal.
-     * @return A idade aproximada do animal
+     * @return A idade aproximada do animal.
      */
     public int calcularIdade(YearMonth dataNascimento){
         YearMonth dataHoje = YearMonth.now();
@@ -173,71 +175,24 @@ public class AnimalController {
      */
     public boolean deletarAnimal(Animal animal){
         if (animal == null) return false;
-        if (animal.getTutores() != null) {
-            for (Tutor tutor : animal.getTutores()) {
+        if (animal.getTutoresIDs() != null) {
+            for (String tutorID : animal.getTutoresIDs()) {
+                Tutor tutor = tutores.get(tutorID);
                 if (tutor.getAnimais() != null) {
-                    tutor.getAnimais().remove(animal); // Remove o animal dos tutores do animal a ser deletado
+                    tutor.getAnimaisIDs().remove(animal.getID());
                 }
             }
         }
-        animal.getTutores().clear(); // Apaga a lista de tutores
-        Setor setor = animal.getSetor(); // Setor em que o animal está
-        if (setor != null){
+        animal.getTutoresIDs().clear();
+        String setorID = animal.getSetorID();
+        if (setorID != null){
+            Setor setor = setores.get(setorID);
             setor.getAnimais().remove(animal);
         }
-        animal.setSetor(null); // Setor do animal agora é nulo
-        animais.remove(animal.getID()); // Remove o animal do Map de animais
+        animal.setSetor(null);
+        animais.remove(animal.getID());
         salvarDadosAnimal();
         return true;
-    }
-
-    /** Adiciona um tutor à lista de tutores do animal.
-     *
-     * @param animal O objeto {@link Animal} a quem será adicionado o tutor.
-     * @param tutor O objeto {@link Tutor} que será adicionado à lista de tutores do animal.
-     * @return {@code true}, caso o tutor seja adicionado com sucesso, ou {@code false}, caso contrário.
-     */
-    public boolean adicionarTutor(Animal animal, Tutor tutor){
-        if (animal != null && tutor != null && !animal.getTutores().contains(tutor)){
-            animal.getTutores().add(tutor);
-            tutor.getAnimais().add(animal);
-            salvarDadosAnimal();
-            return true;
-        }
-        return false;
-    }
-
-    /** Remove um tutor da lista de tutores do animal.
-     *
-     * @param animal O objeto {@link Animal} de quem será removido o tutor.
-     * @param tutor O objeto {@link Tutor} que será removido da lista de tutores do animal.
-     * @return {@code true}, caso o tutor seja removido com sucesso, ou {@code false}, caso contrário.
-     */
-    public boolean removerTutor(Animal animal, Tutor tutor){
-        if (animal != null && tutor != null && animal.getTutores().contains(tutor)
-                && tutor.getAnimais().contains(animal)){
-            animal.getTutores().remove(tutor); // Remove a pessoa da lista de tutores do animal
-            tutor.getAnimais().remove(animal); // Remove o animal da lista de animais da pessoa tutor
-            salvarDadosAnimal();
-            return true;
-        }
-        return false;
-    }
-
-    /** Adiciona o setor do animal.
-     *
-     * @param animal O objeto {@link Animal} a quem será adicionado o setor.
-     * @param setor O objeto {@link Setor} que será adicionado ao animal.
-     * @return {@code true}, caso o setor seja adiconado com sucesso, ou {@code false}, caso contrário.
-     */
-    public boolean adicionarSetor(Animal animal, Setor setor){
-        if (animal != null && setor != null && animal.getSetor() == null && !setor.getAnimais().contains(animal)){
-            animal.setSetor(setor);
-            setor.getAnimais().add(animal);
-            salvarDadosAnimal();
-            return true;
-        }
-        return false;
     }
 
     /** Busca um animal pelo seu ID
@@ -267,21 +222,11 @@ public class AnimalController {
         return new ArrayList<>();
     }
 
-    /** Busca em que setor está o animal.
-     *
-     * @param animal O objeto {@link Animal} a quem será feita a busca.
-     * @return O setor em que está o animal, ou {@code null} se houver algum erro.
-     */
-    public Setor buscarSetor(Animal animal){
-        if (animal != null) return animal.getSetor();
-        return null;
-    }
-
     /** Lista todos os animais cadastrados no mapa de animais.
      *
      * @return Uma lista contendo os nomes todos os animais.
      */
-    public List<Animal> listarAnimais (){
+    public List<Animal> listarAnimais(){
         if (animais.isEmpty()) return new ArrayList<>();
         return new ArrayList<Animal>(animais.values());
     }
@@ -291,13 +236,13 @@ public class AnimalController {
      * @param animal O objeto {@link Animal} a ter a lista de tutores procurada.
      * @return Uma lista com os nomes de todos os tutores do animal.
      */
-    public List<String> listarTutores (Animal animal){
-        if (animal == null || animal.getTutores().isEmpty()) return new ArrayList<>();
-        List<String> nomesTutores = new ArrayList<>();
-        for (Tutor tutor : animal.getTutores()){
-            nomesTutores.add(tutor.getNome());
+    public List<String> listarTutores(Animal animal){
+        if (animal == null || animal.getTutoresIDs().isEmpty()) return new ArrayList<>();
+        List<String> IDTutores = new ArrayList<>();
+        for (String tutorID : animal.getTutoresIDs()){
+            IDTutores.add(tutorID);
         }
-        return nomesTutores;
+        return IDTutores;
     }
 
     /** Atualiza o ID do animal.
@@ -420,6 +365,7 @@ public class AnimalController {
         if (animal == null || novoSetor == null) return false;
         // Caso o animal já esteja nesse setor
         if (animal.getSetor() != null && animal.getSetor().getID().equalsIgnoreCase(novoSetor.getID())) return false;
+        if (animal.getSetorID().equalsIgnoreCase(novoSetor.getID().trim())) return false;
         animal.setSetor(novoSetor);
         salvarDadosAnimal();
         return true;

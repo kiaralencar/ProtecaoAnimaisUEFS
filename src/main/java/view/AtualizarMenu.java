@@ -1,6 +1,12 @@
 package view;
 import java.util.Scanner;
 
+/** Classe responsável por gerenciar a interface de usuário (View) para o menu
+ * de atualização, em que o usuário decide qual entidade ele deseja atualizar.
+ *
+ * @author Kiara Alencar
+ * @version 1.2
+ * */
 public class AtualizarMenu {
     static Scanner scan = new Scanner(System.in);
     public static void exibirMenu(){

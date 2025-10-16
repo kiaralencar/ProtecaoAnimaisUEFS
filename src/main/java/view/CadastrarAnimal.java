@@ -3,20 +3,41 @@ import controller.GeralController;
 import model.Animal;
 import model.Setor;
 import model.Tutor;
-
 import java.time.DateTimeException;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/** Classe responsável por gerenciar a interface de usuário (View) para a coleta
+ * e registro de dados de um novo objeto {@link Animal} no sistema.
+ *
+ * @author Kiara Alencar
+ * @version 1.7
+ * @see Animal
+ * @see Setor
+ * @see Tutor
+ * */
 public class CadastrarAnimal {
     static Scanner scan = new Scanner(System.in);
 
     public static void cadastrar(){
         List<Setor> setores = GeralController.S.listarSetores();
+        List<Setor> setoresAtivos = new ArrayList<>();
+        for (int i = 0; i < setores.size(); i++) {
+            Setor setorAtual = setores.get(i);
+            boolean ativo = GeralController.S.setorAtivo(setorAtual);
+            if (ativo) setoresAtivos.add(setorAtual);
+        }
         if (setores.isEmpty()){
             System.out.println("Nao eh possivel cadastrar animais,\npois nao ha setores cadastrados.");
+            System.out.println("Aperte Enter para voltar ao menu de cadastro.");
+            scan.nextLine();
+            return;
+        }
+        if (setoresAtivos.isEmpty()){
+            System.out.println("Ops! Ainda nao ha setores ativos. Antes de cadastrar animais,");
+            System.out.println("eh necessario cadastrar um setor com suas pessoas tutoras.");
             System.out.println("Aperte Enter para voltar ao menu de cadastro.");
             scan.nextLine();
             return;
@@ -90,14 +111,13 @@ public class CadastrarAnimal {
         } while (!situacaoValida);
         do {
             System.out.println("\nSetores ativos:");
-            for (int i = 0; i < setores.size(); i++) {
-                Setor setorAtivo = setores.get(i);
+            for (Setor setorAtivo : setoresAtivos){
                 System.out.println(setorAtivo.getID() + " - " + setorAtivo.getNome());
             }
             System.out.println("\nInsira o ID do setor escolhido: ");
             String IDsetor = scan.nextLine();
-            for (Setor setor : setores){
-                if (setor.getID().equalsIgnoreCase(IDsetor.trim())){
+            for (Setor setor : setores) {
+                if (setor.getID().equalsIgnoreCase(IDsetor.trim())) {
                     setorAnimal = setor;
                     setorEscolhido = true;
                     break;

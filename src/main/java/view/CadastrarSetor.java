@@ -1,15 +1,17 @@
 package view;
-
 import controller.GeralController;
-import model.Animal;
 import model.Setor;
 
-import java.time.DateTimeException;
-import java.time.YearMonth;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
+/** Classe responsável por gerenciar a interface de usuário (View) para a coleta
+ * e registro de dados de um novo objeto {@link Setor} no sistema.
+ *
+ * @author Kiara Alencar
+ * @version 1.5
+ * @see Setor
+ * */
 public class CadastrarSetor {
     static Scanner scan = new Scanner(System.in);
 

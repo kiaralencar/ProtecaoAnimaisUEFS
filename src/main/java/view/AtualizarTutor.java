@@ -6,6 +6,15 @@ import model.Tutor;
 import java.util.List;
 import java.util.Scanner;
 
+/** Classe responsável por gerenciar a interface de usuário (View) para a busca,
+ * seleção e atualização de dados de um objeto {@link Tutor}.
+ *
+ * @author Kiara Alencar
+ * @version 1.4
+ * @see Tutor
+ * @see Setor
+ * @see Endereco
+ * */
 public class AtualizarTutor {
     static Scanner scan = new Scanner(System.in);
 

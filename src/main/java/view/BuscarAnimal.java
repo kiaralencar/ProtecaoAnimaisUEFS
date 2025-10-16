@@ -1,11 +1,18 @@
 package view;
 import controller.GeralController;
 import model.Animal;
-import model.Tutor;
-
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
+/** Classe responsável por gerenciar a interface de usuário
+ * (View) para a busca e exibição de um relatório detalhado
+ * de um objeto {@link Animal}.
+ *
+ * @author Kiara Alencar
+ * @version 1.3
+ * @see Animal
+ * */
 public class BuscarAnimal {
     static Scanner scan = new Scanner(System.in);
 
@@ -23,8 +30,9 @@ public class BuscarAnimal {
             System.out.println("Situacao: " + animal.getSituacao());
             System.out.println("Setor: " + animal.getSetor().getNome());
             System.out.println("Tutores:");
-            for (Tutor tutor : animal.getTutores()) {
-                System.out.println(tutor.getNome());
+            List<String> nomesTutores = GeralController.A.listarTutores(animal);
+            for (String nome : nomesTutores){
+                System.out.println(nome);
             }
             System.out.println("Aperte Enter para voltar ao menu de busca.");
             scan.nextLine();

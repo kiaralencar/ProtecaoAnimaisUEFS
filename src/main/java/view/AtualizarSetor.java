@@ -4,6 +4,13 @@ import model.Setor;
 import java.util.List;
 import java.util.Scanner;
 
+/** Classe responsável por gerenciar a interface de usuário (View) para a busca,
+ * seleção e atualização de dados de um objeto {@link Setor}.
+ *
+ * @author Kiara Alencar
+ * @version 1.5
+ * @see Setor
+ * */
 public class AtualizarSetor {
     static Scanner scan = new Scanner(System.in);
 

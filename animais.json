@@ -8,7 +8,7 @@
     "sexo" : "Femea",
     "situacao" : "Disponivel",
     "setorID" : "S1",
-    "tutoresIDs" : [ ]
+    "tutoresIDs" : [ "T1", "T9" ]
   },
   "A2" : {
     "id" : "A2",
@@ -32,6 +32,17 @@
     "setorID" : null,
     "tutoresIDs" : [ ]
   },
+  "A4" : {
+    "id" : "A4",
+    "nome" : "Oliver",
+    "especie" : "Gato",
+    "raca" : "Persa",
+    "data" : [ 2022, 7 ],
+    "sexo" : "Macho",
+    "situacao" : "Animal em observacao",
+    "setorID" : "S1",
+    "tutoresIDs" : [ "T1", "T9" ]
+  },
   "A5" : {
     "id" : "A5",
     "nome" : "Lilica",
@@ -41,6 +52,28 @@
     "sexo" : "Femea",
     "situacao" : "Disponivel",
     "setorID" : "S1",
-    "tutoresIDs" : [ ]
+    "tutoresIDs" : [ "T1", "T9" ]
+  },
+  "A6" : {
+    "id" : "A6",
+    "nome" : "Simba",
+    "especie" : "Cachorr",
+    "raca" : "Bulldog",
+    "data" : [ 2023, 8 ],
+    "sexo" : "Macho",
+    "situacao" : "Animal disponivel para adocao",
+    "setorID" : "S3",
+    "tutoresIDs" : [ "T2", "T7" ]
+  },
+  "A9" : {
+    "id" : "A9",
+    "nome" : "Aila",
+    "especie" : "Cachorro",
+    "raca" : "Pastor alemao",
+    "data" : [ 2021, 9 ],
+    "sexo" : "Femea",
+    "situacao" : "Animal em tratamento",
+    "setorID" : "S3",
+    "tutoresIDs" : [ "T2", "T7" ]
   }
 }

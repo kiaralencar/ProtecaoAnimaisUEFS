@@ -2,25 +2,25 @@
   "S3" : {
     "id" : "S3",
     "nome" : "Modulo 3",
-    "tutoresIDs" : [ ],
-    "animaisIDs" : [ ]
+    "animaisIDs" : [ "A6", "A9" ],
+    "tutoresIDs" : [ "T2", "T7" ]
   },
   "S6" : {
     "id" : "S6",
-    "nome" : "Reitoria",
-    "tutoresIDs" : [ ],
-    "animaisIDs" : [ ]
+    "nome" : "Modulo 6",
+    "animaisIDs" : [ ],
+    "tutoresIDs" : [ ]
   },
   "S1" : {
     "id" : "S1",
-    "nome" : "Modulo 1",
-    "tutoresIDs" : [ ],
-    "animaisIDs" : [ ]
+    "nome" : "Reitoria",
+    "animaisIDs" : [ "A5", "A1" ],
+    "tutoresIDs" : [ "T1", "T9" ]
   },
   "S2" : {
     "id" : "S2",
     "nome" : "Modulo 2",
-    "tutoresIDs" : [ ],
-    "animaisIDs" : [ ]
+    "animaisIDs" : [ ],
+    "tutoresIDs" : [ ]
   }
 }

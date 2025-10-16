@@ -3,9 +3,14 @@ import controller.GeralController;
 import model.Animal;
 import model.Setor;
 import model.Tutor;
-
 import java.util.Scanner;
 
+/** Classe responsável por gerenciar a interface de usuário (View) para o menu
+ * de deleção, em que o usuário decide qual entidade ele deseja deletar.
+ *
+ * @author Kiara Alencar
+ * @version 1.2
+ * */
 public class DeletarMenu {
     static Scanner scan = new Scanner(System.in);
     public static void exibirMenu() {

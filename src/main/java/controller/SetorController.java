@@ -27,7 +27,7 @@ public class SetorController {
     private final SetorDAO setorDAO;
 
     /** Um mapa que armazena objetos do tipo {@link Setor}, usando o ID como chave. */
-    private static HashMap<String, Setor> setores;
+    public static HashMap<String, Setor> setores;
 
     /** Restaura o relacionamento bidirecional entre Setor e Tutor/Animal
      * após a desserialização do JSON, pois a referência de volta foi ignorada
@@ -64,6 +64,7 @@ public class SetorController {
     /** Construtor  da classe SetorController.
      * <p>
      * Incializa o DAO do setor e carrega os dados do JSON para o Map de setores.
+     * Além disso, liga as referências ignoradas durante a serialização do JSON.
      *
      */
     public SetorController(){
@@ -230,10 +231,10 @@ public class SetorController {
         return false;
     }
 
-    /** Remove um tutor à lista de tutores do setor.
+    /** Remove um tutor da lista de tutores do setor.
      *
      * @param setor O objeto {@link Setor} a quem será removido o tutor.
-     * @param tutor O objeto {@link Tutor} que será removido à lista de tutores do setor.
+     * @param tutor O objeto {@link Tutor} que será removido da lista de tutores do setor.
      * @return {@code true}, caso o tutor seja removido com sucesso, ou {@code false}, caso contrário.
      */
     public boolean removerTutor(Setor setor, Tutor tutor){
@@ -292,10 +293,10 @@ public class SetorController {
         return false;
     }
 
-    /** Remove um animal à lista de animais do setor.
+    /** Remove um animal da lista de animais do setor.
      *
      * @param setor O objeto {@link Setor} a quem será removido o animal.
-     * @param animal O objeto {@link Animal} que será removido à lista de animais do setor.
+     * @param animal O objeto {@link Animal} que será removido da lista de animais do setor.
      * @return {@code true}, caso o animal seja removido com sucesso, ou {@code false}, caso contrário.
      */
     public boolean removerAnimal(Setor setor, Animal animal){
@@ -409,7 +410,8 @@ public class SetorController {
                     break;
                 }
             }
-            if (setor != null && !setor.getNome().equalsIgnoreCase(novoNome) && !setorExistente){
+            if (setor != null && !setor.getNome().equalsIgnoreCase(novoNome)
+                    && !setorExistente && validarNomeSetor(novoNome)){
                 setor.setNome(novoNome);
                 salvarDadosSetor();
                 return true;

@@ -1,9 +1,17 @@
 package view;
-import model.Animal;
+import controller.GeralController;
 import model.Setor;
-import model.Tutor;
+import java.util.List;
 import java.util.Scanner;
 
+/** Classe responsável por gerenciar a interface de usuário
+ * (View) para a busca e exibição de um relatório detalhado
+ * de um objeto {@link Setor}.
+ *
+ * @author Kiara Alencar
+ * @version 1.1
+ * @see Setor
+ * */
 public class BuscarSetor {
     static Scanner scan = new Scanner(System.in);
 
@@ -14,12 +22,14 @@ public class BuscarSetor {
         System.out.println("Nome: " + setor.getNome());
         System.out.println("Endereco: " + Setor.getEndereco());
         System.out.println("Tutores:");
-        for (Tutor tutor : setor.getTutores()){
-            System.out.println(tutor.getNome());
+        List<String> nomesTutores = GeralController.S.listarTutores(setor);
+        for (String nome : nomesTutores){
+            System.out.println(nome);
         }
         System.out.println("Animais:");
-        for (Animal animal : setor.getAnimais()){
-            System.out.println(animal.getNome());
+        List<String> nomesAnimais = GeralController.S.listarAnimais(setor);
+        for (String nome : nomesAnimais){
+            System.out.println(nome);
         }
         System.out.println("Aperte Enter para voltar ao menu de busca.");
         scan.nextLine();
